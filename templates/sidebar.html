@@ -1,0 +1,51 @@
+<div class="menu-container" style="width: 300px;">
+    <style>
+        .btn-custom-menu {
+            background-color: #4a86e8; /* Màu xanh chuẩn như image_f083d5.png */
+            color: white !important;
+            border: 2px solid #3d6bb3;
+            border-radius: 12px;
+            margin-bottom: 8px;
+            padding: 12px;
+            font-weight: bold;
+            display: block;
+            text-align: center;
+            text-decoration: none;
+            transition: 0.3s;
+        }
+        .btn-custom-menu:hover {
+            background-color: #3d6bb3;
+            transform: scale(1.02);
+        }
+    </style>
+
+    <!-- Nút 1: Nhập Liệu Nhập kho -->
+    <a href="{% url 'add_stock' %}" class="btn-custom-menu shadow-sm">
+        Nhập Liệu Nhập kho
+    </a>
+
+    <!-- Nút 2: Nhập Liệu Xuất kho -->
+    <a href="{% url 'export_stock' %}" class="btn-custom-menu shadow-sm">
+        Nhập Liệu Xuất kho
+    </a>
+
+    <!-- Nút 3: In Phiếu Nhập Kho -->
+    <a href="{% url 'print_in' %}" class="btn-custom-menu shadow-sm">
+        In Phiếu Nhập Kho
+    </a>
+
+    <!-- Nút 4: In Phiếu Xuất Kho -->
+    <a href="{% url 'print_out' %}" class="btn-custom-menu shadow-sm">
+        In Phiếu Xuất Kho
+    </a>
+
+    <!-- Nút 5: Danh mục khách hàng -->
+    <a href="{% url 'customers' %}" class="btn-custom-menu shadow-sm">
+        Danh mục khách hàng
+    </a>
+
+    <!-- Nút 6: Tổng Hợp Nhập Xuất Tồn -->
+    <a href="{% url 'summary_nxt' %}" class="btn-custom-menu shadow-sm">
+        Tổng Hợp Nhập Xuất Tồn
+    </a>
+</div>

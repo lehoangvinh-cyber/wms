@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Danh Sách Nợ Đồng Phục - WMS</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <style>
+        body { background-color: #f4f7f9; font-family: 'Segoe UI', sans-serif; }
+        .table-debt thead { background-color: #f2f2f2; border-bottom: 2px solid #dee2e6; }
+        .table-debt th { font-weight: bold; color: #333; text-align: center; vertical-align: middle; padding: 12px; }
+        .table-debt td { vertical-align: middle; padding: 10px; border: 1px solid #eee; }
+        .note-badge { background-color: #fff3cd; color: #856404; padding: 5px 10px; border-radius: 5px; font-size: 0.85rem; }
+        /* Chỉnh lại giao diện Select2 cho hợp Bootstrap */
+        .select2-container .select2-selection--single { height: 38px; border: 1px solid #dee2e6; border-radius: 6px; padding-top: 5px; }
+        .select2-container--default .select2-selection--single .select2-selection__arrow { top: 6px; }
+    </style>
+</head>
+<body>
+
+<div class="container-fluid py-4 px-5">
+
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }} alert-dismissible fade show shadow-sm" role="alert">
+                <i class="bi bi-info-circle-fill me-2"></i> {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h3 class="fw-bold"><i class="bi bi-journal-text me-2"></i>THEO DÕI NỢ ĐỒNG PHỤC</h3>
+        <div>
+            <button type="button" class="btn btn-primary rounded-pill px-3 me-2 shadow-sm" data-bs-toggle="modal" data-bs-target="#importExcelModal">
+                <i class="bi bi-file-earmark-arrow-up"></i> Nhập từ Excel
+            </button>
+            <a href="{% url 'export_debt_excel' %}" class="btn btn-success rounded-pill px-3 me-2 shadow-sm">
+                <i class="bi bi-file-earmark-excel"></i> Xuất Excel
+            </a>
+            <button class="btn btn-outline-secondary rounded-pill me-2 shadow-sm" onclick="window.print()"><i class="bi bi-printer"></i> In PDF</button>
+            <a href="{% url 'dashboard' %}" class="btn btn-dark px-4 rounded-pill shadow-sm">Quay lại Dashboard</a>
+        </div>
+    </div>
+
+    <div class="row g-3 mb-4">
+        <div class="col-md-4">
+            <div class="card border-0 shadow-sm border-start border-primary border-4 bg-white">
+                <div class="card-body py-3">
+                    <h6 class="text-muted fw-bold mb-1">TỔNG GIAO DỊCH NỢ</h6>
+                    <h3 class="mb-0 text-primary fw-bold">{{ total_debts }}</h3>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card border-0 shadow-sm border-start border-danger border-4 bg-white">
+                <div class="card-body py-3">
+                    <h6 class="text-muted fw-bold mb-1">ĐANG CHỜ TRẢ MỚI</h6>
+                    <h3 class="mb-0 text-danger fw-bold">{{ pending_debts }}</h3>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card border-0 shadow-sm border-start border-success border-4 bg-white">
+                <div class="card-body py-3">
+                    <h6 class="text-muted fw-bold mb-1">ĐÃ HOÀN THÀNH</h6>
+                    <h3 class="mb-0 text-success fw-bold">{{ resolved_debts }}</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card mb-4 border-0 shadow-sm bg-white">
+        <div class="card-body">
+            <h6 class="fw-bold mb-3 text-primary"><i class="bi bi-plus-circle-fill me-2"></i>NHẬP DỮ LIỆU NỢ MỚI</h6>
+            <form method="POST">
+                {% csrf_token %}
+                <div class="row g-2">
+                    <div class="col-md-2"><input type="text" name="branch" class="form-control" placeholder="Cơ sở (VD: Belleza)" required></div>
+                    <div class="col-md-2"><input type="date" name="request_date" class="form-control" value="{% now 'Y-m-d' %}" required></div>
+                    <div class="col-md-3">
+                        <select name="uniform" id="searchableSelect" class="form-select" required>
+                            <option value="" disabled selected>Chọn đồng phục...</option>
+                            {% for u in uniforms %}<option value="{{ u.id }}">{{ u.name }} - Size: {{ u.size }} (Tồn: {{ u.quantity }})</option>{% endfor %}
+                        </select>
+                    </div>
+                    <div class="col-md-1"><input type="number" name="quantity" class="form-control" value="1" min="1"></div>
+                    <div class="col-md-2"><input type="text" name="student_name" class="form-control" placeholder="Tên học sinh" required></div>
+                    <div class="col-md-2"><button type="submit" class="btn btn-primary w-100 fw-bold"><i class="bi bi-save me-1"></i> LƯU NỢ</button></div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="card mb-3 border-0 shadow-sm bg-white">
+        <div class="card-body py-2">
+            <form method="GET" class="row g-2 align-items-center">
+                <div class="col-md-4">
+                    <div class="input-group input-group-sm">
+                        <span class="input-group-text bg-light border-end-0"><i class="bi bi-search"></i></span>
+                        <input type="text" name="search" class="form-control border-start-0" placeholder="Tìm tên HS hoặc đồng phục..." value="{{ search_query }}">
+                    </div>
+                </div>
+                <div class="col-md-2"><input type="text" name="branch" class="form-control form-control-sm" placeholder="Lọc Cơ sở" value="{{ branch_filter }}"></div>
+                <div class="col-md-2">
+                    <select name="status" class="form-select form-select-sm">
+                        <option value="">Tất cả trạng thái</option>
+                        <option value="0" {% if status_filter == '0' %}selected{% endif %}>Chưa trả</option>
+                        <option value="1" {% if status_filter == '1' %}selected{% endif %}>Đã xong</option>
+                    </select>
+                </div>
+                <div class="col-md-2"><button type="submit" class="btn btn-dark btn-sm w-100">Lọc</button></div>
+                {% if search_query or branch_filter or status_filter %}
+                <div class="col-md-2"><a href="{% url 'debt_list' %}" class="btn btn-outline-danger btn-sm w-100">Xóa lọc</a></div>
+                {% endif %}
+            </form>
+        </div>
+    </div>
+
+    <div class="bg-white border rounded-3 overflow-hidden shadow-sm">
+        <table class="table table-debt table-hover mb-0">
+            <thead>
+                <tr>
+                    <th style="width: 120px;">Cơ sở</th>
+                    <th style="width: 120px;">Ngày</th>
+                    <th>Tên đồng phục</th>
+                    <th style="width: 60px;">SL</th>
+                    <th style="width: 80px;">Size</th>
+                    <th>Tên học sinh</th>
+                    <th>Ghi chú</th>
+                    <th style="width: 130px;">Trạng thái</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for d in page_obj %}
+                <tr>
+                    <td class="text-center fw-bold text-secondary">{{ d.branch }}</td>
+                    <td class="text-center">{{ d.request_date|date:"d/m/Y" }}</td>
+                    <td class="fw-bold text-primary">{{ d.uniform.name }}</td>
+                    <td class="text-center fw-bold">{{ d.quantity }}</td>
+                    <td class="text-center"><span class="badge bg-light text-dark border">{{ d.uniform.size }}</span></td>
+                    <td>{{ d.student_name }}</td>
+                    <td><span class="note-badge"><i class="bi bi-clock-history me-1"></i>{{ d.note }}</span></td>
+                    <td class="text-center">
+                        {% if not d.is_resolved %}
+                            <span class="text-danger fw-bold small text-uppercase d-block mb-1">Chưa trả</span>
+                            <a href="{% url 'resolve_debt' d.id %}" class="btn btn-sm btn-outline-success py-0 px-2 rounded-pill shadow-sm" onclick="return confirm('Trừ tồn kho và gạch nợ cho học sinh này?');">
+                                <i class="bi bi-check2-circle"></i> Trả áo
+                            </a>
+                        {% else %}
+                            <span class="text-success fw-bold small text-uppercase">Đã xong</span>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% empty %}
+                <tr><td colspan="8" class="text-center py-5 text-muted">Không có dữ liệu phù hợp.</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    {% if page_obj.has_other_pages %}
+    <nav class="mt-4">
+        <ul class="pagination pagination-sm justify-content-center">
+            {% if page_obj.has_previous %}
+                <li class="page-item"><a class="page-link shadow-none" href="?page={{ page_obj.previous_page_number }}&search={{ search_query }}&branch={{ branch_filter }}&status={{ status_filter }}">Trước</a></li>
+            {% endif %}
+
+            {% for i in page_obj.paginator.page_range %}
+                {% if page_obj.number == i %}
+                    <li class="page-item active"><span class="page-link shadow-none border-0">{{ i }}</span></li>
+                {% else %}
+                    <li class="page-item"><a class="page-link shadow-none" href="?page={{ i }}&search={{ search_query }}&branch={{ branch_filter }}&status={{ status_filter }}">{{ i }}</a></li>
+                {% endif %}
+            {% endfor %}
+
+            {% if page_obj.has_next %}
+                <li class="page-item"><a class="page-link shadow-none" href="?page={{ page_obj.next_page_number }}&search={{ search_query }}&branch={{ branch_filter }}&status={{ status_filter }}">Sau</a></li>
+            {% endif %}
+        </ul>
+    </nav>
+    {% endif %}
+
+</div>
+
+<div class="modal fade" id="importExcelModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content border-0 shadow-lg">
+            <div class="modal-header bg-primary text-white border-0">
+                <h5 class="modal-title fw-bold"><i class="bi bi-cloud-upload me-2"></i>Nhập dữ liệu Nợ</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <form action="{% url 'import_debt_excel' %}" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="modal-body p-4">
+                    <div class="mb-3">
+                        <label class="form-label fw-bold text-secondary">Chọn file Excel (.xlsx)</label>
+                        <input class="form-control form-control-lg" type="file" name="excel_file" accept=".xlsx" required>
+                    </div>
+                </div>
+                <div class="modal-footer bg-light border-0">
+                    <button type="button" class="btn btn-secondary rounded-pill px-4" data-bs-dismiss="modal">Hủy</button>
+                    <button type="submit" class="btn btn-primary rounded-pill px-4 fw-bold">Tiến hành Nhập</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script>
+    // Kích hoạt tính năng gõ tìm kiếm cho ô chọn Đồng phục
+    $(document).ready(function() {
+        $('#searchableSelect').select2({
+            placeholder: "Gõ để tìm kiếm đồng phục...",
+            allowClear: true,
+            width: '100%'
+        });
+    });
+</script>
+
+</body>
+</html>
