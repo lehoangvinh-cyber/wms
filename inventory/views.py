@@ -1,5 +1,4 @@
 import datetime
-from random import uniform
 
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
@@ -17,19 +16,33 @@ def dashboard(request):
 def stock_action(request, action_type):
     """Xử lý chung cho cả Nhập và Xuất kho"""
     if request.method == 'POST':
+        uniform_id = request.POST.get('uniform')
+        amount = int(request.POST.get('amount', 1))
+
+        # 1. Ghi lại lịch sử giao dịch (Giữ nguyên)
         Transaction.objects.create(
             ticket_id=request.POST.get('ticket_id'),
             actor_name=request.POST.get('actor_name'),
-            uniform_id=request.POST.get('uniform'),
-            amount=int(request.POST.get('amount')),
+            uniform_id=uniform_id,
+            amount=amount,
             type=action_type
         )
+
+        # 2. FIX LỖI Ở ĐÂY: Cập nhật trực tiếp số lượng tồn kho
+        uniform_obj = Uniform.objects.get(id=uniform_id)
         if action_type == 'IN':
-            pending_debts = Debt.objects.filter(uniform=uniform, is_resolved=False)
+            uniform_obj.quantity += amount  # Nhập thì cộng thêm
+        elif action_type == 'OUT':
+            uniform_obj.quantity -= amount  # Xuất thì trừ đi
+        uniform_obj.save()  # Lưu vào database
+
+        # 3. Kích hoạt thông báo trả nợ tự động (Giữ nguyên)
+        if action_type == 'IN':
+            pending_debts = Debt.objects.filter(uniform=uniform_obj, is_resolved=False)
             if pending_debts.exists():
                 request.session['auto_debt_trigger'] = {
-                    'uniform_id': uniform.id,
-                    'uniform_name': uniform.name,
+                    'uniform_id': uniform_obj.id,
+                    'uniform_name': uniform_obj.name,
                     'student_count': pending_debts.count()
                 }
         return redirect('dashboard')
@@ -40,7 +53,6 @@ def stock_action(request, action_type):
 
 
 from django.db.models import Sum
-from .models import Uniform, Transaction
 
 
 @login_required
@@ -49,15 +61,15 @@ def summary_nxt(request):
     report_data = []
 
     for u in uniforms:
-        # Tính tổng nhập
+        # Tính tổng nhập, xuất từ lịch sử
         nhap = Transaction.objects.filter(uniform=u, type='IN').aggregate(Sum('amount'))['amount__sum'] or 0
-        # Tính tổng xuất
         xuat = Transaction.objects.filter(uniform=u, type='OUT').aggregate(Sum('amount'))['amount__sum'] or 0
 
-        # Tồn đầu kỳ (Trong ví dụ đơn giản này ta coi như bằng 0 hoặc lấy số dư từ kỳ trước)
-        ton_dau = 0
-        # Tồn cuối kỳ = Tồn đầu + Nhập - Xuất
-        ton_cuoi = ton_dau + nhap - xuat
+        # ĐỒNG BỘ: Tồn cuối kỳ lấy thẳng từ số lượng thực tế hiện tại
+        ton_cuoi = u.quantity
+
+        # TỰ ĐỘNG TÍNH NGƯỢC: Tồn đầu kỳ = Tồn cuối - Nhập + Xuất
+        ton_dau = ton_cuoi - nhap + xuat
 
         report_data.append({
             'sku': u.sku,
@@ -71,12 +83,20 @@ def summary_nxt(request):
 
     return render(request, 'summary_nxt.html', {'report_data': report_data})
 
+# THÊM DÒNG NÀY LÊN GẦN TRÊN CÙNG FILE
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth import login
+
+# THAY THẾ HÀM register CŨ BẰNG HÀM NÀY:
 def register(request):
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
         if form.is_valid():
-            form.save()
-            return redirect('login')
+            user = form.save()
+            # Tự động đăng nhập luôn sau khi đăng ký thành công cho tiện
+            login(request, user)
+            messages.success(request, "Đăng ký tài khoản thành công!")
+            return redirect('dashboard')
     else:
         form = UserCreationForm()
     return render(request, 'register.html', {'form': form})
@@ -93,17 +113,40 @@ def dashboard(request):
 def stock_form(request):
     """Trang nhập dữ liệu đồng bộ theo mẫu image_ef8bf4.png"""
     if request.method == 'POST':
-        # Lấy dữ liệu từ Form
         action_type = request.POST.get('type')
+        uniform_id = request.POST.get('uniform')
+        amount = int(request.POST.get('amount', 1))
+
+        # 1. Ghi lại lịch sử giao dịch (Giữ nguyên của bạn)
         Transaction.objects.create(
             ticket_id=request.POST.get('ticket_id'),
             date=request.POST.get('date'),
             actor_name=request.POST.get('actor_name'),
-            uniform_id=request.POST.get('uniform'),
-            amount=int(request.POST.get('amount')),
-            type=action_type
+            uniform_id=uniform_id,
+            amount=amount,
+            type=action_type,
+            branch=request.POST.get('branch', 'Kho Tổng')
         )
-        return redirect('dashboard')  # Lưu xong quay về Dashboard xem tồn kho mới
+
+        # 2. FIX LỖI Ở ĐÂY: Cập nhật trực tiếp số lượng tồn kho
+        uniform_obj = Uniform.objects.get(id=uniform_id)
+        if action_type == 'IN':
+            uniform_obj.quantity += amount  # Nhập thì cộng thêm
+        elif action_type == 'OUT':
+            uniform_obj.quantity -= amount  # Xuất thì trừ đi
+        uniform_obj.save()  # Lưu số mới vào database
+
+        # 3. Kích hoạt thông báo trả nợ tự động (nếu kho vừa được nhập thêm áo)
+        if action_type == 'IN':
+            pending_debts = Debt.objects.filter(uniform=uniform_obj, is_resolved=False)
+            if pending_debts.exists():
+                request.session['auto_debt_trigger'] = {
+                    'uniform_id': uniform_obj.id,
+                    'uniform_name': uniform_obj.name,
+                    'student_count': pending_debts.count()
+                }
+
+        return redirect('dashboard')
 
     uniforms = Uniform.objects.all().order_by('name')
     return render(request, 'stock_form.html', {'uniforms': uniforms})
@@ -257,19 +300,19 @@ from django.shortcuts import get_object_or_404
 @login_required
 def auto_resolve_debt(request, uniform_id):
     uniform = get_object_or_404(Uniform, id=uniform_id)
-    # Tìm các khoản nợ chưa trả của đồng phục này, ưu tiên nợ cũ nhất
     pending_debts = Debt.objects.filter(uniform=uniform, is_resolved=False).order_by('request_date')
 
     resolved_count = 0
     for debt in pending_debts:
-        # Chỉ trả nợ nếu số lượng tồn kho còn đủ để trả cho học sinh này
         if uniform.quantity >= debt.quantity:
-            # 1. Tạo lịch sử xuất kho
+            # 1. Tạo lịch sử xuất kho (ĐÃ FIX TÊN CỘT)
             Transaction.objects.create(
                 uniform=uniform,
-                transaction_type='OUT',
-                quantity=debt.quantity,
-                note=f"Xuất tự động trả nợ cho: {debt.student_name}"
+                type='OUT',             # Đổi transaction_type thành type
+                amount=debt.quantity,   # Đổi quantity thành amount
+                actor_name="Hệ thống",  # Tên người thực hiện
+                branch=debt.branch      # Gắn với cơ sở của học sinh
+                # Nếu model Transaction của bạn có cột note thì thêm: note=f"Xuất tự động..."
             )
             # 2. Trừ tồn kho
             uniform.quantity -= debt.quantity

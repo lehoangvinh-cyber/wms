@@ -4,11 +4,9 @@ from . import views
 
 urlpatterns = [
     path('', views.dashboard, name='dashboard'),
-    path('login/', auth_views.LoginView.as_view(template_name='login.html'), name='login'),
-    path('logout/', auth_views.LogoutView.as_view(next_page='login'), name='logout'),
-
-    # THÊM DÒNG NÀY ĐỂ FIX LỖI TRONG image_effc55.png
-    path('register/', views.register, name='register'),
+    path('dang-nhap/', auth_views.LoginView.as_view(template_name='registration/login.html'), name='login'),
+    path('dang-xuat/', auth_views.LogoutView.as_view(next_page='login'), name='logout'),
+    path('dang-ky/', views.register, name='register'),
 
     path('nhap-kho/', views.stock_action, {'action_type': 'IN'}, name='stock_in'),
     path('cap-phat/', views.stock_action, {'action_type': 'OUT'}, name='stock_out'),
