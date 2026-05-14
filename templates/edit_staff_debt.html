@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Sửa Cấp Phát Nhân Viên - WMS</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <style>
+        body { background-color: #f0f2f5; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        .edit-card { border: none; border-radius: 15px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); }
+        .form-label { font-weight: 600; color: #495057; font-size: 0.9rem; }
+        .form-control, .form-select { border-radius: 8px; padding: 10px 15px; border: 1px solid #dce1e6; }
+        .form-control:focus { box-shadow: 0 0 0 3px rgba(13, 110, 253, 0.15); }
+        .btn-save { border-radius: 10px; padding: 12px; font-weight: bold; letter-spacing: 0.5px; }
+    </style>
+</head>
+<body>
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-7">
+
+            <div class="mb-4 d-flex align-items-center">
+                <a href="{% url 'staff_debt_list' %}" class="btn btn-light rounded-circle me-3 shadow-sm">
+                    <i class="bi bi-arrow-left"></i>
+                </a>
+                <h4 class="mb-0 fw-bold text-dark">Chỉnh sửa thông tin cấp phát</h4>
+            </div>
+
+            <div class="card edit-card bg-white">
+                <div class="card-body p-4 p-md-5">
+                    <form method="POST">
+                        {% csrf_token %}
+
+                        <div class="row g-4">
+                            <div class="col-md-8">
+                                <label class="form-label"><i class="bi bi-person me-1"></i> Họ và tên nhân viên</label>
+                                <input type="text" name="employee_name" class="form-control" value="{{ debt.employee_name }}" required>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label">Giới tính</label>
+                                <select name="gender" class="form-select">
+                                    <option value="Nữ" {% if debt.gender == 'Nữ' %}selected{% endif %}>Nữ</option>
+                                    <option value="Nam" {% if debt.gender == 'Nam' %}selected{% endif %}>Nam</option>
+                                </select>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label"><i class="bi bi-briefcase me-1"></i> Chức vụ</label>
+                                <input type="text" name="position" class="form-control" value="{{ debt.position }}" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label"><i class="bi bi-geo-alt me-1"></i> Cơ sở</label>
+                                <input type="text" name="branch" class="form-control" value="{{ debt.branch }}" required>
+                            </div>
+
+                            <hr class="my-3 opacity-50">
+
+                            <div class="col-md-9">
+                                <label class="form-label"><i class="bi bi-box-seam me-1"></i> Loại đồng phục & Size</label>
+                                <select name="uniform" id="selectUniform" class="form-select" required>
+                                    {% for u in uniforms %}
+                                        <option value="{{ u.id }}" {% if debt.uniform.id == u.id %}selected{% endif %}>
+                                            {{ u.name }} - Size: {{ u.size }} (Kho: {{ u.quantity }})
+                                        </option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label">Số lượng</label>
+                                <input type="number" name="quantity" class="form-control" value="{{ debt.quantity }}" min="1" required>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label"><i class="bi bi-calendar-event me-1"></i> Ngày xuất</label>
+                                <input type="date" name="issue_date" class="form-control" value="{{ debt.issue_date|date:'Y-m-d' }}" required>
+                            </div>
+
+                            <div class="col-12">
+                                <label class="form-label"><i class="bi bi-sticky me-1"></i> Ghi chú</label>
+                                <textarea name="note" class="form-control" rows="3" placeholder="Nhập ghi chú thêm nếu có...">{{ debt.note|default_if_none:'' }}</textarea>
+                            </div>
+
+                            <div class="col-12 mt-5">
+                                <div class="row g-3">
+                                    <div class="col-md-8">
+                                        <button type="submit" class="btn btn-primary btn-save w-100 shadow-sm">
+                                            <i class="bi bi-check-circle me-2"></i> LƯU THAY ĐỔI
+                                        </button>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <a href="{% url 'staff_debt_list' %}" class="btn btn-outline-secondary btn-save w-100">
+                                            HỦY BỎ
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <p class="text-center text-muted mt-4 small">Mã hệ thống: #STAFF-{{ debt.id }} | Trạng thái: {% if debt.is_resolved %}Đã thu hồi{% else %}Đang sử dụng{% endif %}</p>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('#selectUniform').select2({
+            width: '100%'
+        });
+    });
+</script>
+</body>
+</html>

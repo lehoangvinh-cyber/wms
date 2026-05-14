@@ -42,6 +42,18 @@
         .table thead { background-color: #f8f9fa; }
         .table th { font-weight: 600; color: #4b5563; font-size: 0.85rem; border-bottom: 2px solid #e5e7eb; }
         .empty-state { padding: 40px 0; text-align: center; color: #9ca3af; }
+        .custom-orange-btn {
+        background-color: #ea580c; /* Màu cam giống hình */
+        border: none;
+        border-radius: 8px; /* Bo góc vừa phải */
+        padding: 12px 20px;
+        transition: all 0.2s;
+        width: 100%; /* Chiều rộng full khối */
+    }
+    .custom-orange-btn:hover {
+        background-color: #c2410c; /* Đậm hơn một chút khi di chuột vào */
+        color: white;
+    }
     </style>
 </head>
 <body>
@@ -58,14 +70,21 @@
             </li>
         </ul>
         <div class="d-flex align-items-center text-white">
-            <span class="me-3 opacity-75 small">Xin chào, <b class="opacity-100">{{ request.user.username|default:"admin" }}</b></span>
-            <a href="#" class="btn btn-outline-light btn-sm rounded-pill px-3">Thoát</a>
+            <span class="text-white me-3">Xin chào, <b>{{ request.user.username }}</b></span>
+
+            <form action="{% url 'logout' %}" method="POST" class="d-inline">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-light btn-sm rounded-pill px-3 fw-bold shadow-sm">
+                    Thoát
+                </button>
+            </form>
         </div>
     </div>
 </nav>
 
 <div class="container-fluid py-4 px-4">
     <div class="row g-4">
+
         <!-- Cột trái: Sidebar Menu -->
         <div class="col-md-3">
             <a href="{% url 'stock_in' %}" class="btn-sidebar btn-import">
@@ -74,16 +93,21 @@
             <a href="{% url 'stock_out' %}" class="btn-sidebar btn-export">
                 <i class="bi bi-box-arrow-up-right"></i> XUẤT KHO (CẤP PHÁT)
             </a>
+
             <a href="{% url 'summary_nxt' %}" class="btn-sidebar btn-report">
                 <i class="bi bi-file-earmark-bar-graph"></i> BÁO CÁO TỒN KHO
             </a>
             <a href="{% url 'debt_list' %}" class="btn-sidebar btn-debt">
                 <i class="bi bi-person-exclamation"></i> THEO DÕI NỢ ĐP
             </a>
+            <a href="{% url 'staff_debt_list' %}" class="btn text-white fw-bold shadow-sm d-flex justify-content-center align-items-center custom-orange-btn">
+    <i class="bi bi-person-badge-fill me-2 fs-5"></i> ĐỒNG PHỤC NHÂN VIÊN
+</a>
             <hr class="my-4 text-muted">
             <a href="/admin/" target="_blank" class="btn-sidebar btn-admin">
                 <i class="bi bi-gear"></i> TRANG QUẢN TRỊ
             </a>
+
         </div>
 
         <!-- Cột phải: Nội dung chính -->
@@ -184,6 +208,7 @@
             </div>
 
         </div>
+
     </div>
 </div>
 <!-- Kịch bản: Bật Pop-up Cấn trừ nợ nếu có tín hiệu từ Backend -->

@@ -356,3 +356,231 @@ def resolve_debt(request, debt_id):
 
     return redirect('debt_list')
 
+
+@login_required
+def staff_debt_list(request):
+    if request.method == 'POST' and 'employee_name' in request.POST:
+        uniform_id = request.POST.get('uniform')
+        if not uniform_id:
+            messages.error(request, "Vui lòng chọn loại đồng phục!")
+            return redirect('staff_debt_list')
+
+        # Lưu dữ liệu cấp phát mới
+        StaffDebt.objects.create(
+            employee_name=request.POST.get('employee_name'),
+            position=request.POST.get('position'),
+            gender=request.POST.get('gender'),
+            uniform_id=uniform_id,
+            quantity=int(request.POST.get('quantity', 1)),
+            issue_date=request.POST.get('issue_date') or timezone.now().date(),
+            branch=request.POST.get('branch'),
+            note=request.POST.get('note', '')
+        )
+        # Bổ sung: Tự động trừ tồn kho khi phát đồ cho nhân viên
+        uniform_obj = Uniform.objects.get(id=uniform_id)
+        uniform_obj.quantity -= int(request.POST.get('quantity', 1))
+        uniform_obj.save()
+
+        messages.success(request, "Đã cấp phát đồng phục cho nhân viên và trừ tồn kho thành công!")
+        return redirect('staff_debt_list')
+
+    uniforms = Uniform.objects.all().order_by('name')
+    staff_debts = StaffDebt.objects.all().order_by('is_resolved', '-issue_date')
+
+    # Thống kê
+    total_debts = staff_debts.count()
+    pending_debts = staff_debts.filter(is_resolved=False).count()
+
+    # Bộ lọc
+    search_query = request.GET.get('search', '')
+    branch_filter = request.GET.get('branch', '')
+    position_filter = request.GET.get('position', '')
+
+    if search_query:
+        staff_debts = staff_debts.filter(
+            Q(employee_name__icontains=search_query) | Q(uniform__name__icontains=search_query))
+    if branch_filter:
+        staff_debts = staff_debts.filter(branch__icontains=branch_filter)
+    if position_filter:
+        staff_debts = staff_debts.filter(position__icontains=position_filter)
+
+    # Phân trang
+    paginator = Paginator(staff_debts, 15)
+    page_obj = paginator.get_page(request.GET.get('page'))
+
+    return render(request, 'staff_debt_list.html', {
+        'page_obj': page_obj,
+        'uniforms': uniforms,
+        'search_query': search_query,
+        'branch_filter': branch_filter,
+        'position_filter': position_filter,
+        'total_debts': total_debts,
+        'pending_debts': pending_debts,
+    })
+
+from .models import Uniform, Debt, Transaction, StaffDebt
+@login_required
+def resolve_staff_debt(request, debt_id):
+    """Xử lý thu hồi đồng phục nhân viên (Trả lại kho)"""
+    debt = get_object_or_404(StaffDebt, id=debt_id)
+    if not debt.is_resolved:
+        # Cộng lại tồn kho
+        debt.uniform.quantity += debt.quantity
+        debt.uniform.save()
+
+        # Cập nhật trạng thái và Ngày nhập
+        debt.is_resolved = True
+        debt.return_date = timezone.now().date()  # Ghi nhận ngày trả
+        debt.note = f"{debt.note} (Đã trả lại kho)" if debt.note else "Trả lại kho"
+        debt.save()
+        messages.success(request, f"Đã thu hồi đồng phục của {debt.employee_name} và nhập lại kho!")
+    return redirect('staff_debt_list')
+
+
+# 1. XÓA DỮ LIỆU
+@login_required
+def delete_staff_debt(request, debt_id):
+    debt = get_object_or_404(StaffDebt, id=debt_id)
+    # Nếu xóa dòng chưa trả, hãy cộng lại tồn kho trước khi xóa
+    if not debt.is_resolved:
+        debt.uniform.quantity += debt.quantity
+        debt.uniform.save()
+    debt.delete()
+    messages.warning(request, "Đã xóa bản ghi cấp phát thành công!")
+    return redirect('staff_debt_list')
+
+
+# 2. XUẤT EXCEL (EXPORT)
+@login_required
+def export_staff_debt_excel(request):
+    response = HttpResponse(content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+    current_date = dt.datetime.now().strftime('%Y%m%d')
+    response['Content-Disposition'] = f'attachment; filename=Bao_cao_dong_phuc_NV_{current_date}.xlsx'
+
+    wb = openpyxl.Workbook()
+    ws = wb.active
+    ws.title = 'Đồng phục nhân viên'
+
+    # Tiêu đề theo đúng mẫu ảnh của bạn
+    columns = ['Tên nhân viên', 'Chức vụ', 'Giới tính', 'Tên sản phẩm', 'Kích cỡ', 'Số lượng', 'Ngày nhập', 'Ngày xuất',
+               'Cơ sở', 'Ghi chú']
+    ws.append(columns)
+
+    for d in StaffDebt.objects.all().order_by('-issue_date'):
+        ws.append([
+            d.employee_name, d.position, d.gender, d.uniform.name, d.uniform.size,
+            d.quantity, d.return_date.strftime("%d/%m/%Y") if d.return_date else "",
+            d.issue_date.strftime("%d/%m/%Y") if d.issue_date else "",
+            d.branch, d.note
+        ])
+    wb.save(response)
+    return response
+
+
+import datetime as dt  # Đảm bảo có dòng này ở đầu file views.py
+from django.utils import timezone
+
+
+@login_required
+def import_staff_debt_excel(request):
+    if request.method == 'POST':
+        excel_file = request.FILES.get('excel_file')
+        if not excel_file:
+            return redirect('staff_debt_list')
+
+        try:
+            wb = openpyxl.load_workbook(excel_file, data_only=True)
+            sheet = wb.active
+            success_count = 0
+
+            for row in sheet.iter_rows(min_row=2, values_only=True):
+                # row[0] là STT, row[1] là Tên nhân viên, row[4] là Tên sản phẩm
+                # Nếu trống Tên NV hoặc Tên SP thì bỏ qua dòng đó
+                if not row[1] or not row[4]:
+                    continue
+
+                    # Tìm đồng phục trong kho (Tên ở cột E = row[4], Size ở cột F = row[5])
+                uniform_name = str(row[4]).strip()
+                uniform_size = str(row[5]).strip() if row[5] else ""
+                uniform = Uniform.objects.filter(name__icontains=uniform_name, size__icontains=uniform_size).first()
+
+                if uniform:
+                    # --- XỬ LÝ NGÀY XUẤT CẤP PHÁT (Cột I = row[8]) ---
+                    issue_date_val = row[8]
+                    if isinstance(issue_date_val, dt.datetime):
+                        issue_date = issue_date_val.date()
+                    elif isinstance(issue_date_val, str):
+                        try:
+                            issue_date = dt.datetime.strptime(issue_date_val.strip(), "%d/%m/%Y").date()
+                        except:
+                            issue_date = timezone.now().date()
+                    else:
+                        issue_date = timezone.now().date()
+
+                    # --- XỬ LÝ NGÀY NHẬP TRẢ KHO (Cột H = row[7]) ---
+                    return_date = None
+                    if row[7]:
+                        if isinstance(row[7], dt.datetime):
+                            return_date = row[7].date()
+                        elif isinstance(row[7], str):
+                            try:
+                                return_date = dt.datetime.strptime(str(row[7]).strip(), "%d/%m/%Y").date()
+                            except:
+                                pass
+
+                    # Lấy số lượng (Cột G = row[6])
+                    qty = int(row[6]) if row[6] else 1
+
+                    # Lưu vào Database
+                    StaffDebt.objects.create(
+                        employee_name=str(row[1]).strip(),
+                        position=str(row[2]).strip() if row[2] else "",
+                        gender=str(row[3]).strip() if row[3] else "Nữ",
+                        uniform=uniform,
+                        quantity=qty,
+                        issue_date=issue_date,
+                        return_date=return_date,
+                        branch=str(row[9]).strip() if row[9] else "Không rõ",
+                        note=str(row[10]).strip() if row[10] else "",
+                        is_resolved=True if return_date else False
+                    )
+
+                    # Trừ tồn kho nếu đồ này nhân viên chưa trả lại
+                    if not return_date:
+                        uniform.quantity -= qty
+                        uniform.save()
+
+                    success_count += 1
+
+            messages.success(request, f"Đã nhập thành công {success_count} nhân viên từ Excel.")
+        except Exception as e:
+            messages.error(request, f"Lỗi đọc file Excel: {str(e)}")
+
+    return redirect('staff_debt_list')
+
+
+# 4. SỬA DỮ LIỆU (VIEW)
+@login_required
+def edit_staff_debt(request, debt_id):
+    debt = get_object_or_404(StaffDebt, id=debt_id)
+    uniforms = Uniform.objects.all().order_by('name')  # Lấy danh sách áo để chọn lại
+
+    if request.method == 'POST':
+        # Cập nhật toàn bộ các trường
+        debt.employee_name = request.POST.get('employee_name')
+        debt.position = request.POST.get('position')
+        debt.gender = request.POST.get('gender')
+        debt.uniform_id = request.POST.get('uniform')
+        debt.quantity = int(request.POST.get('quantity', 1))
+        debt.issue_date = request.POST.get('issue_date')
+        debt.branch = request.POST.get('branch')
+        debt.note = request.POST.get('note')
+
+        debt.save()
+        messages.success(request, f"Đã cập nhật thông tin cho nhân viên {debt.employee_name}!")
+        return redirect('staff_debt_list')
+
+    return render(request, 'edit_staff_debt.html', {
+        'debt': debt,
+        'uniforms': uniforms
+    })

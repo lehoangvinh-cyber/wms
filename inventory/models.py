@@ -1,4 +1,7 @@
+
+
 from django.db import models
+from django.utils import timezone
 
 
 class Uniform(models.Model):
@@ -46,3 +49,23 @@ class Debt(models.Model):
 
     def __str__(self):
         return f"{self.student_name} - {self.uniform.name}"
+
+
+# THÊM VÀO CUỐI FILE models.py
+class StaffDebt(models.Model):
+    employee_name = models.CharField("Tên nhân viên", max_length=255)
+    position = models.CharField("Chức vụ", max_length=100)
+    gender = models.CharField("Giới tính", max_length=10, choices=[('Nam', 'Nam'), ('Nữ', 'Nữ')])
+    uniform = models.ForeignKey(Uniform, on_delete=models.CASCADE, verbose_name="Tên sản phẩm")
+    quantity = models.IntegerField("Số lượng", default=1)
+
+    issue_date = models.DateField("Ngày xuất", default=timezone.now)
+    return_date = models.DateField("Ngày nhập (Trả lại)", blank=True,
+                                   null=True)  # Khi nào trả đồ thì hệ thống điền vào đây
+
+    branch = models.CharField("Cơ sở", max_length=100)
+    note = models.CharField("Ghi chú", max_length=255, blank=True, null=True)
+    is_resolved = models.BooleanField("Đã trả kho", default=False)
+
+    def __str__(self):
+        return f"{self.employee_name} - {self.uniform.name}"
