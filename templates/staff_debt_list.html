@@ -122,7 +122,9 @@
                     <th>Ngày xuất</th>
                     <th>Cơ sở</th>
                     <th>Ghi chú</th>
-                    <th>Thao tác</th>
+                    <th class="text-center">Trạng thái</th>
+                    <th class="text-center">Thao tác</th>
+
                 </tr>
             </thead>
             <tbody>
@@ -141,15 +143,17 @@
                     <td>{{ d.issue_date|date:"d/m/Y" }}</td>
                     <td class="fw-bold text-secondary">{{ d.branch }}</td>
                     <td class="small">{{ d.note|default_if_none:"" }}</td>
-                    <td>
-                        {% if not d.is_resolved %}
-                            <a href="/thu-hoi-do-nhan-vien/{{ d.pk }}/" class="btn btn-sm btn-outline-danger py-0 px-2 rounded-pill shadow-sm" onclick="return confirm('Xác nhận nhân viên đã trả đồ và nhập lại vào kho?');">
-                                <i class="bi bi-box-arrow-in-down"></i> Thu hồi
-                            </a>
-                        {% else %}
-                            <span class="badge bg-success"><i class="bi bi-check-lg"></i> Đã trả</span>
-                        {% endif %}
-                    </td>
+                    <td class="text-center align-middle">
+    {% if not d.is_resolved %}
+        <a href="{% url 'resolve_staff_debt' d.pk %}" class="btn btn-sm btn-outline-danger rounded-pill px-3 py-1 shadow-sm fw-bold" onclick="return confirm('Xác nhận: Nhân viên đã nhận áo? Số lượng sẽ tự động trừ đi trong kho.');">
+            <i class="bi bi-arrow-repeat"></i> Đang giao
+        </a>
+    {% else %}
+        <span class="badge bg-success rounded-pill px-3 py-2 shadow-sm">
+            <i class="bi bi-check2-circle"></i> Đã nhận
+        </span>
+    {% endif %}
+</td>
                 <td>
     {% if not d.is_resolved %}
         <a href="{% url 'resolve_staff_debt' d.pk %}" class="btn btn-sm btn-success py-0 px-2 rounded-pill mb-1" onclick="return confirm('Thu hồi áo?');">Thu hồi</a>
