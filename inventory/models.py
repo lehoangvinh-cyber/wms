@@ -1,5 +1,4 @@
-
-
+from django.contrib.auth.models import User
 from django.db import models
 from django.utils import timezone
 
@@ -69,3 +68,14 @@ class StaffDebt(models.Model):
 
     def __str__(self):
         return f"{self.employee_name} - {self.uniform.name}"
+
+
+class ActionLog(models.Model):
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True, verbose_name="Người thao tác")
+    action = models.CharField("Hành động", max_length=100)
+    description = models.TextField("Chi tiết")
+    created_at = models.DateTimeField("Thời gian", auto_now_add=True)
+
+    def __str__(self):
+        username = self.user.username if self.user else "Hệ thống"
+        return f"{username} - {self.action} - {self.created_at.strftime('%d/%m/%Y %H:%M')}"

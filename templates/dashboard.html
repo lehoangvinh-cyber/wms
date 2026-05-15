@@ -87,9 +87,11 @@
 
         <!-- Cột trái: Sidebar Menu -->
         <div class="col-md-3">
+         {% if request.user.is_superuser %}
             <a href="{% url 'stock_in' %}" class="btn-sidebar btn-import">
                 <i class="bi bi-plus-circle"></i> NHẬP KHO (NCC)
             </a>
+        {% endif %}
             <a href="{% url 'stock_out' %}" class="btn-sidebar btn-export">
                 <i class="bi bi-box-arrow-up-right"></i> XUẤT KHO (CẤP PHÁT)
             </a>
@@ -104,9 +106,14 @@
     <i class="bi bi-person-badge-fill me-2 fs-5"></i> ĐỒNG PHỤC NHÂN VIÊN
 </a>
             <hr class="my-4 text-muted">
+            {% if request.user.is_superuser %}
+                <a href="{% url 'audit_log' %}" class="btn btn-secondary w-100 mb-2 fw-bold shadow-sm">
+        <i class="bi bi-shield-check me-1"></i> LỊCH SỬ THAO TÁC
+    </a>
             <a href="/admin/" target="_blank" class="btn-sidebar btn-admin">
                 <i class="bi bi-gear"></i> TRANG QUẢN TRỊ
             </a>
+            {% endif %}
 
         </div>
 
@@ -128,13 +135,19 @@
                 </div>
 
                 <div class="col-md-4">
-                    <div class="stat-card p-3 d-flex justify-content-between align-items-center">
-                        <div>
-                            <p class="text-muted small fw-bold mb-1">CẦN NHẬP THÊM (<10)</p>
-                            <h3 class="fw-bold text-danger mb-0">{{ low_stock_count|default:"0" }}</h3>
-                        </div>
-                        <div class="icon-bg bg-danger bg-opacity-10 text-danger">
-                            <i class="bi bi-exclamation-triangle"></i>
+                    <div class="card h-100 border-0 shadow-sm border-start border-danger border-4">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <h6 class="text-muted fw-bold mb-1">CẦN NHẬP THÊM (<10)</h6>
+                                <i class="bi bi-exclamation-triangle text-danger fs-4"></i>
+                            </div>
+                            <h3 class="mb-0 text-danger fw-bold">{{ low_stock_count }}</h3>
+
+                            {% if low_stock_count > 0 %}
+                            <button class="btn btn-sm btn-outline-danger mt-2" data-bs-toggle="modal" data-bs-target="#lowStockModal">
+                                Xem chi tiết
+                            </button>
+                            {% endif %}
                         </div>
                     </div>
                 </div>
@@ -151,7 +164,14 @@
                     </div>
                 </div>
             </div>
-
+            <div class="card border-0 shadow-sm mb-4">
+    <div class="card-body">
+        <h6 class="fw-bold text-primary mb-3"><i class="bi bi-bar-chart-fill me-2"></i>BIỂU ĐỒ TOP 7 ĐỒNG PHỤC TỒN KHO NHIỀU NHẤT</h6>
+        <div style="height: 300px;">
+            <canvas id="stockChart"></canvas>
+        </div>
+    </div>
+</div>
             <!-- Bảng Dữ Liệu -->
             <div class="table-container">
                 <!-- Thanh công cụ tìm kiếm -->
@@ -288,6 +308,87 @@
         });
     }
 </script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
+<script>
+    // Code vẽ biểu đồ
+    const ctx = document.getElementById('stockChart').getContext('2d');
+    const labels = JSON.parse('{{ chart_labels_json|safe }}');
+    const data = JSON.parse('{{ chart_data_json|safe }}');
+
+    new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: 'Số lượng tồn kho',
+                data: data,
+                backgroundColor: 'rgba(13, 110, 253, 0.6)', // Màu xanh Blue
+                borderColor: 'rgba(13, 110, 253, 1)',
+                borderWidth: 1,
+                borderRadius: 5
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: { y: { beginAtZero: true } }
+        }
+    });
+
+</script>
+
+<div class="modal fade" id="lowStockModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-danger text-white">
+                <h5 class="modal-title fw-bold"><i class="bi bi-exclamation-triangle-fill me-2"></i>Sản phẩm cần nhập thêm</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <ul class="list-group">
+                    {% for u in low_stock_uniforms %}
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            {{ u.name }} (Size: {{ u.size }})
+                            <span class="badge bg-danger rounded-pill">Tồn: {{ u.quantity }}</span>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+{% if messages %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        {% for message in messages %}
+            // Phân loại thông báo để hiện đúng màu (Lỗi = đỏ, Thành công = xanh)
+            let iconType = 'info';
+            {% if message.tags == 'error' %}
+                iconType = 'error';
+            {% elif message.tags == 'success' %}
+                iconType = 'success';
+            {% elif message.tags == 'warning' %}
+                iconType = 'warning';
+            {% endif %}
+
+            // Lệnh gọi Popup
+            Swal.fire({
+                icon: iconType,
+                title: iconType === 'error' ? 'Lỗi thao tác!' : 'Thành công!',
+                text: '{{ message }}',
+                confirmButtonText: 'Đã hiểu',
+                confirmButtonColor: '#0d6efd',
+                timer: 4000, // Tự động đóng sau 4 giây
+                timerProgressBar: true,
+                backdrop: `rgba(0,0,0,0.4)` // Làm tối hình nền đằng sau
+            });
+        {% endfor %}
+    });
+</script>
+{% endif %}
 </body>
 </html>

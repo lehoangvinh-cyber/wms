@@ -1,10 +1,9 @@
 import datetime
 
-from django.shortcuts import render, redirect
+
 from django.contrib.auth.decorators import login_required
 from .models import Uniform, Transaction
-
-
+from .models import Uniform, Debt, Transaction, StaffDebt, ActionLog
 @login_required
 def dashboard(request):
     """Hiển thị danh mục tồn kho thực tế"""
@@ -18,8 +17,21 @@ def stock_action(request, action_type):
     if request.method == 'POST':
         uniform_id = request.POST.get('uniform')
         amount = int(request.POST.get('amount', 1))
+        uniform_obj = Uniform.objects.get(id=uniform_id)
 
-        # 1. Ghi lại lịch sử giao dịch (Giữ nguyên)
+        # 1. KIỂM TRA ĐIỀU KIỆN TRƯỚC KHI LÀM BẤT CỨ ĐIỀU GÌ
+        # Chặn nhân viên nhập kho
+        if action_type == 'IN' and not request.user.is_superuser:
+            messages.error(request, "Lỗi bảo mật: Bạn không có quyền truy cập tính năng Nhập Kho!")
+            return redirect('dashboard')
+
+        # Kiểm tra tồn kho trước khi xuất (Chống chốt đơn ảo)
+        if action_type == 'OUT' and uniform_obj.quantity < amount:
+            messages.error(request,
+                           f"Lỗi: Không thể xuất kho! '{uniform_obj.name}' chỉ còn {uniform_obj.quantity} cái, không đủ để xuất {amount} cái.")
+            return redirect('dashboard')
+
+        # 2. NẾU ĐỦ ĐIỀU KIỆN THÌ MỚI LƯU LỊCH SỬ
         Transaction.objects.create(
             ticket_id=request.POST.get('ticket_id'),
             actor_name=request.POST.get('actor_name'),
@@ -28,15 +40,22 @@ def stock_action(request, action_type):
             type=action_type
         )
 
-        # 2. FIX LỖI Ở ĐÂY: Cập nhật trực tiếp số lượng tồn kho
-        uniform_obj = Uniform.objects.get(id=uniform_id)
+        # 3. CẬP NHẬT TRỰC TIẾP SỐ LƯỢNG VÀO DATABASE
         if action_type == 'IN':
-            uniform_obj.quantity += amount  # Nhập thì cộng thêm
+            uniform_obj.quantity += amount
         elif action_type == 'OUT':
-            uniform_obj.quantity -= amount  # Xuất thì trừ đi
-        uniform_obj.save()  # Lưu vào database
+            uniform_obj.quantity -= amount
+        uniform_obj.save()
+        # ---- GHI NHẬT KÝ NHẬP/XUẤT KHO ----
+        action_name = "NHẬP KHO" if action_type == 'IN' else "XUẤT KHO"
+        action_desc = f"Đã {'nhập thêm' if action_type == 'IN' else 'xuất đi'} {amount} cái '{uniform_obj.name}'."
 
-        # 3. Kích hoạt thông báo trả nợ tự động (Giữ nguyên)
+        ActionLog.objects.create(
+            user=request.user,
+            action=action_name,
+            description=action_desc
+        )
+        # 4. KÍCH HOẠT NHẮC TRẢ NỢ TỰ ĐỘNG
         if action_type == 'IN':
             pending_debts = Debt.objects.filter(uniform=uniform_obj, is_resolved=False)
             if pending_debts.exists():
@@ -101,23 +120,58 @@ def register(request):
         form = UserCreationForm()
     return render(request, 'register.html', {'form': form})
 
+
+import json  # Nhớ thêm cái này ở đầu file để xử lý dữ liệu biểu đồ
+
+
 @login_required
 def dashboard(request):
     uniforms = Uniform.objects.all().order_by('name')
-    auto_debt_info = request.session.pop('auto_debt_trigger', None)
-    return render(request, 'dashboard.html', {'uniforms': uniforms})
+
+    # 1. LOGIC CẢNH BÁO TỒN KHO THẤP (<10)
+    low_stock_uniforms = Uniform.objects.filter(quantity__lt=10)
+    low_stock_count = low_stock_uniforms.count()
+
+    # 2. LOGIC VẼ BIỂU ĐỒ (Lấy Top 7 đồng phục có số lượng tồn nhiều nhất)
+    top_stock = Uniform.objects.all().order_by('-quantity')[:7]
+    chart_labels = [f"{u.name} ({u.size})" for u in top_stock]
+    chart_data = [u.quantity for u in top_stock]
+
+    context = {
+        'uniforms': uniforms,
+        'low_stock_uniforms': low_stock_uniforms,
+        'low_stock_count': low_stock_count,
+        # Chuyển đổi dữ liệu sang dạng chuỗi an toàn để Javascript đọc được
+        'chart_labels_json': json.dumps(chart_labels),
+        'chart_data_json': json.dumps(chart_data),
+    }
+
+    return render(request, 'dashboard.html', context)
 
 
 # ... giữ nguyên các hàm stock_action và summary_nxt ...
 @login_required
 def stock_form(request):
-    """Trang nhập dữ liệu đồng bộ theo mẫu image_ef8bf4.png"""
+    """Trang nhập dữ liệu đồng bộ có đầy đủ khóa bảo vệ"""
     if request.method == 'POST':
         action_type = request.POST.get('type')
         uniform_id = request.POST.get('uniform')
         amount = int(request.POST.get('amount', 1))
+        uniform_obj = Uniform.objects.get(id=uniform_id)
 
-        # 1. Ghi lại lịch sử giao dịch (Giữ nguyên của bạn)
+        # 1. KIỂM TRA ĐIỀU KIỆN (BẢO VỆ KHO)
+        # Chặn nhân viên thường nhập kho
+        if action_type == 'IN' and not request.user.is_superuser:
+            messages.error(request, "Lỗi bảo mật: Bạn không có quyền truy cập tính năng Nhập Kho!")
+            return redirect('dashboard')
+
+        # Chống chốt đơn ảo (Tránh kho bị âm)
+        if action_type == 'OUT' and uniform_obj.quantity < amount:
+            messages.error(request,
+                           f"Lỗi: Không thể xuất kho! '{uniform_obj.name}' chỉ còn {uniform_obj.quantity} cái, không đủ để xuất {amount} cái.")
+            return redirect('dashboard')
+
+        # 2. NẾU AN TOÀN -> GHI LỊCH SỬ GIAO DỊCH
         Transaction.objects.create(
             ticket_id=request.POST.get('ticket_id'),
             date=request.POST.get('date'),
@@ -128,15 +182,22 @@ def stock_form(request):
             branch=request.POST.get('branch', 'Kho Tổng')
         )
 
-        # 2. FIX LỖI Ở ĐÂY: Cập nhật trực tiếp số lượng tồn kho
-        uniform_obj = Uniform.objects.get(id=uniform_id)
+        # 3. CỘNG TRỪ SỐ LƯỢNG THỰC TẾ TRONG DATABASE
         if action_type == 'IN':
-            uniform_obj.quantity += amount  # Nhập thì cộng thêm
+            uniform_obj.quantity += amount
         elif action_type == 'OUT':
-            uniform_obj.quantity -= amount  # Xuất thì trừ đi
-        uniform_obj.save()  # Lưu số mới vào database
+            uniform_obj.quantity -= amount
+        uniform_obj.save()
+        # ---- GHI NHẬT KÝ NHẬP/XUẤT KHO ----
+        action_name = "NHẬP KHO" if action_type == 'IN' else "XUẤT KHO"
+        action_desc = f"Đã {'nhập thêm' if action_type == 'IN' else 'xuất đi'} {amount} cái '{uniform_obj.name}'."
 
-        # 3. Kích hoạt thông báo trả nợ tự động (nếu kho vừa được nhập thêm áo)
+        ActionLog.objects.create(
+            user=request.user,
+            action=action_name,
+            description=action_desc
+        )
+        # 4. KÍCH HOẠT NHẮC TRẢ NỢ (Chỉ áp dụng khi Nhập)
         if action_type == 'IN':
             pending_debts = Debt.objects.filter(uniform=uniform_obj, is_resolved=False)
             if pending_debts.exists():
@@ -427,7 +488,12 @@ def resolve_staff_debt(request, debt_id):
         # Cộng lại tồn kho
         debt.uniform.quantity += debt.quantity
         debt.uniform.save()
-
+        # ---- GHI NHẬT KÝ THU HỒI ----
+        ActionLog.objects.create(
+            user=request.user,
+            action="THU HỒI ÁO",
+            description=f"Đã thu hồi áo '{debt.uniform.name}' từ nhân viên '{debt.employee_name}'."
+        )
         # Cập nhật trạng thái và Ngày nhập
         debt.is_resolved = True
         debt.return_date = timezone.now().date()  # Ghi nhận ngày trả
@@ -441,11 +507,24 @@ def resolve_staff_debt(request, debt_id):
 @login_required
 def delete_staff_debt(request, debt_id):
     debt = get_object_or_404(StaffDebt, id=debt_id)
-    # Nếu xóa dòng chưa trả, hãy cộng lại tồn kho trước khi xóa
     if not debt.is_resolved:
         debt.uniform.quantity += debt.quantity
         debt.uniform.save()
+
+    # LƯU LẠI THÔNG TIN TRƯỚC KHI XÓA
+    employee_name = debt.employee_name
+    uniform_name = debt.uniform.name
+
     debt.delete()
+
+    # ---- GHI NHẬT KÝ VÀO ĐÂY ----
+    ActionLog.objects.create(
+        user=request.user,
+        action="XÓA DỮ LIỆU",
+        description=f"Đã xóa bản ghi cấp phát áo '{uniform_name}' của nhân viên '{employee_name}'."
+    )
+    # -----------------------------
+
     messages.warning(request, "Đã xóa bản ghi cấp phát thành công!")
     return redirect('staff_debt_list')
 
@@ -577,6 +656,12 @@ def edit_staff_debt(request, debt_id):
         debt.note = request.POST.get('note')
 
         debt.save()
+        # ---- GHI NHẬT KÝ SỬA DỮ LIỆU ----
+        ActionLog.objects.create(
+            user=request.user,
+            action="SỬA DỮ LIỆU",
+            description=f"Đã cập nhật thông tin cấp phát áo '{debt.uniform.name}' của nhân viên '{debt.employee_name}'."
+        )
         messages.success(request, f"Đã cập nhật thông tin cho nhân viên {debt.employee_name}!")
         return redirect('staff_debt_list')
 
@@ -584,3 +669,25 @@ def edit_staff_debt(request, debt_id):
         'debt': debt,
         'uniforms': uniforms
     })
+
+
+from django.core.paginator import Paginator
+from .models import ActionLog  # Hãy đảm bảo dòng này có ở gần đầu file cùng với Uniform, Debt...
+
+
+@login_required
+def audit_log(request):
+    # Khóa bảo vệ: Chỉ Superuser mới được xem camera an ninh
+    if not request.user.is_superuser:
+        messages.error(request, "Lỗi bảo mật: Bạn không có quyền xem Nhật ký hệ thống!")
+        return redirect('dashboard')
+
+    logs_list = ActionLog.objects.all().order_by('-created_at')
+
+    # Phân trang (30 dòng 1 trang cho gọn)
+    paginator = Paginator(logs_list, 30)
+    page_obj = paginator.get_page(request.GET.get('page'))
+
+    return render(request, 'audit_log.html', {'page_obj': page_obj})
+
+
