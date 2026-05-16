@@ -54,6 +54,15 @@
         background-color: #c2410c; /* Đậm hơn một chút khi di chuột vào */
         color: white;
     }
+    body {
+    background-color: #f4f7f9;
+    font-family: 'Segoe UI', sans-serif;
+    display: flex;             /* Thêm dòng này */
+    flex-direction: column;    /* Thêm dòng này */
+    min-height: 100vh;         /* Thêm dòng này */
+}
+/* Ép nội dung chính đẩy footer xuống đáy */
+.container-fluid { flex: 1; }
     </style>
 </head>
 <body>
@@ -390,5 +399,17 @@
     });
 </script>
 {% endif %}
+<footer class="mt-5 py-3 bg-white border-top shadow-sm">
+        <div class="container-fluid px-5 d-flex flex-column flex-md-row justify-content-between align-items-center">
+            <span class="text-muted small fw-medium mb-2 mb-md-0">
+                &copy; {% now "Y" %} Hệ Thống Quản Lý Kho Đồng Phục (WMS). All rights reserved.
+            </span>
+            <span class="text-muted small">
+                Được phát triển bởi <span class="fw-bold text-primary">Vinh</span> <i class="bi bi-code-slash ms-1 text-dark"></i>
+            </span>
+        </div>
+    </footer>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </body>
 </html>

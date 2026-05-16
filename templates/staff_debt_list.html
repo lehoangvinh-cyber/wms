@@ -7,7 +7,8 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <style>
-        body { background-color: #f4f7f9; font-family: 'Segoe UI', sans-serif; }
+        body { background-color: #f4f7f9; font-family: 'Segoe UI', sans-serif; display: flex; flex-direction: column; min-height: 100vh; }
+        .container-fluid { flex: 1; }
         .table-custom thead { background-color: #e9ecef; border-bottom: 2px solid #dee2e6; }
         .table-custom th { font-weight: bold; color: #333; text-align: center; vertical-align: middle; padding: 12px; }
         .table-custom td { vertical-align: middle; padding: 10px; border: 1px solid #eee; text-align: center; }
@@ -31,16 +32,17 @@
         <h3 class="fw-bold text-uppercase"><i class="bi bi-person-badge me-2"></i>Cấp phát Đồng Phục Nhân Viên</h3>
 
         <div class="d-flex gap-2">
-    <button class="btn btn-outline-success rounded-pill px-3 shadow-sm" data-bs-toggle="modal" data-bs-target="#importModal">
-        <i class="bi bi-file-earmark-excel me-1"></i> Nhập Excel
-    </button>
-    <a href="{% url 'export_staff_debt_excel' %}" class="btn btn-outline-primary rounded-pill px-3 shadow-sm">
-        <i class="bi bi-download me-1"></i> Xuất Báo Cáo
-    </a>
-   <div>
+            <button type="button" onclick="printSelected()" class="btn btn-outline-info rounded-pill px-3 shadow-sm">
+                <i class="bi bi-printer me-1"></i> In phiếu đã chọn
+            </button>
+            <button class="btn btn-outline-success rounded-pill px-3 shadow-sm" data-bs-toggle="modal" data-bs-target="#importModal">
+                <i class="bi bi-file-earmark-excel me-1"></i> Nhập Excel
+            </button>
+            <a href="{% url 'export_staff_debt_excel' %}" class="btn btn-outline-primary rounded-pill px-3 shadow-sm">
+                <i class="bi bi-download me-1"></i> Xuất Báo Cáo
+            </a>
             <a href="{% url 'dashboard' %}" class="btn btn-dark px-4 rounded-pill shadow-sm">Quay lại Dashboard</a>
         </div>
-</div>
     </div>
 
     <div class="row g-3 mb-4">
@@ -111,6 +113,9 @@
         <table class="table table-custom table-hover mb-0">
             <thead>
                 <tr>
+                    <th style="width: 40px;">
+                        <input class="form-check-input border-secondary shadow-sm" type="checkbox" id="selectAll">
+                    </th>
                     <th style="width: 50px;">STT</th>
                     <th class="text-start">Tên nhân viên</th>
                     <th>Chức vụ</th>
@@ -124,12 +129,14 @@
                     <th>Ghi chú</th>
                     <th class="text-center">Trạng thái</th>
                     <th class="text-center">Thao tác</th>
-
                 </tr>
             </thead>
             <tbody>
                 {% for d in page_obj %}
                 <tr>
+                    <td>
+                        <input class="form-check-input row-checkbox border-secondary" type="checkbox" value="{{ d.id }}">
+                    </td>
                     <td class="fw-bold text-muted">{{ forloop.counter }}</td>
                     <td class="text-start fw-bold">{{ d.employee_name }}</td>
                     <td>{{ d.position }}</td>
@@ -143,43 +150,35 @@
                     <td>{{ d.issue_date|date:"d/m/Y" }}</td>
                     <td class="fw-bold text-secondary">{{ d.branch }}</td>
                     <td class="small">{{ d.note|default_if_none:"" }}</td>
+
                     <td class="text-center align-middle">
-    {% if not d.is_resolved %}
-        <a href="{% url 'resolve_staff_debt' d.pk %}" class="btn btn-sm btn-outline-danger rounded-pill px-3 py-1 shadow-sm fw-bold" onclick="return confirm('Xác nhận: Nhân viên đã nhận áo? Số lượng sẽ tự động trừ đi trong kho.');">
-            <i class="bi bi-arrow-repeat"></i> Đang giao
-        </a>
-    {% else %}
-        <span class="badge bg-success rounded-pill px-3 py-2 shadow-sm">
-            <i class="bi bi-check2-circle"></i> Đã nhận
-        </span>
-    {% endif %}
-</td>
-                <td>
-    {% if not d.is_resolved %}
-        <a href="{% url 'resolve_staff_debt' d.pk %}" class="btn btn-sm btn-success py-0 px-2 rounded-pill mb-1" onclick="return confirm('Thu hồi áo?');">Thu hồi</a>
-    {% endif %}
-    <a href="{% url 'edit_staff_debt' d.id %}" class="btn btn-sm btn-outline-primary py-0 px-2 rounded-pill mb-1"><i class="bi bi-pencil"></i></a>
-    <a href="{% url 'delete_staff_debt' d.id %}" class="btn btn-sm btn-outline-danger py-0 px-2 rounded-pill mb-1" onclick="return confirm('Xóa vĩnh viễn dòng này?');"><i class="bi bi-trash"></i></a>
-</td>
-                </tr>
-                {% empty %}
-                <tr><td colspan="12" class="text-center py-5 text-muted">Không có dữ liệu.</td></tr>
+                        {% if not d.is_resolved %}
+                            <a href="{% url 'resolve_staff_debt' d.pk %}" class="btn btn-sm btn-outline-danger rounded-pill px-3 py-1 shadow-sm fw-bold" onclick="return confirm('Xác nhận: Nhân viên đã nhận áo? Số lượng sẽ tự động trừ đi trong kho.');">
+                                <i class="bi bi-arrow-repeat"></i> Đang giao
+                            </a>
+                        {% else %}
+                            <span class="badge bg-success rounded-pill px-3 py-2 shadow-sm">
+                                <i class="bi bi-check2-circle"></i> Đã nhận
+                            </span>
+                        {% endif %}
+                    </td>
+
+                    <td class="text-center align-middle text-nowrap">
+                        <a href="{% url 'edit_staff_debt' d.id %}" class="btn btn-sm btn-outline-primary py-0 px-2 rounded-pill mb-1"><i class="bi bi-pencil"></i></a>
+                        <a href="{% url 'delete_staff_debt' d.id %}" class="btn btn-sm btn-outline-dark py-0 px-2 rounded-pill mb-1" onclick="return confirm('Xóa vĩnh viễn dòng này?');"><i class="bi bi-trash"></i></a>
+                    </td>
+                </tr> {% empty %}
+                <tr><td colspan="14" class="text-center py-5 text-muted">Không có dữ liệu.</td></tr>
                 {% endfor %}
             </tbody>
         </table>
-    </div>
-</table>
     </div>
 
     {% if page_obj.has_other_pages %}
     <nav aria-label="Page navigation" class="mt-4 mb-2">
         <ul class="pagination justify-content-center shadow-sm">
             {% if page_obj.has_previous %}
-                <li class="page-item">
-                    <a class="page-link text-primary fw-bold" href="?page={{ page_obj.previous_page_number }}&search={{ search_query }}&branch={{ branch_filter }}&position={{ position_filter }}">
-                        <i class="bi bi-chevron-left"></i> Trước
-                    </a>
-                </li>
+                <li class="page-item"><a class="page-link text-primary fw-bold" href="?page={{ page_obj.previous_page_number }}"><i class="bi bi-chevron-left"></i> Trước</a></li>
             {% else %}
                 <li class="page-item disabled"><span class="page-link"><i class="bi bi-chevron-left"></i> Trước</span></li>
             {% endif %}
@@ -188,27 +187,28 @@
                 {% if page_obj.number == num %}
                     <li class="page-item active"><span class="page-link fw-bold border-primary">{{ num }}</span></li>
                 {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
-                    <li class="page-item">
-                        <a class="page-link text-dark" href="?page={{ num }}&search={{ search_query }}&branch={{ branch_filter }}&position={{ position_filter }}">{{ num }}</a>
-                    </li>
+                    <li class="page-item"><a class="page-link text-dark" href="?page={{ num }}">{{ num }}</a></li>
                 {% endif %}
             {% endfor %}
 
             {% if page_obj.has_next %}
-                <li class="page-item">
-                    <a class="page-link text-primary fw-bold" href="?page={{ page_obj.next_page_number }}&search={{ search_query }}&branch={{ branch_filter }}&position={{ position_filter }}">
-                        Sau <i class="bi bi-chevron-right"></i>
-                    </a>
-                </li>
+                <li class="page-item"><a class="page-link text-primary fw-bold" href="?page={{ page_obj.next_page_number }}">Sau <i class="bi bi-chevron-right"></i></a></li>
             {% else %}
                 <li class="page-item disabled"><span class="page-link">Sau <i class="bi bi-chevron-right"></i></span></li>
             {% endif %}
         </ul>
     </nav>
     {% endif %}
-    </div> ```
 
 </div>
+
+<footer class="mt-5 py-3 bg-white border-top shadow-sm mt-auto">
+    <div class="container-fluid px-5 d-flex justify-content-between align-items-center">
+        <span class="text-muted small fw-medium">&copy; {% now "Y" %} Hệ Thống Quản Lý Kho Đồng Phục (WMS). All rights reserved.</span>
+        <span class="text-muted small">Được phát triển bởi <span class="fw-bold text-primary">Vinh</span> <i class="bi bi-code-slash ms-1 text-dark"></i></span>
+    </div>
+</footer>
+
 <div class="modal fade" id="importModal" tabindex="-1">
     <div class="modal-dialog">
         <form action="{% url 'import_staff_debt_excel' %}" method="POST" enctype="multipart/form-data" class="modal-content">
@@ -222,6 +222,7 @@
         </form>
     </div>
 </div>
+
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
@@ -229,6 +230,30 @@
     $(document).ready(function() {
         $('#searchableSelect').select2({ placeholder: "Gõ để tìm kiếm đồng phục...", allowClear: true, width: '100%' });
     });
+
+    // 1. Tính năng tick "Chọn tất cả"
+    $('#selectAll').click(function() {
+        $('.row-checkbox').prop('checked', this.checked);
+    });
+
+    // 2. Tính năng gom ID để in
+    // 2. Tính năng gom ID để in
+    function printSelected() {
+        var selectedIds = [];
+        $('.row-checkbox:checked').each(function() {
+            selectedIds.push($(this).val());
+        });
+
+        if (selectedIds.length === 0) {
+            alert('Vui lòng tick chọn ít nhất 1 nhân viên để in phiếu!');
+            return;
+        }
+
+        // CHỈ SỬA ĐÚNG DÒNG NÀY: Gọi hàm print_receipt mà không cần d.id
+        var url = "{% url 'print_receipt' %}?ids=" + selectedIds.join(',');
+
+        window.open(url, '_blank');
+    }
 </script>
 
 </body>

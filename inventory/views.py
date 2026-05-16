@@ -685,3 +685,68 @@ def audit_log(request):
     return render(request, 'audit_log.html', {'page_obj': page_obj})
 
 
+@login_required
+def print_receipt(request):
+    ids_str = request.GET.get('ids', '')
+
+    # 1. Khai báo các biến lưu trữ
+    grouped_debts = {}  # Dùng Dictionary để gom nhóm
+    total_xanh = 0
+    total_trang = 0
+    branch = ""
+
+    if ids_str:
+        id_list = [int(i) for i in ids_str.split(',') if i.isdigit()]
+        debts = StaffDebt.objects.filter(id__in=id_list).order_by('employee_name')
+
+        if debts.exists():
+            branch = debts.first().branch
+
+        # 2. THUẬT TOÁN GOM NHÓM
+        for d in debts:
+            # Tạo "chìa khóa" gom nhóm: Cùng Tên + Cùng Chức vụ + Cùng Cơ sở
+            key = (d.employee_name, d.position, d.branch)
+
+            # Nếu người này chưa có trong danh sách gom nhóm thì tạo mới
+            if key not in grouped_debts:
+                grouped_debts[key] = {
+                    'name': d.employee_name,
+                    'position': d.position,
+                    'sl_xanh': 0,
+                    'sl_trang': 0,
+                    'sizes': set(),  # Dùng set để lọc trùng (vd: XL, XL -> chỉ hiện XL)
+                    'notes': set()
+                }
+
+            # Cộng số lượng vào đúng cột
+            name_lower = d.uniform.name.lower()
+            if 'xanh' in name_lower:
+                grouped_debts[key]['sl_xanh'] += d.quantity
+                total_xanh += d.quantity
+            elif 'trắng' in name_lower or 'raplan' in name_lower:
+                grouped_debts[key]['sl_trang'] += d.quantity
+                total_trang += d.quantity
+
+            # Đưa size và ghi chú vào danh sách
+            if d.uniform.size:
+                grouped_debts[key]['sizes'].add(d.uniform.size)
+            if d.note:
+                grouped_debts[key]['notes'].add(d.note)
+
+    # Biến đổi dữ liệu mảng thành danh sách để đưa ra HTML dễ hơn
+    final_list = []
+    for data in grouped_debts.values():
+        # Nối các size lại bằng dấu phẩy (vd: XL, XXL)
+        data['sizes_str'] = ", ".join(data['sizes'])
+        data['notes_str'] = ", ".join(data['notes'])
+        final_list.append(data)
+
+    context = {
+        'grouped_debts': final_list,  # Truyền danh sách đã gom nhóm ra ngoài
+        'branch': branch,
+        'total_xanh': total_xanh,
+        'total_trang': total_trang,
+    }
+    return render(request, 'print_receipt.html', context)
+
+

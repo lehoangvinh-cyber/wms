@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Phiếu Xuất Kho Đồng Phục - WMS</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f0f0f0;
+            color: #000;
+            font-size: 13px; /* Giảm font chữ 1 chút để vừa 1 trang */
+        }
+
+        .a4-landscape-container {
+            width: 297mm;
+            height: 209mm; /* Ép cứng chiều cao giấy A4 ngang */
+            background: white;
+            margin: 10px auto;
+            padding: 15px 25px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+            box-sizing: border-box;
+            position: relative; /* Dùng để ghim các khối bên trong */
+            overflow: hidden; /* Cắt phần thừa (nếu có) để không nhảy trang */
+        }
+
+        .table-excel { border-collapse: collapse; width: 100%; margin-bottom: 10px; }
+        .table-excel th, .table-excel td {
+            border: 1px solid #000 !important;
+            padding: 6px; /* Giảm padding bảng */
+            vertical-align: middle;
+            text-align: center;
+        }
+        .table-excel th { background-color: #fff; font-weight: bold; }
+        .text-danger-excel { color: red !important; font-weight: bold; }
+
+        /* Vùng chữ ký */
+        .signature-area { margin-top: 15px; }
+        .signature-space { height: 50px; /* Thu hẹp bớt khoảng trống chữ ký */ }
+
+        /* Box Lưu ý được ghim chết ở góc dưới cùng bên trái */
+        .note-box {
+            border: 1px solid #000;
+            padding: 6px;
+            width: 50%;
+            font-size: 12px;
+            position: absolute;
+            bottom: 25px; /* Ghim cách đáy 25px */
+            left: 25px;   /* Ghim cách lề trái 25px */
+        }
+
+        /* Nút in được ghim dưới cùng bên phải, sẽ ẩn khi in */
+        .btn-print-box {
+            position: absolute;
+            bottom: 25px;
+            right: 25px;
+        }
+
+        /* Cấu hình khi in ra máy */
+        @media print {
+            @page {
+                size: A4 landscape;
+                margin: 5mm; /* Ép lề máy in siêu mỏng */
+            }
+            body { background-color: white; margin: 0; padding: 0; }
+            .a4-landscape-container {
+                width: 100%;
+                height: 100vh; /* Chiếm trọn 1 màn hình in */
+                margin: 0;
+                padding: 10mm;
+                box-shadow: none;
+                border: none;
+            }
+            .no-print { display: none !important; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="a4-landscape-container">
+
+    <div class="fw-bold mb-2" style="font-size: 15px;">
+        Công Ty Cổ Phần Vision Education
+    </div>
+
+    <div class="text-center mb-3">
+        <h3 class="fw-bold mb-0">PHIẾU XUẤT KHO ĐỒNG PHỤC NHÂN VIÊN</h3>
+    </div>
+
+    <div class="d-flex justify-content-between align-items-end fw-bold mb-2" style="font-size: 13px;">
+        <div>
+            <span class="text-uppercase">CƠ SỞ :</span>
+            <span class="ms-2 fw-normal">{{ branch|default:"......................................................" }}</span>
+        </div>
+        <div>Ngày xuất: {% now "d/m/Y" %}</div>
+    </div>
+
+    <table class="table-excel">
+        <thead>
+            <tr>
+                <th rowspan="2" style="width: 5%;">STT</th>
+                <th rowspan="2" style="width: 20%;">Họ tên người nhận</th>
+                <th rowspan="2" style="width: 15%;">Chức vụ</th>
+                <th colspan="1">Áo thun xanh</th>
+                <th colspan="1">Áo thun trắng</th>
+                <th rowspan="2" style="width: 10%;">Size</th>
+                <th rowspan="2" style="width: 15%;">Ký nhận</th>
+                <th rowspan="2" style="width: 15%;">Ghi chú</th>
+            </tr>
+            <tr>
+                <th style="width: 10%;">SL</th>
+                <th style="width: 10%;">SL</th>
+            </tr>
+        </thead>
+       <tbody>
+            {% for row in grouped_debts %}
+            <tr style="height: 35px;">
+                <td>{{ forloop.counter }}</td>
+                <td class="text-start fw-bold" style="padding-left: 10px;">{{ row.name }}</td>
+                <td>{{ row.position }}</td>
+
+                <td class="fw-bold">
+                    {% if row.sl_xanh > 0 %}{{ row.sl_xanh }}{% endif %}
+                </td>
+
+                <td class="fw-bold">
+                    {% if row.sl_trang > 0 %}{{ row.sl_trang }}{% endif %}
+                </td>
+
+                <td>{{ row.sizes_str }}</td>
+                <td></td>
+                <td class="small">{{ row.notes_str }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="8" class="text-center py-4 fst-italic">Chưa có dữ liệu nào được chọn để in.</td>
+            </tr>
+            {% endfor %}
+            <tr>
+                <td colspan="3" class="text-center text-danger-excel">Tổng</td>
+                <td class="text-danger-excel" style="font-size: 15px;">{{ total_xanh }}</td>
+                <td class="text-danger-excel" style="font-size: 15px;">{{ total_trang }}</td>
+                <td colspan="3"></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="row text-center signature-area" style="font-size: 13px;">
+        <div class="col-3">
+            <p class="fw-bold mb-1">Ban Giám hiệu</p>
+            <p class="fst-italic">( Ký, ghi rõ họ tên )</p>
+            <div class="signature-space"></div>
+        </div>
+        <div class="col-3">
+            <p class="fw-bold mb-1">Thủ kho</p>
+            <p class="fst-italic">( Ký, ghi rõ họ tên )</p>
+            <div class="signature-space"></div>
+            <p class="fw-bold mb-0">Lê Hoàng Vinh</p>
+        </div>
+        <div class="col-3">
+            <p class="fw-bold mb-1">Phòng nhân sự xác nhận</p>
+            <p class="fst-italic">( Ký, ghi rõ họ tên )</p>
+            <div class="signature-space"></div>
+        </div>
+        <div class="col-3">
+            <p class="fw-bold mb-1">Phòng kế toán xác nhận</p>
+            <p class="fst-italic">( Ký, ghi rõ họ tên )</p>
+            <div class="signature-space"></div>
+        </div>
+    </div>
+
+    <div class="note-box">
+        Lưu ý: Trường hợp nhân viên chưa làm việc đủ 01 năm kể từ ngày nhận đồng phục, chi phí đồng phục (90.000 đồng/áo) sẽ được khấu trừ theo quy định của công ty.
+    </div>
+
+    <div class="btn-print-box no-print">
+        <button onclick="window.print()" class="btn btn-primary px-4 me-2 shadow-sm">
+            <i class="bi bi-printer"></i> In Phiếu
+        </button>
+        <button onclick="window.close()" class="btn btn-secondary px-4 shadow-sm">Đóng</button>
+    </div>
+
+</div>
+
+<script>
+    // Tự động gọi lệnh in khi mở web
+    window.onload = function() {
+        setTimeout(function() { window.print(); }, 500);
+    }
+</script>
+
+</body>
+</html>

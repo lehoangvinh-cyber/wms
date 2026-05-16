@@ -26,4 +26,6 @@ urlpatterns = [
     path('xuat-excel-nhan-vien/', views.export_staff_debt_excel, name='export_staff_debt_excel'),
     path('nhap-excel-nhan-vien/', views.import_staff_debt_excel, name='import_staff_debt_excel'),
     path('nhat-ky-he-thong/', views.audit_log, name='audit_log'),
+    # Đảm bảo không có <int:debt_id> ở trong ngoặc đơn
+    path('in-phieu-ban-giao/', views.print_receipt, name='print_receipt'),
 ]
