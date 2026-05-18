@@ -577,35 +577,41 @@ from django.utils import timezone
 def import_staff_debt_excel(request):
     if request.method == 'POST' and request.FILES.get('excel_file'):
         excel_file = request.FILES['excel_file']
+
+        # Mở file Excel
         wb = openpyxl.load_workbook(excel_file)
         sheet = wb.active
 
         success_count = 0
-        for row in sheet.iter_rows(min_row=2, values_only=True):
-            # Giả sử cấu thứ tự cột của bạn: Tên, Chức vụ, Giới tính, Tên áo, Size, SL...
+        error_list = []  # Danh sách gom các lỗi để báo cáo
+
+        # Bắt đầu đọc từ dòng số 2 (bỏ qua tiêu đề)
+        for row_idx, row in enumerate(sheet.iter_rows(min_row=2, values_only=True), start=2):
             emp_name, pos, gen, uni_name, size, qty = row[0], row[1], row[2], row[3], row[4], row[5]
 
+            # Bỏ qua dòng trống hoàn toàn
             if not emp_name or not uni_name:
                 continue
 
             try:
+                # Ép kiểu số lượng về số nguyên để tránh lỗi
+                qty = int(qty) if qty else 1
+
+                # Tìm đúng tên áo và size trong Database
                 uniform_obj = Uniform.objects.get(name=uni_name, size=size)
 
-                # BỔ SUNG LOGIC TÌM KIẾM TRÙNG LẶP Ở ĐÂY
-                # Kiểm tra xem nhân viên này đã có phiếu chờ giao của loại áo này chưa?
+                # Logic kiểm tra trùng lặp
                 existing_debt = StaffDebt.objects.filter(
                     employee_name=emp_name,
                     uniform=uniform_obj,
-                    is_resolved=False  # Chỉ xét các đơn đang ở trạng thái 'Đang giao'
+                    is_resolved=False
                 ).first()
 
                 if existing_debt:
-                    # NẾU ĐÃ CÓ: Cộng dồn số lượng và cập nhật chức vụ mới nhất
-                    existing_debt.quantity += int(qty)
+                    existing_debt.quantity += qty
                     existing_debt.position = pos
                     existing_debt.save()
                 else:
-                    # NẾU CHƯA CÓ: Tạo dòng mới tinh
                     StaffDebt.objects.create(
                         employee_name=emp_name,
                         position=pos,
@@ -615,19 +621,28 @@ def import_staff_debt_excel(request):
                         is_resolved=False,
                         issue_date=datetime.date.today()
                     )
-
                 success_count += 1
-            except Uniform.DoesNotExist:
-                continue
 
+            except Uniform.DoesNotExist:
+                # Nếu không tìm thấy áo, lưu lại dòng bị lỗi vào danh sách
+                error_list.append(f"Dòng {row_idx}: Không tìm thấy '{uni_name}' - Size '{size}' trong kho.")
+            except Exception as e:
+                error_list.append(f"Dòng {row_idx}: Lỗi định dạng dữ liệu ({str(e)}).")
+
+        # THÔNG BÁO KẾT QUẢ RA MÀN HÌNH
         if success_count > 0:
             ActionLog.objects.create(
                 user=request.user,
                 action="IMPORT EXCEL",
-                description=f"Đã import {success_count} phiếu cấp phát mới ở trạng thái chờ giao."
+                description=f"Đã lưu {success_count} dòng cấp phát mới."
             )
-            messages.success(request,
-                             f"Đã nhập {success_count} dòng dữ liệu thành công. Kho chưa bị trừ cho đến khi bạn xác nhận giao đồ.")
+            messages.success(request, f"Đã lưu thành công {success_count} dòng dữ liệu vào hệ thống!")
+
+        if error_list:
+            # In ra danh sách các dòng bị lỗi để thủ kho biết đường sửa file Excel
+            from django.utils.safestring import mark_safe
+            error_msg = "<br>".join(error_list)
+            messages.warning(request, mark_safe(f"Có {len(error_list)} dòng KHÔNG ĐƯỢC LƯU:<br>{error_msg}"))
 
     return redirect('staff_debt_list')
 
