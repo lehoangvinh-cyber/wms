@@ -21,11 +21,19 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-dxmh(q2&ko698g0!t_7)3^wwou%b@!fxfc#0vj%z*tf#ve(o&4'
+# Thêm domain của bạn vào danh sách các origin được tin cậy (bắt buộc phải có định dạng https://)
+CSRF_TRUSTED_ORIGINS = [
+    'https://app.vinhle.site',
+]
 
+# Đồng thời đảm bảo ALLOWED_HOSTS đã chứa domain này (không kèm https://)
+ALLOWED_HOSTS = [
+    'app.vinhle.site',
+    'localhost',
+    '127.0.0.1',
+]
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-
-ALLOWED_HOSTS = ['192.168.1.5', 'vinhlehoang.ddns.net', 'localhost', '127.0.0.1', '*']# Application definition
 
 INSTALLED_APPS = [
     'django.contrib.admin',
