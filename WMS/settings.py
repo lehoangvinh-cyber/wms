@@ -78,8 +78,12 @@ WSGI_APPLICATION = 'WMS.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'wms_db',
+        'USER': 'wms_user',
+        'PASSWORD': 'wms_password',
+        'HOST': 'db',   # Tên service MySQL trong docker-compose
+        'PORT': '3306',
     }
 }
 
