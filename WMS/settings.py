@@ -32,7 +32,7 @@ ALLOWED_HOSTS = ['wms.vinhle.site', 'localhost', '127.0.0.1', '*']
 CSRF_COOKIE_SECURE = True
 SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_HTTPONLY = False
-DEBUG = False
+DEBUG = True
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -124,7 +124,8 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 LOGIN_URL = 'login'
 # Chỉ định nơi quay về sau khi đăng nhập thành công
 LOGIN_REDIRECT_URL = 'dashboard'
