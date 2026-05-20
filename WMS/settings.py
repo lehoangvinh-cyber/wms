@@ -84,7 +84,7 @@ DATABASES = {
         'NAME': 'wms_db',
         'USER': 'wms_user',
         'PASSWORD': 'wms_password',
-        'HOST': 'db',   # Tên service MySQL trong docker-compose
+        'HOST': 'db',   # Trỏ vào container db
         'PORT': '3306',
     }
 }

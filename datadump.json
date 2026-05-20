@@ -1,0 +1,4795 @@
+[
+{
+    "model": "admin.logentry",
+    "pk": 1,
+    "fields": {
+        "action_time": "2026-05-13T06:47:38.193Z",
+        "user": 1,
+        "content_type": 9,
+        "object_id": "1",
+        "object_repr": "Nón kết trắng Vision (Size Freesize)",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 2,
+    "fields": {
+        "action_time": "2026-05-13T08:16:58.716Z",
+        "user": 1,
+        "content_type": 8,
+        "object_id": "12",
+        "object_repr": "Transaction object (12)",
+        "action_flag": 3,
+        "change_message": ""
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 3,
+    "fields": {
+        "action_time": "2026-05-13T08:16:58.716Z",
+        "user": 1,
+        "content_type": 8,
+        "object_id": "11",
+        "object_repr": "Transaction object (11)",
+        "action_flag": 3,
+        "change_message": ""
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 4,
+    "fields": {
+        "action_time": "2026-05-13T08:16:58.716Z",
+        "user": 1,
+        "content_type": 8,
+        "object_id": "10",
+        "object_repr": "Transaction object (10)",
+        "action_flag": 3,
+        "change_message": ""
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 5,
+    "fields": {
+        "action_time": "2026-05-13T08:16:58.716Z",
+        "user": 1,
+        "content_type": 8,
+        "object_id": "9",
+        "object_repr": "Transaction object (9)",
+        "action_flag": 3,
+        "change_message": ""
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 6,
+    "fields": {
+        "action_time": "2026-05-13T08:16:58.716Z",
+        "user": 1,
+        "content_type": 8,
+        "object_id": "8",
+        "object_repr": "Transaction object (8)",
+        "action_flag": 3,
+        "change_message": ""
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 7,
+    "fields": {
+        "action_time": "2026-05-13T08:16:58.716Z",
+        "user": 1,
+        "content_type": 8,
+        "object_id": "7",
+        "object_repr": "Transaction object (7)",
+        "action_flag": 3,
+        "change_message": ""
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 8,
+    "fields": {
+        "action_time": "2026-05-13T08:16:58.716Z",
+        "user": 1,
+        "content_type": 8,
+        "object_id": "6",
+        "object_repr": "Transaction object (6)",
+        "action_flag": 3,
+        "change_message": ""
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 9,
+    "fields": {
+        "action_time": "2026-05-13T08:16:58.716Z",
+        "user": 1,
+        "content_type": 8,
+        "object_id": "5",
+        "object_repr": "Transaction object (5)",
+        "action_flag": 3,
+        "change_message": ""
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 10,
+    "fields": {
+        "action_time": "2026-05-13T08:16:58.716Z",
+        "user": 1,
+        "content_type": 8,
+        "object_id": "4",
+        "object_repr": "Transaction object (4)",
+        "action_flag": 3,
+        "change_message": ""
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 11,
+    "fields": {
+        "action_time": "2026-05-13T08:16:58.716Z",
+        "user": 1,
+        "content_type": 8,
+        "object_id": "3",
+        "object_repr": "Transaction object (3)",
+        "action_flag": 3,
+        "change_message": ""
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 12,
+    "fields": {
+        "action_time": "2026-05-13T08:16:58.716Z",
+        "user": 1,
+        "content_type": 8,
+        "object_id": "2",
+        "object_repr": "Transaction object (2)",
+        "action_flag": 3,
+        "change_message": ""
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 13,
+    "fields": {
+        "action_time": "2026-05-13T08:16:58.716Z",
+        "user": 1,
+        "content_type": 8,
+        "object_id": "1",
+        "object_repr": "Transaction object (1)",
+        "action_flag": 3,
+        "change_message": ""
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 14,
+    "fields": {
+        "action_time": "2026-05-14T09:13:05.765Z",
+        "user": 1,
+        "content_type": 9,
+        "object_id": "2",
+        "object_repr": "Áo đồng phục xanh (Size L)",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 15,
+    "fields": {
+        "action_time": "2026-05-14T09:13:24.999Z",
+        "user": 1,
+        "content_type": 9,
+        "object_id": "3",
+        "object_repr": "Áo đồng phục trắng raplan (Size M)",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 16,
+    "fields": {
+        "action_time": "2026-05-15T02:49:24.259Z",
+        "user": 1,
+        "content_type": 8,
+        "object_id": "16",
+        "object_repr": "Transaction object (16)",
+        "action_flag": 3,
+        "change_message": ""
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 17,
+    "fields": {
+        "action_time": "2026-05-15T02:49:24.259Z",
+        "user": 1,
+        "content_type": 8,
+        "object_id": "15",
+        "object_repr": "Transaction object (15)",
+        "action_flag": 3,
+        "change_message": ""
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 18,
+    "fields": {
+        "action_time": "2026-05-15T02:49:24.259Z",
+        "user": 1,
+        "content_type": 8,
+        "object_id": "14",
+        "object_repr": "Transaction object (14)",
+        "action_flag": 3,
+        "change_message": ""
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 19,
+    "fields": {
+        "action_time": "2026-05-15T02:49:24.259Z",
+        "user": 1,
+        "content_type": 8,
+        "object_id": "13",
+        "object_repr": "Transaction object (13)",
+        "action_flag": 3,
+        "change_message": ""
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 20,
+    "fields": {
+        "action_time": "2026-05-15T02:49:33.066Z",
+        "user": 1,
+        "content_type": 9,
+        "object_id": "1",
+        "object_repr": "Nón kết trắng Vision (Size Freesize)",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"S\\u1ed1 l\\u01b0\\u1ee3ng t\\u1ed3n\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 21,
+    "fields": {
+        "action_time": "2026-05-15T03:02:22.371Z",
+        "user": 1,
+        "content_type": 9,
+        "object_id": "3",
+        "object_repr": "Áo đồng phục trắng raplan (Size M)",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"S\\u1ed1 l\\u01b0\\u1ee3ng t\\u1ed3n\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 22,
+    "fields": {
+        "action_time": "2026-05-15T03:02:25.431Z",
+        "user": 1,
+        "content_type": 9,
+        "object_id": "2",
+        "object_repr": "Áo đồng phục xanh (Size L)",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"S\\u1ed1 l\\u01b0\\u1ee3ng t\\u1ed3n\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 23,
+    "fields": {
+        "action_time": "2026-05-15T04:26:46.756Z",
+        "user": 1,
+        "content_type": 9,
+        "object_id": "3",
+        "object_repr": "Áo đồng phục trắng raplan (Size M)",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"S\\u1ed1 l\\u01b0\\u1ee3ng t\\u1ed3n\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 24,
+    "fields": {
+        "action_time": "2026-05-15T06:54:28.307Z",
+        "user": 1,
+        "content_type": 9,
+        "object_id": "3",
+        "object_repr": "Áo đồng phục trắng raplan (Size S)",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"M\\u00e3 \\u0110\\u1ed3ng Ph\\u1ee5c\", \"K\\u00edch c\\u1ee1 (Size)\", \"S\\u1ed1 l\\u01b0\\u1ee3ng t\\u1ed3n\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 25,
+    "fields": {
+        "action_time": "2026-05-15T06:54:37.015Z",
+        "user": 1,
+        "content_type": 9,
+        "object_id": "3",
+        "object_repr": "Áo đồng phục trắng raplan (Size S)",
+        "action_flag": 2,
+        "change_message": "[]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 26,
+    "fields": {
+        "action_time": "2026-05-15T06:54:41.704Z",
+        "user": 1,
+        "content_type": 9,
+        "object_id": "3",
+        "object_repr": "Áo đồng phục trắng raplan (Size S)",
+        "action_flag": 2,
+        "change_message": "[]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 27,
+    "fields": {
+        "action_time": "2026-05-15T06:54:46.241Z",
+        "user": 1,
+        "content_type": 9,
+        "object_id": "3",
+        "object_repr": "Áo đồng phục trắng raplan (Size M)",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"K\\u00edch c\\u1ee1 (Size)\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 28,
+    "fields": {
+        "action_time": "2026-05-15T06:54:50.817Z",
+        "user": 1,
+        "content_type": 9,
+        "object_id": "3",
+        "object_repr": "Áo đồng phục trắng raplan (Size L)",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"K\\u00edch c\\u1ee1 (Size)\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 29,
+    "fields": {
+        "action_time": "2026-05-15T06:54:55.212Z",
+        "user": 1,
+        "content_type": 9,
+        "object_id": "3",
+        "object_repr": "Áo đồng phục trắng raplan (Size XL)",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"K\\u00edch c\\u1ee1 (Size)\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 30,
+    "fields": {
+        "action_time": "2026-05-15T06:55:01.179Z",
+        "user": 1,
+        "content_type": 9,
+        "object_id": "3",
+        "object_repr": "Áo đồng phục trắng raplan (Size XXL)",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"K\\u00edch c\\u1ee1 (Size)\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 31,
+    "fields": {
+        "action_time": "2026-05-15T06:55:06.730Z",
+        "user": 1,
+        "content_type": 9,
+        "object_id": "3",
+        "object_repr": "Áo đồng phục trắng raplan (Size 3XL)",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"K\\u00edch c\\u1ee1 (Size)\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 32,
+    "fields": {
+        "action_time": "2026-05-15T06:55:11.100Z",
+        "user": 1,
+        "content_type": 9,
+        "object_id": "3",
+        "object_repr": "Áo đồng phục trắng raplan (Size 4XL)",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"K\\u00edch c\\u1ee1 (Size)\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 33,
+    "fields": {
+        "action_time": "2026-05-15T06:55:14.625Z",
+        "user": 1,
+        "content_type": 9,
+        "object_id": "3",
+        "object_repr": "Áo đồng phục trắng raplan (Size 5XL)",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"K\\u00edch c\\u1ee1 (Size)\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 34,
+    "fields": {
+        "action_time": "2026-05-15T06:55:29.960Z",
+        "user": 1,
+        "content_type": 9,
+        "object_id": "3",
+        "object_repr": "Áo đồng phục trắng raplan (Size 5XL)",
+        "action_flag": 2,
+        "change_message": "[]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 35,
+    "fields": {
+        "action_time": "2026-05-15T06:57:54.789Z",
+        "user": 1,
+        "content_type": 9,
+        "object_id": "4",
+        "object_repr": "Áo đồng phục trắng raplan (Size S)",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 36,
+    "fields": {
+        "action_time": "2026-05-15T06:58:14.908Z",
+        "user": 1,
+        "content_type": 9,
+        "object_id": "5",
+        "object_repr": "Áo đồng phục trắng raplan (Size M)",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 37,
+    "fields": {
+        "action_time": "2026-05-15T06:58:51.062Z",
+        "user": 1,
+        "content_type": 9,
+        "object_id": "6",
+        "object_repr": "Áo đồng phục trắng raplan (Size L)",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 38,
+    "fields": {
+        "action_time": "2026-05-15T06:59:05.637Z",
+        "user": 1,
+        "content_type": 9,
+        "object_id": "7",
+        "object_repr": "Áo đồng phục trắng raplan (Size XL)",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 39,
+    "fields": {
+        "action_time": "2026-05-15T06:59:18.427Z",
+        "user": 1,
+        "content_type": 9,
+        "object_id": "8",
+        "object_repr": "Áo đồng phục trắng raplan (Size XXL)",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 40,
+    "fields": {
+        "action_time": "2026-05-15T06:59:39.027Z",
+        "user": 1,
+        "content_type": 9,
+        "object_id": "9",
+        "object_repr": "Áo đồng phục trắng raplan (Size 3XL)",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 41,
+    "fields": {
+        "action_time": "2026-05-15T07:00:02.255Z",
+        "user": 1,
+        "content_type": 9,
+        "object_id": "10",
+        "object_repr": "Áo đồng phục trắng raplan (Size 4XL)",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 42,
+    "fields": {
+        "action_time": "2026-05-15T07:00:18.733Z",
+        "user": 1,
+        "content_type": 9,
+        "object_id": "11",
+        "object_repr": "Áo đồng phục trắng raplan (Size 5XL)",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 43,
+    "fields": {
+        "action_time": "2026-05-15T07:00:53.974Z",
+        "user": 1,
+        "content_type": 9,
+        "object_id": "3",
+        "object_repr": "Áo đồng phục trắng raplan (Size 5XL)",
+        "action_flag": 3,
+        "change_message": ""
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 44,
+    "fields": {
+        "action_time": "2026-05-15T07:01:27.283Z",
+        "user": 1,
+        "content_type": 9,
+        "object_id": "12",
+        "object_repr": "Áo đồng phục xanh (Size S)",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 45,
+    "fields": {
+        "action_time": "2026-05-15T07:01:44.174Z",
+        "user": 1,
+        "content_type": 9,
+        "object_id": "13",
+        "object_repr": "Áo đồng phục xanh (Size M)",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 46,
+    "fields": {
+        "action_time": "2026-05-15T07:02:14.031Z",
+        "user": 1,
+        "content_type": 9,
+        "object_id": "14",
+        "object_repr": "Áo đồng phục xanh (Size L)",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 47,
+    "fields": {
+        "action_time": "2026-05-15T07:02:30.182Z",
+        "user": 1,
+        "content_type": 9,
+        "object_id": "15",
+        "object_repr": "Áo đồng phục xanh (Size XL)",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 48,
+    "fields": {
+        "action_time": "2026-05-15T07:03:01.952Z",
+        "user": 1,
+        "content_type": 9,
+        "object_id": "16",
+        "object_repr": "Áo đồng phục xanh (Size XXL)",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 49,
+    "fields": {
+        "action_time": "2026-05-15T07:03:17.534Z",
+        "user": 1,
+        "content_type": 9,
+        "object_id": "17",
+        "object_repr": "Áo đồng phục xanh (Size 3XL)",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 50,
+    "fields": {
+        "action_time": "2026-05-15T07:03:34.659Z",
+        "user": 1,
+        "content_type": 9,
+        "object_id": "18",
+        "object_repr": "Áo đồng phục xanh (Size 4XL)",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 51,
+    "fields": {
+        "action_time": "2026-05-15T07:03:52.336Z",
+        "user": 1,
+        "content_type": 9,
+        "object_id": "19",
+        "object_repr": "Áo đồng phục xanh (Size 5XL)",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 52,
+    "fields": {
+        "action_time": "2026-05-15T07:04:52.447Z",
+        "user": 1,
+        "content_type": 9,
+        "object_id": "2",
+        "object_repr": "Áo đồng phục xanh (Size L)",
+        "action_flag": 3,
+        "change_message": ""
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 53,
+    "fields": {
+        "action_time": "2026-05-15T07:52:20.607Z",
+        "user": 1,
+        "content_type": 9,
+        "object_id": "19",
+        "object_repr": "Áo đồng phục xanh (Size 5XL)",
+        "action_flag": 2,
+        "change_message": "[]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 54,
+    "fields": {
+        "action_time": "2026-05-15T07:52:24.234Z",
+        "user": 1,
+        "content_type": 9,
+        "object_id": "19",
+        "object_repr": "Áo đồng phục xanh (Size 5XL)",
+        "action_flag": 2,
+        "change_message": "[]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 55,
+    "fields": {
+        "action_time": "2026-05-15T07:52:49.904Z",
+        "user": 1,
+        "content_type": 9,
+        "object_id": "18",
+        "object_repr": "Áo đồng phục xanh (Size 4XL)",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"S\\u1ed1 l\\u01b0\\u1ee3ng t\\u1ed3n\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 56,
+    "fields": {
+        "action_time": "2026-05-15T07:52:54.235Z",
+        "user": 1,
+        "content_type": 9,
+        "object_id": "17",
+        "object_repr": "Áo đồng phục xanh (Size 3XL)",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"S\\u1ed1 l\\u01b0\\u1ee3ng t\\u1ed3n\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 57,
+    "fields": {
+        "action_time": "2026-05-15T07:52:57.394Z",
+        "user": 1,
+        "content_type": 9,
+        "object_id": "16",
+        "object_repr": "Áo đồng phục xanh (Size XXL)",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"S\\u1ed1 l\\u01b0\\u1ee3ng t\\u1ed3n\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 58,
+    "fields": {
+        "action_time": "2026-05-15T07:53:01.142Z",
+        "user": 1,
+        "content_type": 9,
+        "object_id": "15",
+        "object_repr": "Áo đồng phục xanh (Size XL)",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"S\\u1ed1 l\\u01b0\\u1ee3ng t\\u1ed3n\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 59,
+    "fields": {
+        "action_time": "2026-05-15T07:53:04.964Z",
+        "user": 1,
+        "content_type": 9,
+        "object_id": "14",
+        "object_repr": "Áo đồng phục xanh (Size L)",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"S\\u1ed1 l\\u01b0\\u1ee3ng t\\u1ed3n\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 60,
+    "fields": {
+        "action_time": "2026-05-15T07:53:07.976Z",
+        "user": 1,
+        "content_type": 9,
+        "object_id": "13",
+        "object_repr": "Áo đồng phục xanh (Size M)",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"S\\u1ed1 l\\u01b0\\u1ee3ng t\\u1ed3n\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 61,
+    "fields": {
+        "action_time": "2026-05-15T07:53:11.163Z",
+        "user": 1,
+        "content_type": 9,
+        "object_id": "12",
+        "object_repr": "Áo đồng phục xanh (Size S)",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"S\\u1ed1 l\\u01b0\\u1ee3ng t\\u1ed3n\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 62,
+    "fields": {
+        "action_time": "2026-05-15T07:53:14.487Z",
+        "user": 1,
+        "content_type": 9,
+        "object_id": "8",
+        "object_repr": "Áo đồng phục trắng raplan (Size XXL)",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"S\\u1ed1 l\\u01b0\\u1ee3ng t\\u1ed3n\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 63,
+    "fields": {
+        "action_time": "2026-05-15T07:53:18.391Z",
+        "user": 1,
+        "content_type": 9,
+        "object_id": "7",
+        "object_repr": "Áo đồng phục trắng raplan (Size XL)",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"S\\u1ed1 l\\u01b0\\u1ee3ng t\\u1ed3n\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 64,
+    "fields": {
+        "action_time": "2026-05-15T07:53:22.244Z",
+        "user": 1,
+        "content_type": 9,
+        "object_id": "6",
+        "object_repr": "Áo đồng phục trắng raplan (Size L)",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"S\\u1ed1 l\\u01b0\\u1ee3ng t\\u1ed3n\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 65,
+    "fields": {
+        "action_time": "2026-05-15T07:53:26.896Z",
+        "user": 1,
+        "content_type": 9,
+        "object_id": "5",
+        "object_repr": "Áo đồng phục trắng raplan (Size M)",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"S\\u1ed1 l\\u01b0\\u1ee3ng t\\u1ed3n\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 66,
+    "fields": {
+        "action_time": "2026-05-15T07:53:30.089Z",
+        "user": 1,
+        "content_type": 9,
+        "object_id": "4",
+        "object_repr": "Áo đồng phục trắng raplan (Size S)",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"S\\u1ed1 l\\u01b0\\u1ee3ng t\\u1ed3n\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 67,
+    "fields": {
+        "action_time": "2026-05-15T07:55:48.866Z",
+        "user": 1,
+        "content_type": 9,
+        "object_id": "18",
+        "object_repr": "Áo đồng phục xanh (Size 4XL)",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"S\\u1ed1 l\\u01b0\\u1ee3ng t\\u1ed3n\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 68,
+    "fields": {
+        "action_time": "2026-05-15T09:37:12.306Z",
+        "user": 1,
+        "content_type": 9,
+        "object_id": "20",
+        "object_repr": "Balo học sinh Vision trắng mặt trước xanh có logo hệ thống (Size Free Size)",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 69,
+    "fields": {
+        "action_time": "2026-05-15T09:37:27.724Z",
+        "user": 1,
+        "content_type": 9,
+        "object_id": "1",
+        "object_repr": "Nón kết trắng Vision (Size Free Size)",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"K\\u00edch c\\u1ee1 (Size)\", \"S\\u1ed1 l\\u01b0\\u1ee3ng t\\u1ed3n\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 70,
+    "fields": {
+        "action_time": "2026-05-15T09:37:55.158Z",
+        "user": 1,
+        "content_type": 9,
+        "object_id": "21",
+        "object_repr": "Túi Tote vãi bố Vision trắng quai xanh lam (Size Free Size)",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 71,
+    "fields": {
+        "action_time": "2026-05-15T09:40:36.390Z",
+        "user": 1,
+        "content_type": 9,
+        "object_id": "8",
+        "object_repr": "Áo đồng phục trắng raplan (Size XXL)",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"S\\u1ed1 l\\u01b0\\u1ee3ng t\\u1ed3n\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 72,
+    "fields": {
+        "action_time": "2026-05-15T09:40:48.914Z",
+        "user": 1,
+        "content_type": 9,
+        "object_id": "8",
+        "object_repr": "Áo đồng phục trắng raplan (Size XXL)",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"S\\u1ed1 l\\u01b0\\u1ee3ng t\\u1ed3n\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 73,
+    "fields": {
+        "action_time": "2026-05-15T09:42:32.002Z",
+        "user": 1,
+        "content_type": 9,
+        "object_id": "7",
+        "object_repr": "Áo đồng phục trắng raplan (Size XL)",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"S\\u1ed1 l\\u01b0\\u1ee3ng t\\u1ed3n\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 74,
+    "fields": {
+        "action_time": "2026-05-15T09:47:39.325Z",
+        "user": 1,
+        "content_type": 9,
+        "object_id": "15",
+        "object_repr": "Áo đồng phục xanh (Size XL)",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"S\\u1ed1 l\\u01b0\\u1ee3ng t\\u1ed3n\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 75,
+    "fields": {
+        "action_time": "2026-05-15T09:47:39.326Z",
+        "user": 1,
+        "content_type": 9,
+        "object_id": "14",
+        "object_repr": "Áo đồng phục xanh (Size L)",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"S\\u1ed1 l\\u01b0\\u1ee3ng t\\u1ed3n\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 76,
+    "fields": {
+        "action_time": "2026-05-15T09:47:39.327Z",
+        "user": 1,
+        "content_type": 9,
+        "object_id": "13",
+        "object_repr": "Áo đồng phục xanh (Size M)",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"S\\u1ed1 l\\u01b0\\u1ee3ng t\\u1ed3n\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 77,
+    "fields": {
+        "action_time": "2026-05-15T09:47:39.328Z",
+        "user": 1,
+        "content_type": 9,
+        "object_id": "12",
+        "object_repr": "Áo đồng phục xanh (Size S)",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"S\\u1ed1 l\\u01b0\\u1ee3ng t\\u1ed3n\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 78,
+    "fields": {
+        "action_time": "2026-05-15T09:47:39.329Z",
+        "user": 1,
+        "content_type": 9,
+        "object_id": "8",
+        "object_repr": "Áo đồng phục trắng raplan (Size XXL)",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"S\\u1ed1 l\\u01b0\\u1ee3ng t\\u1ed3n\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 79,
+    "fields": {
+        "action_time": "2026-05-15T09:47:39.329Z",
+        "user": 1,
+        "content_type": 9,
+        "object_id": "6",
+        "object_repr": "Áo đồng phục trắng raplan (Size L)",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"S\\u1ed1 l\\u01b0\\u1ee3ng t\\u1ed3n\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 80,
+    "fields": {
+        "action_time": "2026-05-15T09:47:39.330Z",
+        "user": 1,
+        "content_type": 9,
+        "object_id": "5",
+        "object_repr": "Áo đồng phục trắng raplan (Size M)",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"S\\u1ed1 l\\u01b0\\u1ee3ng t\\u1ed3n\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 81,
+    "fields": {
+        "action_time": "2026-05-15T09:47:39.330Z",
+        "user": 1,
+        "content_type": 9,
+        "object_id": "4",
+        "object_repr": "Áo đồng phục trắng raplan (Size S)",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"S\\u1ed1 l\\u01b0\\u1ee3ng t\\u1ed3n\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 82,
+    "fields": {
+        "action_time": "2026-05-15T09:48:46.643Z",
+        "user": 1,
+        "content_type": 9,
+        "object_id": "16",
+        "object_repr": "Áo đồng phục xanh (Size XXL)",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"S\\u1ed1 l\\u01b0\\u1ee3ng t\\u1ed3n\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 83,
+    "fields": {
+        "action_time": "2026-05-15T09:49:42.738Z",
+        "user": 1,
+        "content_type": 9,
+        "object_id": "14",
+        "object_repr": "Áo đồng phục xanh (Size L)",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"S\\u1ed1 l\\u01b0\\u1ee3ng t\\u1ed3n\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 84,
+    "fields": {
+        "action_time": "2026-05-15T09:50:34.676Z",
+        "user": 1,
+        "content_type": 9,
+        "object_id": "16",
+        "object_repr": "Áo đồng phục xanh (Size XXL)",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"S\\u1ed1 l\\u01b0\\u1ee3ng t\\u1ed3n\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 85,
+    "fields": {
+        "action_time": "2026-05-15T09:50:34.677Z",
+        "user": 1,
+        "content_type": 9,
+        "object_id": "15",
+        "object_repr": "Áo đồng phục xanh (Size XL)",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"S\\u1ed1 l\\u01b0\\u1ee3ng t\\u1ed3n\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 86,
+    "fields": {
+        "action_time": "2026-05-15T09:50:34.678Z",
+        "user": 1,
+        "content_type": 9,
+        "object_id": "13",
+        "object_repr": "Áo đồng phục xanh (Size M)",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"S\\u1ed1 l\\u01b0\\u1ee3ng t\\u1ed3n\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 87,
+    "fields": {
+        "action_time": "2026-05-15T09:50:34.678Z",
+        "user": 1,
+        "content_type": 9,
+        "object_id": "12",
+        "object_repr": "Áo đồng phục xanh (Size S)",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"S\\u1ed1 l\\u01b0\\u1ee3ng t\\u1ed3n\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 88,
+    "fields": {
+        "action_time": "2026-05-15T09:50:34.679Z",
+        "user": 1,
+        "content_type": 9,
+        "object_id": "6",
+        "object_repr": "Áo đồng phục trắng raplan (Size L)",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"S\\u1ed1 l\\u01b0\\u1ee3ng t\\u1ed3n\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 89,
+    "fields": {
+        "action_time": "2026-05-15T09:50:34.679Z",
+        "user": 1,
+        "content_type": 9,
+        "object_id": "5",
+        "object_repr": "Áo đồng phục trắng raplan (Size M)",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"S\\u1ed1 l\\u01b0\\u1ee3ng t\\u1ed3n\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 90,
+    "fields": {
+        "action_time": "2026-05-15T09:50:34.680Z",
+        "user": 1,
+        "content_type": 9,
+        "object_id": "4",
+        "object_repr": "Áo đồng phục trắng raplan (Size S)",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"S\\u1ed1 l\\u01b0\\u1ee3ng t\\u1ed3n\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 91,
+    "fields": {
+        "action_time": "2026-05-15T09:51:17.510Z",
+        "user": 1,
+        "content_type": 9,
+        "object_id": "17",
+        "object_repr": "Áo đồng phục xanh (Size 3XL)",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"S\\u1ed1 l\\u01b0\\u1ee3ng t\\u1ed3n\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 92,
+    "fields": {
+        "action_time": "2026-05-15T09:51:37.016Z",
+        "user": 1,
+        "content_type": 9,
+        "object_id": "17",
+        "object_repr": "Áo đồng phục xanh (Size 3XL)",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"S\\u1ed1 l\\u01b0\\u1ee3ng t\\u1ed3n\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 93,
+    "fields": {
+        "action_time": "2026-05-15T09:51:37.017Z",
+        "user": 1,
+        "content_type": 9,
+        "object_id": "16",
+        "object_repr": "Áo đồng phục xanh (Size XXL)",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"S\\u1ed1 l\\u01b0\\u1ee3ng t\\u1ed3n\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 94,
+    "fields": {
+        "action_time": "2026-05-15T09:51:37.018Z",
+        "user": 1,
+        "content_type": 9,
+        "object_id": "14",
+        "object_repr": "Áo đồng phục xanh (Size L)",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"S\\u1ed1 l\\u01b0\\u1ee3ng t\\u1ed3n\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 95,
+    "fields": {
+        "action_time": "2026-05-15T09:51:37.019Z",
+        "user": 1,
+        "content_type": 9,
+        "object_id": "8",
+        "object_repr": "Áo đồng phục trắng raplan (Size XXL)",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"S\\u1ed1 l\\u01b0\\u1ee3ng t\\u1ed3n\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 96,
+    "fields": {
+        "action_time": "2026-05-15T09:51:37.019Z",
+        "user": 1,
+        "content_type": 9,
+        "object_id": "6",
+        "object_repr": "Áo đồng phục trắng raplan (Size L)",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"S\\u1ed1 l\\u01b0\\u1ee3ng t\\u1ed3n\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 97,
+    "fields": {
+        "action_time": "2026-05-15T09:53:00.421Z",
+        "user": 1,
+        "content_type": 9,
+        "object_id": "15",
+        "object_repr": "Áo đồng phục xanh (Size XL)",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"S\\u1ed1 l\\u01b0\\u1ee3ng t\\u1ed3n\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 98,
+    "fields": {
+        "action_time": "2026-05-15T09:54:07.575Z",
+        "user": 1,
+        "content_type": 9,
+        "object_id": "17",
+        "object_repr": "Áo đồng phục xanh (Size 3XL)",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"S\\u1ed1 l\\u01b0\\u1ee3ng t\\u1ed3n\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 99,
+    "fields": {
+        "action_time": "2026-05-15T09:54:07.577Z",
+        "user": 1,
+        "content_type": 9,
+        "object_id": "14",
+        "object_repr": "Áo đồng phục xanh (Size L)",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"S\\u1ed1 l\\u01b0\\u1ee3ng t\\u1ed3n\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 100,
+    "fields": {
+        "action_time": "2026-05-15T09:54:07.577Z",
+        "user": 1,
+        "content_type": 9,
+        "object_id": "13",
+        "object_repr": "Áo đồng phục xanh (Size M)",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"S\\u1ed1 l\\u01b0\\u1ee3ng t\\u1ed3n\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 101,
+    "fields": {
+        "action_time": "2026-05-15T09:54:07.578Z",
+        "user": 1,
+        "content_type": 9,
+        "object_id": "12",
+        "object_repr": "Áo đồng phục xanh (Size S)",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"S\\u1ed1 l\\u01b0\\u1ee3ng t\\u1ed3n\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 102,
+    "fields": {
+        "action_time": "2026-05-15T09:54:07.578Z",
+        "user": 1,
+        "content_type": 9,
+        "object_id": "8",
+        "object_repr": "Áo đồng phục trắng raplan (Size XXL)",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"S\\u1ed1 l\\u01b0\\u1ee3ng t\\u1ed3n\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 103,
+    "fields": {
+        "action_time": "2026-05-15T09:54:07.579Z",
+        "user": 1,
+        "content_type": 9,
+        "object_id": "7",
+        "object_repr": "Áo đồng phục trắng raplan (Size XL)",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"S\\u1ed1 l\\u01b0\\u1ee3ng t\\u1ed3n\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 104,
+    "fields": {
+        "action_time": "2026-05-15T09:54:07.580Z",
+        "user": 1,
+        "content_type": 9,
+        "object_id": "6",
+        "object_repr": "Áo đồng phục trắng raplan (Size L)",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"S\\u1ed1 l\\u01b0\\u1ee3ng t\\u1ed3n\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 105,
+    "fields": {
+        "action_time": "2026-05-15T09:54:07.580Z",
+        "user": 1,
+        "content_type": 9,
+        "object_id": "5",
+        "object_repr": "Áo đồng phục trắng raplan (Size M)",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"S\\u1ed1 l\\u01b0\\u1ee3ng t\\u1ed3n\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 106,
+    "fields": {
+        "action_time": "2026-05-15T09:54:07.581Z",
+        "user": 1,
+        "content_type": 9,
+        "object_id": "4",
+        "object_repr": "Áo đồng phục trắng raplan (Size S)",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"S\\u1ed1 l\\u01b0\\u1ee3ng t\\u1ed3n\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 107,
+    "fields": {
+        "action_time": "2026-05-15T09:54:51.619Z",
+        "user": 1,
+        "content_type": 8,
+        "object_id": "23",
+        "object_repr": "Transaction object (23)",
+        "action_flag": 3,
+        "change_message": ""
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 108,
+    "fields": {
+        "action_time": "2026-05-15T09:54:51.619Z",
+        "user": 1,
+        "content_type": 8,
+        "object_id": "19",
+        "object_repr": "Transaction object (19)",
+        "action_flag": 3,
+        "change_message": ""
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 109,
+    "fields": {
+        "action_time": "2026-05-15T09:54:51.619Z",
+        "user": 1,
+        "content_type": 8,
+        "object_id": "18",
+        "object_repr": "Transaction object (18)",
+        "action_flag": 3,
+        "change_message": ""
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 110,
+    "fields": {
+        "action_time": "2026-05-15T09:54:51.619Z",
+        "user": 1,
+        "content_type": 8,
+        "object_id": "17",
+        "object_repr": "Transaction object (17)",
+        "action_flag": 3,
+        "change_message": ""
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 111,
+    "fields": {
+        "action_time": "2026-05-18T07:09:53.829Z",
+        "user": 1,
+        "content_type": 9,
+        "object_id": "19",
+        "object_repr": "Áo đồng phục xanh (Size 5XL)",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"S\\u1ed1 l\\u01b0\\u1ee3ng t\\u1ed3n\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 112,
+    "fields": {
+        "action_time": "2026-05-18T07:09:53.830Z",
+        "user": 1,
+        "content_type": 9,
+        "object_id": "18",
+        "object_repr": "Áo đồng phục xanh (Size 4XL)",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"S\\u1ed1 l\\u01b0\\u1ee3ng t\\u1ed3n\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 113,
+    "fields": {
+        "action_time": "2026-05-18T07:09:53.831Z",
+        "user": 1,
+        "content_type": 9,
+        "object_id": "17",
+        "object_repr": "Áo đồng phục xanh (Size 3XL)",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"S\\u1ed1 l\\u01b0\\u1ee3ng t\\u1ed3n\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 114,
+    "fields": {
+        "action_time": "2026-05-18T07:09:53.832Z",
+        "user": 1,
+        "content_type": 9,
+        "object_id": "16",
+        "object_repr": "Áo đồng phục xanh (Size XXL)",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"S\\u1ed1 l\\u01b0\\u1ee3ng t\\u1ed3n\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 115,
+    "fields": {
+        "action_time": "2026-05-18T07:09:53.832Z",
+        "user": 1,
+        "content_type": 9,
+        "object_id": "15",
+        "object_repr": "Áo đồng phục xanh (Size XL)",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"S\\u1ed1 l\\u01b0\\u1ee3ng t\\u1ed3n\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 116,
+    "fields": {
+        "action_time": "2026-05-18T07:09:53.833Z",
+        "user": 1,
+        "content_type": 9,
+        "object_id": "12",
+        "object_repr": "Áo đồng phục xanh (Size S)",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"S\\u1ed1 l\\u01b0\\u1ee3ng t\\u1ed3n\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 117,
+    "fields": {
+        "action_time": "2026-05-18T07:09:53.834Z",
+        "user": 1,
+        "content_type": 9,
+        "object_id": "9",
+        "object_repr": "Áo đồng phục trắng raplan (Size 3XL)",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"S\\u1ed1 l\\u01b0\\u1ee3ng t\\u1ed3n\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 118,
+    "fields": {
+        "action_time": "2026-05-18T07:09:53.834Z",
+        "user": 1,
+        "content_type": 9,
+        "object_id": "8",
+        "object_repr": "Áo đồng phục trắng raplan (Size XXL)",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"S\\u1ed1 l\\u01b0\\u1ee3ng t\\u1ed3n\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 119,
+    "fields": {
+        "action_time": "2026-05-18T07:09:53.835Z",
+        "user": 1,
+        "content_type": 9,
+        "object_id": "7",
+        "object_repr": "Áo đồng phục trắng raplan (Size XL)",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"S\\u1ed1 l\\u01b0\\u1ee3ng t\\u1ed3n\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 120,
+    "fields": {
+        "action_time": "2026-05-18T07:09:53.836Z",
+        "user": 1,
+        "content_type": 9,
+        "object_id": "6",
+        "object_repr": "Áo đồng phục trắng raplan (Size L)",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"S\\u1ed1 l\\u01b0\\u1ee3ng t\\u1ed3n\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 121,
+    "fields": {
+        "action_time": "2026-05-18T07:09:53.836Z",
+        "user": 1,
+        "content_type": 9,
+        "object_id": "4",
+        "object_repr": "Áo đồng phục trắng raplan (Size S)",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"S\\u1ed1 l\\u01b0\\u1ee3ng t\\u1ed3n\"]}}]"
+    }
+},
+{
+    "model": "auth.user",
+    "pk": 1,
+    "fields": {
+        "password": "pbkdf2_sha256$1200000$50NaqiyqO7yuX7f9W5r4Lc$vKh/H6rNH/jeZC0PPZEWLGJ/AW9pLK8cJ3j5LsvO2QA=",
+        "last_login": "2026-05-15T04:13:25.753Z",
+        "is_superuser": true,
+        "username": "admin",
+        "first_name": "",
+        "last_name": "",
+        "email": "",
+        "is_staff": true,
+        "is_active": true,
+        "date_joined": "2026-05-13T06:40:01.969Z",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "auth.user",
+    "pk": 2,
+    "fields": {
+        "password": "pbkdf2_sha256$1200000$Ks9RJ2uq5gw10kRmJroVWe$aKXd/K7luS3X3bWV+4Lm2n0GKkkwOZtOkIooKV2472k=",
+        "last_login": "2026-05-15T04:13:15.937Z",
+        "is_superuser": false,
+        "username": "vinh",
+        "first_name": "",
+        "last_name": "",
+        "email": "",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2026-05-13T08:24:58.423Z",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "sessions.session",
+    "pk": "w45qwa2522zub1w141q66i049hpo4f07",
+    "fields": {
+        "session_data": ".eJxVjs1qwzAQhF_F7NkYyVJcycfe22NOAbH6s9U0EkirU8i7B5dQ2tvMfMMwdzDYaTe9hWqShxU4jH8zi-4a8gH8F-atTK5kqslOR2V60TZ9FB--31_dfwM7th1WsFFoJU-IkjMVNWcxLlpGuyATKCUG5xWbfdRWOjbrxYqTU4tXs9NC41uAEbBTMT5YMlTTtoUK6x16TrHU2893Pv7ajLcAK3xeOmNR5OF66TzYSAPVQ2HM23BOLZUMIzTqPmQyrvRMsPJZPB5PZMhepg:1wNmJq:_HZXYxXfhE1F1UXw0j8HeiXbvegHCTz8QmB-q7cUmGk",
+        "expire_date": "2026-05-29T06:46:46.448Z"
+    }
+},
+{
+    "model": "inventory.uniform",
+    "pk": 1,
+    "fields": {
+        "sku": "NON_VISION24",
+        "name": "Nón kết trắng Vision",
+        "size": "Free Size",
+        "quantity": 0
+    }
+},
+{
+    "model": "inventory.uniform",
+    "pk": 4,
+    "fields": {
+        "sku": "AOTRANG_S",
+        "name": "Áo đồng phục trắng raplan",
+        "size": "S",
+        "quantity": 1
+    }
+},
+{
+    "model": "inventory.uniform",
+    "pk": 5,
+    "fields": {
+        "sku": "AOTRANG_M",
+        "name": "Áo đồng phục trắng raplan",
+        "size": "M",
+        "quantity": 0
+    }
+},
+{
+    "model": "inventory.uniform",
+    "pk": 6,
+    "fields": {
+        "sku": "AOTRANG_L",
+        "name": "Áo đồng phục trắng raplan",
+        "size": "L",
+        "quantity": 10
+    }
+},
+{
+    "model": "inventory.uniform",
+    "pk": 7,
+    "fields": {
+        "sku": "AOTRANG_XL",
+        "name": "Áo đồng phục trắng raplan",
+        "size": "XL",
+        "quantity": 13
+    }
+},
+{
+    "model": "inventory.uniform",
+    "pk": 8,
+    "fields": {
+        "sku": "AOTRANG_XXL",
+        "name": "Áo đồng phục trắng raplan",
+        "size": "XXL",
+        "quantity": 7
+    }
+},
+{
+    "model": "inventory.uniform",
+    "pk": 9,
+    "fields": {
+        "sku": "AOTRANG_3XL",
+        "name": "Áo đồng phục trắng raplan",
+        "size": "3XL",
+        "quantity": 8
+    }
+},
+{
+    "model": "inventory.uniform",
+    "pk": 10,
+    "fields": {
+        "sku": "AOTRANG_4XL",
+        "name": "Áo đồng phục trắng raplan",
+        "size": "4XL",
+        "quantity": 0
+    }
+},
+{
+    "model": "inventory.uniform",
+    "pk": 11,
+    "fields": {
+        "sku": "AOTRANG_5XL",
+        "name": "Áo đồng phục trắng raplan",
+        "size": "5XL",
+        "quantity": 0
+    }
+},
+{
+    "model": "inventory.uniform",
+    "pk": 12,
+    "fields": {
+        "sku": "AOXANH_S",
+        "name": "Áo đồng phục xanh",
+        "size": "S",
+        "quantity": 2
+    }
+},
+{
+    "model": "inventory.uniform",
+    "pk": 13,
+    "fields": {
+        "sku": "AOXANH_M",
+        "name": "Áo đồng phục xanh",
+        "size": "M",
+        "quantity": 0
+    }
+},
+{
+    "model": "inventory.uniform",
+    "pk": 14,
+    "fields": {
+        "sku": "AOXANH_L",
+        "name": "Áo đồng phục xanh",
+        "size": "L",
+        "quantity": 0
+    }
+},
+{
+    "model": "inventory.uniform",
+    "pk": 15,
+    "fields": {
+        "sku": "AOXANH_XL",
+        "name": "Áo đồng phục xanh",
+        "size": "XL",
+        "quantity": 35
+    }
+},
+{
+    "model": "inventory.uniform",
+    "pk": 16,
+    "fields": {
+        "sku": "AOXANH_XXL",
+        "name": "Áo đồng phục xanh",
+        "size": "XXL",
+        "quantity": 25
+    }
+},
+{
+    "model": "inventory.uniform",
+    "pk": 17,
+    "fields": {
+        "sku": "AOXANH_3XL",
+        "name": "Áo đồng phục xanh",
+        "size": "3XL",
+        "quantity": 17
+    }
+},
+{
+    "model": "inventory.uniform",
+    "pk": 18,
+    "fields": {
+        "sku": "AOXANH_4XL",
+        "name": "Áo đồng phục xanh",
+        "size": "4XL",
+        "quantity": 2
+    }
+},
+{
+    "model": "inventory.uniform",
+    "pk": 19,
+    "fields": {
+        "sku": "AOXANH_5XL",
+        "name": "Áo đồng phục xanh",
+        "size": "5XL",
+        "quantity": 8
+    }
+},
+{
+    "model": "inventory.uniform",
+    "pk": 20,
+    "fields": {
+        "sku": "BALO_VISION24",
+        "name": "Balo học sinh Vision trắng mặt trước xanh có logo hệ thống",
+        "size": "Free Size",
+        "quantity": 0
+    }
+},
+{
+    "model": "inventory.uniform",
+    "pk": 21,
+    "fields": {
+        "sku": "TUI_VISION24",
+        "name": "Túi Tote vãi bố Vision trắng quai xanh lam",
+        "size": "Free Size",
+        "quantity": 0
+    }
+},
+{
+    "model": "inventory.debt",
+    "pk": 1,
+    "fields": {
+        "branch": "Belleza",
+        "request_date": "2026-01-20",
+        "uniform": 1,
+        "quantity": 1,
+        "student_name": "Vương Mẫn Nghi",
+        "note": "Kho nợ",
+        "is_resolved": false,
+        "created_at": "2026-05-13T06:47:53.980Z"
+    }
+},
+{
+    "model": "inventory.debt",
+    "pk": 2,
+    "fields": {
+        "branch": "Belleza",
+        "request_date": "2026-01-20",
+        "uniform": 1,
+        "quantity": 1,
+        "student_name": "Trần Ngọc Tường Nghi",
+        "note": "Kho nợ",
+        "is_resolved": false,
+        "created_at": "2026-05-13T06:47:53.987Z"
+    }
+},
+{
+    "model": "inventory.debt",
+    "pk": 3,
+    "fields": {
+        "branch": "Diamond",
+        "request_date": "2026-01-27",
+        "uniform": 1,
+        "quantity": 1,
+        "student_name": "Nguyễn Đình Nguyên",
+        "note": "Kho nợ",
+        "is_resolved": false,
+        "created_at": "2026-05-13T06:47:53.992Z"
+    }
+},
+{
+    "model": "inventory.debt",
+    "pk": 4,
+    "fields": {
+        "branch": "Diamond",
+        "request_date": "2026-01-27",
+        "uniform": 1,
+        "quantity": 1,
+        "student_name": "Nguyễn Công Minh Quân",
+        "note": "Kho nợ",
+        "is_resolved": false,
+        "created_at": "2026-05-13T06:47:53.997Z"
+    }
+},
+{
+    "model": "inventory.debt",
+    "pk": 5,
+    "fields": {
+        "branch": "HPO",
+        "request_date": "2026-01-27",
+        "uniform": 1,
+        "quantity": 1,
+        "student_name": "Wu Hoang Dung Nhi",
+        "note": "Kho nợ",
+        "is_resolved": false,
+        "created_at": "2026-05-13T06:47:54.002Z"
+    }
+},
+{
+    "model": "inventory.debt",
+    "pk": 6,
+    "fields": {
+        "branch": "HPO",
+        "request_date": "2026-01-27",
+        "uniform": 1,
+        "quantity": 1,
+        "student_name": "Lê Gia Hân",
+        "note": "Kho nợ",
+        "is_resolved": false,
+        "created_at": "2026-05-13T06:47:54.007Z"
+    }
+},
+{
+    "model": "inventory.debt",
+    "pk": 7,
+    "fields": {
+        "branch": "HPO",
+        "request_date": "2026-01-27",
+        "uniform": 1,
+        "quantity": 1,
+        "student_name": "Ngô Trương Gia Khiêm",
+        "note": "Kho nợ",
+        "is_resolved": false,
+        "created_at": "2026-05-13T06:47:54.012Z"
+    }
+},
+{
+    "model": "inventory.debt",
+    "pk": 8,
+    "fields": {
+        "branch": "Lexington",
+        "request_date": "2026-01-13",
+        "uniform": 1,
+        "quantity": 1,
+        "student_name": "Lâm Khả Hân",
+        "note": "Kho nợ",
+        "is_resolved": false,
+        "created_at": "2026-05-13T06:47:54.016Z"
+    }
+},
+{
+    "model": "inventory.debt",
+    "pk": 9,
+    "fields": {
+        "branch": "Lexington",
+        "request_date": "2026-01-13",
+        "uniform": 1,
+        "quantity": 1,
+        "student_name": "Lềnh Gia Khiêm",
+        "note": "Kho nợ",
+        "is_resolved": false,
+        "created_at": "2026-05-13T06:47:54.020Z"
+    }
+},
+{
+    "model": "inventory.debt",
+    "pk": 10,
+    "fields": {
+        "branch": "Lexington",
+        "request_date": "2026-01-13",
+        "uniform": 1,
+        "quantity": 1,
+        "student_name": "Lê Mỹ Linh",
+        "note": "Kho nợ",
+        "is_resolved": false,
+        "created_at": "2026-05-13T06:47:54.025Z"
+    }
+},
+{
+    "model": "inventory.debt",
+    "pk": 11,
+    "fields": {
+        "branch": "Newcity",
+        "request_date": "2026-01-20",
+        "uniform": 1,
+        "quantity": 1,
+        "student_name": "Trần Chí Kiên",
+        "note": "Kho nợ",
+        "is_resolved": false,
+        "created_at": "2026-05-13T06:47:54.029Z"
+    }
+},
+{
+    "model": "inventory.debt",
+    "pk": 12,
+    "fields": {
+        "branch": "Phú Mỹ",
+        "request_date": "2026-01-13",
+        "uniform": 1,
+        "quantity": 1,
+        "student_name": "NGUYỄN HỮU ANH MINH",
+        "note": "Kho nợ",
+        "is_resolved": false,
+        "created_at": "2026-05-13T06:47:54.034Z"
+    }
+},
+{
+    "model": "inventory.debt",
+    "pk": 13,
+    "fields": {
+        "branch": "Tresor",
+        "request_date": "2026-01-27",
+        "uniform": 1,
+        "quantity": 1,
+        "student_name": "Đặng Phương Nhi",
+        "note": "Kho nợ",
+        "is_resolved": false,
+        "created_at": "2026-05-13T06:47:54.037Z"
+    }
+},
+{
+    "model": "inventory.debt",
+    "pk": 14,
+    "fields": {
+        "branch": "Orchard",
+        "request_date": "2026-01-21",
+        "uniform": 1,
+        "quantity": 1,
+        "student_name": "Đỗ Khải An",
+        "note": "Kho nợ",
+        "is_resolved": false,
+        "created_at": "2026-05-13T06:47:54.042Z"
+    }
+},
+{
+    "model": "inventory.debt",
+    "pk": 15,
+    "fields": {
+        "branch": "Diamond",
+        "request_date": "2026-02-03",
+        "uniform": 1,
+        "quantity": 1,
+        "student_name": "Trần Diệu Châu",
+        "note": "Kho nợ",
+        "is_resolved": false,
+        "created_at": "2026-05-13T06:47:54.047Z"
+    }
+},
+{
+    "model": "inventory.debt",
+    "pk": 16,
+    "fields": {
+        "branch": "HPO",
+        "request_date": "2026-02-03",
+        "uniform": 1,
+        "quantity": 1,
+        "student_name": "Vũ Thảo Nguyên An",
+        "note": "Kho nợ",
+        "is_resolved": false,
+        "created_at": "2026-05-13T06:47:54.051Z"
+    }
+},
+{
+    "model": "inventory.debt",
+    "pk": 17,
+    "fields": {
+        "branch": "Lexington",
+        "request_date": "2026-02-03",
+        "uniform": 1,
+        "quantity": 1,
+        "student_name": "Lưu Quỳnh Trang",
+        "note": "Kho nợ",
+        "is_resolved": false,
+        "created_at": "2026-05-13T06:47:54.056Z"
+    }
+},
+{
+    "model": "inventory.debt",
+    "pk": 18,
+    "fields": {
+        "branch": "Luxcity",
+        "request_date": "2026-02-03",
+        "uniform": 1,
+        "quantity": 1,
+        "student_name": "Lê Gia Đạt",
+        "note": "Kho nợ",
+        "is_resolved": false,
+        "created_at": "2026-05-13T06:47:54.060Z"
+    }
+},
+{
+    "model": "inventory.debt",
+    "pk": 19,
+    "fields": {
+        "branch": "Sunview",
+        "request_date": "2026-01-20",
+        "uniform": 1,
+        "quantity": 1,
+        "student_name": "Nguyễn An Di",
+        "note": "Kho nợ",
+        "is_resolved": false,
+        "created_at": "2026-05-13T06:47:54.064Z"
+    }
+},
+{
+    "model": "inventory.debt",
+    "pk": 20,
+    "fields": {
+        "branch": "Citygate",
+        "request_date": "2026-02-24",
+        "uniform": 1,
+        "quantity": 1,
+        "student_name": "Nguyễn Đăng Khải",
+        "note": "Kho nợ",
+        "is_resolved": false,
+        "created_at": "2026-05-13T06:47:54.069Z"
+    }
+},
+{
+    "model": "inventory.debt",
+    "pk": 21,
+    "fields": {
+        "branch": "Safira",
+        "request_date": "2026-02-25",
+        "uniform": 1,
+        "quantity": 1,
+        "student_name": "Nguyễn Trần Thiên An",
+        "note": "Kho nợ",
+        "is_resolved": false,
+        "created_at": "2026-05-13T06:47:54.075Z"
+    }
+},
+{
+    "model": "inventory.debt",
+    "pk": 22,
+    "fields": {
+        "branch": "Safira",
+        "request_date": "2026-02-25",
+        "uniform": 1,
+        "quantity": 1,
+        "student_name": "Cao Thiên Khôi",
+        "note": "Kho nợ",
+        "is_resolved": false,
+        "created_at": "2026-05-13T06:47:54.080Z"
+    }
+},
+{
+    "model": "inventory.debt",
+    "pk": 23,
+    "fields": {
+        "branch": "Safira",
+        "request_date": "2026-02-25",
+        "uniform": 1,
+        "quantity": 1,
+        "student_name": "Trần Hà An",
+        "note": "Kho nợ",
+        "is_resolved": false,
+        "created_at": "2026-05-13T06:47:54.086Z"
+    }
+},
+{
+    "model": "inventory.debt",
+    "pk": 24,
+    "fields": {
+        "branch": "Safira",
+        "request_date": "2026-02-25",
+        "uniform": 1,
+        "quantity": 1,
+        "student_name": "Trịnh Hiểu Minh",
+        "note": "Kho nợ",
+        "is_resolved": false,
+        "created_at": "2026-05-13T06:47:54.091Z"
+    }
+},
+{
+    "model": "inventory.debt",
+    "pk": 25,
+    "fields": {
+        "branch": "Safira",
+        "request_date": "2026-02-25",
+        "uniform": 1,
+        "quantity": 1,
+        "student_name": "Dương Ngọc Bảo Trân",
+        "note": "Kho nợ",
+        "is_resolved": false,
+        "created_at": "2026-05-13T06:47:54.095Z"
+    }
+},
+{
+    "model": "inventory.debt",
+    "pk": 26,
+    "fields": {
+        "branch": "Safira",
+        "request_date": "2026-02-25",
+        "uniform": 1,
+        "quantity": 1,
+        "student_name": "Hoàng Nguyễn Thiên Kim",
+        "note": "Kho nợ",
+        "is_resolved": false,
+        "created_at": "2026-05-13T06:47:54.100Z"
+    }
+},
+{
+    "model": "inventory.debt",
+    "pk": 27,
+    "fields": {
+        "branch": "Safira",
+        "request_date": "2026-02-25",
+        "uniform": 1,
+        "quantity": 1,
+        "student_name": "Lê Hoàng Vĩnh Khang",
+        "note": "Kho nợ",
+        "is_resolved": false,
+        "created_at": "2026-05-13T06:47:54.105Z"
+    }
+},
+{
+    "model": "inventory.debt",
+    "pk": 28,
+    "fields": {
+        "branch": "Phú Mỹ",
+        "request_date": "2026-02-04",
+        "uniform": 1,
+        "quantity": 1,
+        "student_name": "DƯƠNG KAI AN",
+        "note": "Kho nợ",
+        "is_resolved": false,
+        "created_at": "2026-05-13T06:47:54.109Z"
+    }
+},
+{
+    "model": "inventory.debt",
+    "pk": 29,
+    "fields": {
+        "branch": "Phú Mỹ",
+        "request_date": "2026-02-04",
+        "uniform": 1,
+        "quantity": 1,
+        "student_name": "DƯƠNG SUNNY ÁNH",
+        "note": "Kho nợ",
+        "is_resolved": false,
+        "created_at": "2026-05-13T06:47:54.114Z"
+    }
+},
+{
+    "model": "inventory.debt",
+    "pk": 30,
+    "fields": {
+        "branch": "Sunview",
+        "request_date": "2026-02-24",
+        "uniform": 1,
+        "quantity": 1,
+        "student_name": "Lê Bá Hải Đăng",
+        "note": "Kho nợ",
+        "is_resolved": false,
+        "created_at": "2026-05-13T06:47:54.118Z"
+    }
+},
+{
+    "model": "inventory.debt",
+    "pk": 31,
+    "fields": {
+        "branch": "Sunview",
+        "request_date": "2026-02-24",
+        "uniform": 1,
+        "quantity": 1,
+        "student_name": "Nguyễn Thùy Dương",
+        "note": "Kho nợ",
+        "is_resolved": false,
+        "created_at": "2026-05-13T06:47:54.122Z"
+    }
+},
+{
+    "model": "inventory.debt",
+    "pk": 32,
+    "fields": {
+        "branch": "Citygate",
+        "request_date": "2026-03-03",
+        "uniform": 1,
+        "quantity": 1,
+        "student_name": "Lê Phạm Nhật Hạ",
+        "note": "Kho nợ",
+        "is_resolved": false,
+        "created_at": "2026-05-13T06:47:54.125Z"
+    }
+},
+{
+    "model": "inventory.debt",
+    "pk": 33,
+    "fields": {
+        "branch": "Citygate",
+        "request_date": "2026-03-03",
+        "uniform": 1,
+        "quantity": 1,
+        "student_name": "Đặng Châu Á Lâm",
+        "note": "Kho nợ",
+        "is_resolved": false,
+        "created_at": "2026-05-13T06:47:54.128Z"
+    }
+},
+{
+    "model": "inventory.debt",
+    "pk": 34,
+    "fields": {
+        "branch": "Citygate",
+        "request_date": "2026-03-03",
+        "uniform": 1,
+        "quantity": 1,
+        "student_name": "Hoàng Minh Đức",
+        "note": "Kho nợ",
+        "is_resolved": false,
+        "created_at": "2026-05-13T06:47:54.132Z"
+    }
+},
+{
+    "model": "inventory.debt",
+    "pk": 35,
+    "fields": {
+        "branch": "Hưng Phát",
+        "request_date": "2026-03-03",
+        "uniform": 1,
+        "quantity": 1,
+        "student_name": "Vũ Lam Tường",
+        "note": "Kho nợ",
+        "is_resolved": false,
+        "created_at": "2026-05-13T06:47:54.135Z"
+    }
+},
+{
+    "model": "inventory.debt",
+    "pk": 36,
+    "fields": {
+        "branch": "Newcity",
+        "request_date": "2026-03-03",
+        "uniform": 1,
+        "quantity": 1,
+        "student_name": "Lê Song Anh",
+        "note": "Kho nợ",
+        "is_resolved": false,
+        "created_at": "2026-05-13T06:47:54.138Z"
+    }
+},
+{
+    "model": "inventory.debt",
+    "pk": 37,
+    "fields": {
+        "branch": "Newcity",
+        "request_date": "2026-03-03",
+        "uniform": 1,
+        "quantity": 1,
+        "student_name": "Lê Song Min",
+        "note": "Kho nợ",
+        "is_resolved": false,
+        "created_at": "2026-05-13T06:47:54.172Z"
+    }
+},
+{
+    "model": "inventory.debt",
+    "pk": 38,
+    "fields": {
+        "branch": "Newcity",
+        "request_date": "2026-03-03",
+        "uniform": 1,
+        "quantity": 1,
+        "student_name": "Võ Anh Kiên",
+        "note": "Kho nợ",
+        "is_resolved": false,
+        "created_at": "2026-05-13T06:47:54.175Z"
+    }
+},
+{
+    "model": "inventory.debt",
+    "pk": 39,
+    "fields": {
+        "branch": "Citygate",
+        "request_date": "2026-03-11",
+        "uniform": 1,
+        "quantity": 1,
+        "student_name": "Trần Hà Trúc Diệp",
+        "note": "Kho nợ",
+        "is_resolved": false,
+        "created_at": "2026-05-13T06:47:54.177Z"
+    }
+},
+{
+    "model": "inventory.debt",
+    "pk": 40,
+    "fields": {
+        "branch": "Citygate",
+        "request_date": "2026-03-11",
+        "uniform": 1,
+        "quantity": 1,
+        "student_name": "Nguyễn Hữu Đăng Khoa",
+        "note": "Kho nợ",
+        "is_resolved": false,
+        "created_at": "2026-05-13T06:47:54.182Z"
+    }
+},
+{
+    "model": "inventory.debt",
+    "pk": 41,
+    "fields": {
+        "branch": "Lexington",
+        "request_date": "2026-03-11",
+        "uniform": 1,
+        "quantity": 1,
+        "student_name": "Mai Phương Nhi",
+        "note": "Kho nợ",
+        "is_resolved": false,
+        "created_at": "2026-05-13T06:47:54.186Z"
+    }
+},
+{
+    "model": "inventory.debt",
+    "pk": 42,
+    "fields": {
+        "branch": "Lexington",
+        "request_date": "2026-03-11",
+        "uniform": 1,
+        "quantity": 1,
+        "student_name": "Nguyễn Gia Phát",
+        "note": "Kho nợ",
+        "is_resolved": false,
+        "created_at": "2026-05-13T06:47:54.189Z"
+    }
+},
+{
+    "model": "inventory.debt",
+    "pk": 43,
+    "fields": {
+        "branch": "Orchard",
+        "request_date": "2026-03-11",
+        "uniform": 1,
+        "quantity": 1,
+        "student_name": "Huỳnh Anh Minh",
+        "note": "Kho nợ",
+        "is_resolved": false,
+        "created_at": "2026-05-13T06:47:54.193Z"
+    }
+},
+{
+    "model": "inventory.debt",
+    "pk": 44,
+    "fields": {
+        "branch": "Newcity",
+        "request_date": "2026-03-11",
+        "uniform": 1,
+        "quantity": 1,
+        "student_name": "Phan Khánh An",
+        "note": "Kho nợ",
+        "is_resolved": false,
+        "created_at": "2026-05-13T06:47:54.197Z"
+    }
+},
+{
+    "model": "inventory.debt",
+    "pk": 45,
+    "fields": {
+        "branch": "Luxcity",
+        "request_date": "2026-03-11",
+        "uniform": 1,
+        "quantity": 1,
+        "student_name": "Nguyễn Lâm  Minh Ngọc",
+        "note": "Kho nợ",
+        "is_resolved": false,
+        "created_at": "2026-05-13T06:47:54.200Z"
+    }
+},
+{
+    "model": "inventory.debt",
+    "pk": 46,
+    "fields": {
+        "branch": "Luxcity",
+        "request_date": "2026-03-11",
+        "uniform": 1,
+        "quantity": 1,
+        "student_name": "Nguyễn Khoa Việt",
+        "note": "Kho nợ",
+        "is_resolved": false,
+        "created_at": "2026-05-13T06:47:54.205Z"
+    }
+},
+{
+    "model": "inventory.debt",
+    "pk": 47,
+    "fields": {
+        "branch": "Sunrise",
+        "request_date": "2026-03-11",
+        "uniform": 1,
+        "quantity": 1,
+        "student_name": "Chung Mộc Triết",
+        "note": "Kho nợ",
+        "is_resolved": false,
+        "created_at": "2026-05-13T06:47:54.208Z"
+    }
+},
+{
+    "model": "inventory.debt",
+    "pk": 48,
+    "fields": {
+        "branch": "Sunrise",
+        "request_date": "2026-03-11",
+        "uniform": 1,
+        "quantity": 1,
+        "student_name": "Kim Chí An",
+        "note": "Kho nợ",
+        "is_resolved": false,
+        "created_at": "2026-05-13T06:47:54.211Z"
+    }
+},
+{
+    "model": "inventory.debt",
+    "pk": 49,
+    "fields": {
+        "branch": "Sunrise",
+        "request_date": "2026-03-11",
+        "uniform": 1,
+        "quantity": 1,
+        "student_name": "Vương Hạo Đăng",
+        "note": "Kho nợ",
+        "is_resolved": false,
+        "created_at": "2026-05-13T06:47:54.215Z"
+    }
+},
+{
+    "model": "inventory.debt",
+    "pk": 50,
+    "fields": {
+        "branch": "Sunrise",
+        "request_date": "2026-03-11",
+        "uniform": 1,
+        "quantity": 1,
+        "student_name": "De La Gruz An Nhã",
+        "note": "Kho nợ",
+        "is_resolved": false,
+        "created_at": "2026-05-13T06:47:54.218Z"
+    }
+},
+{
+    "model": "inventory.debt",
+    "pk": 51,
+    "fields": {
+        "branch": "Sunrise",
+        "request_date": "2026-03-11",
+        "uniform": 1,
+        "quantity": 1,
+        "student_name": "Choi Linh Chi",
+        "note": "Kho nợ",
+        "is_resolved": false,
+        "created_at": "2026-05-13T06:47:54.221Z"
+    }
+},
+{
+    "model": "inventory.debt",
+    "pk": 52,
+    "fields": {
+        "branch": "HPO",
+        "request_date": "2026-03-11",
+        "uniform": 1,
+        "quantity": 1,
+        "student_name": "Đào Minh Quân",
+        "note": "Kho nợ",
+        "is_resolved": false,
+        "created_at": "2026-05-13T06:47:54.224Z"
+    }
+},
+{
+    "model": "inventory.debt",
+    "pk": 53,
+    "fields": {
+        "branch": "HPO",
+        "request_date": "2026-03-11",
+        "uniform": 1,
+        "quantity": 1,
+        "student_name": "Phan Gia Huy",
+        "note": "Kho nợ",
+        "is_resolved": false,
+        "created_at": "2026-05-13T06:47:54.228Z"
+    }
+},
+{
+    "model": "inventory.debt",
+    "pk": 54,
+    "fields": {
+        "branch": "Safira",
+        "request_date": "2026-03-11",
+        "uniform": 1,
+        "quantity": 1,
+        "student_name": "Hồ Bảo Quyên",
+        "note": "Kho nợ",
+        "is_resolved": false,
+        "created_at": "2026-05-13T06:47:54.232Z"
+    }
+},
+{
+    "model": "inventory.debt",
+    "pk": 55,
+    "fields": {
+        "branch": "Safira",
+        "request_date": "2026-03-11",
+        "uniform": 1,
+        "quantity": 1,
+        "student_name": "Nguyễn Sỹ Minh",
+        "note": "Kho nợ",
+        "is_resolved": false,
+        "created_at": "2026-05-13T06:47:54.235Z"
+    }
+},
+{
+    "model": "inventory.debt",
+    "pk": 56,
+    "fields": {
+        "branch": "Orchard",
+        "request_date": "2026-03-11",
+        "uniform": 1,
+        "quantity": 1,
+        "student_name": "Nguyễn Bảo Lâm",
+        "note": "Kho nợ",
+        "is_resolved": false,
+        "created_at": "2026-05-13T06:47:54.239Z"
+    }
+},
+{
+    "model": "inventory.debt",
+    "pk": 57,
+    "fields": {
+        "branch": "Orchard",
+        "request_date": "2026-03-11",
+        "uniform": 1,
+        "quantity": 1,
+        "student_name": "Nguyễn Ngọc Lan Chi",
+        "note": "Kho nợ",
+        "is_resolved": false,
+        "created_at": "2026-05-13T06:47:54.241Z"
+    }
+},
+{
+    "model": "inventory.debt",
+    "pk": 58,
+    "fields": {
+        "branch": "Sunview",
+        "request_date": "2026-03-11",
+        "uniform": 1,
+        "quantity": 1,
+        "student_name": "Lê Phúc Khang",
+        "note": "Kho nợ",
+        "is_resolved": false,
+        "created_at": "2026-05-13T06:47:54.245Z"
+    }
+},
+{
+    "model": "inventory.debt",
+    "pk": 59,
+    "fields": {
+        "branch": "Belleza",
+        "request_date": "2026-03-11",
+        "uniform": 1,
+        "quantity": 1,
+        "student_name": "Phạm Lê Hải Đăng",
+        "note": "Kho nợ",
+        "is_resolved": false,
+        "created_at": "2026-05-13T06:47:54.248Z"
+    }
+},
+{
+    "model": "inventory.debt",
+    "pk": 60,
+    "fields": {
+        "branch": "Newcity",
+        "request_date": "2026-03-17",
+        "uniform": 1,
+        "quantity": 1,
+        "student_name": "Nguyễn Bá Hưng",
+        "note": "Kho nợ",
+        "is_resolved": false,
+        "created_at": "2026-05-13T06:47:54.251Z"
+    }
+},
+{
+    "model": "inventory.debt",
+    "pk": 61,
+    "fields": {
+        "branch": "Tresor",
+        "request_date": "2026-03-17",
+        "uniform": 1,
+        "quantity": 1,
+        "student_name": "Phạm Khánh Linh",
+        "note": "Kho nợ",
+        "is_resolved": false,
+        "created_at": "2026-05-13T06:47:54.253Z"
+    }
+},
+{
+    "model": "inventory.debt",
+    "pk": 62,
+    "fields": {
+        "branch": "Tresor",
+        "request_date": "2026-03-17",
+        "uniform": 1,
+        "quantity": 1,
+        "student_name": "Nguyễn Tuấn Sang",
+        "note": "Kho nợ",
+        "is_resolved": false,
+        "created_at": "2026-05-13T06:47:54.256Z"
+    }
+},
+{
+    "model": "inventory.debt",
+    "pk": 63,
+    "fields": {
+        "branch": "Tresor",
+        "request_date": "2026-03-17",
+        "uniform": 1,
+        "quantity": 1,
+        "student_name": "Lê Nhật Mai Lem",
+        "note": "Kho nợ",
+        "is_resolved": false,
+        "created_at": "2026-05-13T06:47:54.259Z"
+    }
+},
+{
+    "model": "inventory.debt",
+    "pk": 64,
+    "fields": {
+        "branch": "Hưng Phát",
+        "request_date": "2026-03-17",
+        "uniform": 1,
+        "quantity": 1,
+        "student_name": "Dương Thái Tường Anh",
+        "note": "Kho nợ",
+        "is_resolved": false,
+        "created_at": "2026-05-13T06:47:54.262Z"
+    }
+},
+{
+    "model": "inventory.debt",
+    "pk": 65,
+    "fields": {
+        "branch": "Sunview",
+        "request_date": "2026-03-24",
+        "uniform": 1,
+        "quantity": 1,
+        "student_name": "Nguyễn Hoàng Hà My",
+        "note": "Kho nợ",
+        "is_resolved": false,
+        "created_at": "2026-05-13T06:47:54.265Z"
+    }
+},
+{
+    "model": "inventory.debt",
+    "pk": 66,
+    "fields": {
+        "branch": "Lexington",
+        "request_date": "2026-03-24",
+        "uniform": 1,
+        "quantity": 1,
+        "student_name": "Yoo Ha Yun",
+        "note": "Kho nợ",
+        "is_resolved": false,
+        "created_at": "2026-05-13T06:47:54.267Z"
+    }
+},
+{
+    "model": "inventory.debt",
+    "pk": 67,
+    "fields": {
+        "branch": "Lexington",
+        "request_date": "2026-03-24",
+        "uniform": 1,
+        "quantity": 1,
+        "student_name": "Trần Minh Anh",
+        "note": "Kho nợ",
+        "is_resolved": false,
+        "created_at": "2026-05-13T06:47:54.270Z"
+    }
+},
+{
+    "model": "inventory.debt",
+    "pk": 68,
+    "fields": {
+        "branch": "Opal Garden",
+        "request_date": "2026-03-24",
+        "uniform": 1,
+        "quantity": 1,
+        "student_name": "Huỳnh Phúc Hưng",
+        "note": "Kho nợ",
+        "is_resolved": false,
+        "created_at": "2026-05-13T06:47:54.275Z"
+    }
+},
+{
+    "model": "inventory.debt",
+    "pk": 69,
+    "fields": {
+        "branch": "Opal Garden",
+        "request_date": "2026-03-24",
+        "uniform": 1,
+        "quantity": 1,
+        "student_name": "Nguyễn Đăng Quân",
+        "note": "Kho nợ",
+        "is_resolved": false,
+        "created_at": "2026-05-13T06:47:54.284Z"
+    }
+},
+{
+    "model": "inventory.debt",
+    "pk": 70,
+    "fields": {
+        "branch": "Opal Garden",
+        "request_date": "2026-03-24",
+        "uniform": 1,
+        "quantity": 1,
+        "student_name": "Lê Trọng Kha",
+        "note": "Kho nợ",
+        "is_resolved": false,
+        "created_at": "2026-05-13T06:47:54.287Z"
+    }
+},
+{
+    "model": "inventory.debt",
+    "pk": 71,
+    "fields": {
+        "branch": "Opal Garden",
+        "request_date": "2026-03-24",
+        "uniform": 1,
+        "quantity": 1,
+        "student_name": "Phạm Quân",
+        "note": "Kho nợ",
+        "is_resolved": false,
+        "created_at": "2026-05-13T06:47:54.291Z"
+    }
+},
+{
+    "model": "inventory.debt",
+    "pk": 72,
+    "fields": {
+        "branch": "Opal Garden",
+        "request_date": "2026-03-24",
+        "uniform": 1,
+        "quantity": 1,
+        "student_name": "Trần Quang Minh",
+        "note": "Kho nợ",
+        "is_resolved": false,
+        "created_at": "2026-05-13T06:47:54.293Z"
+    }
+},
+{
+    "model": "inventory.debt",
+    "pk": 73,
+    "fields": {
+        "branch": "Opal Garden",
+        "request_date": "2026-03-24",
+        "uniform": 1,
+        "quantity": 1,
+        "student_name": "Huỳnh Ngọc Anh Thư",
+        "note": "Kho nợ",
+        "is_resolved": false,
+        "created_at": "2026-05-13T06:47:54.296Z"
+    }
+},
+{
+    "model": "inventory.debt",
+    "pk": 74,
+    "fields": {
+        "branch": "Opal Riverside",
+        "request_date": "2026-03-24",
+        "uniform": 1,
+        "quantity": 1,
+        "student_name": "Đinh Ngọc My",
+        "note": "Kho nợ",
+        "is_resolved": false,
+        "created_at": "2026-05-13T06:47:54.299Z"
+    }
+},
+{
+    "model": "inventory.debt",
+    "pk": 75,
+    "fields": {
+        "branch": "Opal Riverside",
+        "request_date": "2026-03-24",
+        "uniform": 1,
+        "quantity": 1,
+        "student_name": "Đào Uyên Minh",
+        "note": "Kho nợ",
+        "is_resolved": false,
+        "created_at": "2026-05-13T06:47:54.302Z"
+    }
+},
+{
+    "model": "inventory.debt",
+    "pk": 76,
+    "fields": {
+        "branch": "Opal Riverside",
+        "request_date": "2026-03-24",
+        "uniform": 1,
+        "quantity": 1,
+        "student_name": "Ngô Minh Ánh",
+        "note": "Kho nợ",
+        "is_resolved": false,
+        "created_at": "2026-05-13T06:47:54.304Z"
+    }
+},
+{
+    "model": "inventory.debt",
+    "pk": 77,
+    "fields": {
+        "branch": "Citygate",
+        "request_date": "2026-05-13",
+        "uniform": 1,
+        "quantity": 1,
+        "student_name": "Trần Anh Đan",
+        "note": "Kho nợ",
+        "is_resolved": false,
+        "created_at": "2026-05-13T06:47:54.307Z"
+    }
+},
+{
+    "model": "inventory.debt",
+    "pk": 78,
+    "fields": {
+        "branch": "Tresor",
+        "request_date": "2026-03-17",
+        "uniform": 1,
+        "quantity": 1,
+        "student_name": "Phạm Khánh Linh",
+        "note": "Kho nợ",
+        "is_resolved": false,
+        "created_at": "2026-05-13T06:47:54.309Z"
+    }
+},
+{
+    "model": "inventory.debt",
+    "pk": 79,
+    "fields": {
+        "branch": "Tresor",
+        "request_date": "2026-03-17",
+        "uniform": 1,
+        "quantity": 1,
+        "student_name": "Nguyễn Tuấn Sang",
+        "note": "Kho nợ",
+        "is_resolved": false,
+        "created_at": "2026-05-13T06:47:54.312Z"
+    }
+},
+{
+    "model": "inventory.debt",
+    "pk": 80,
+    "fields": {
+        "branch": "Tresor",
+        "request_date": "2026-03-17",
+        "uniform": 1,
+        "quantity": 1,
+        "student_name": "Lê Nhật Mai Lem",
+        "note": "Kho nợ",
+        "is_resolved": false,
+        "created_at": "2026-05-13T06:47:54.314Z"
+    }
+},
+{
+    "model": "inventory.debt",
+    "pk": 81,
+    "fields": {
+        "branch": "Sunrise",
+        "request_date": "2026-03-31",
+        "uniform": 1,
+        "quantity": 1,
+        "student_name": "Bùi Thảo Vy",
+        "note": "Kho nợ",
+        "is_resolved": false,
+        "created_at": "2026-05-13T06:47:54.317Z"
+    }
+},
+{
+    "model": "inventory.debt",
+    "pk": 82,
+    "fields": {
+        "branch": "Sunview",
+        "request_date": "2026-03-31",
+        "uniform": 1,
+        "quantity": 1,
+        "student_name": "Trần Hồng Đăng",
+        "note": "Kho nợ",
+        "is_resolved": false,
+        "created_at": "2026-05-13T06:47:54.320Z"
+    }
+},
+{
+    "model": "inventory.debt",
+    "pk": 83,
+    "fields": {
+        "branch": "Belleza",
+        "request_date": "2026-03-31",
+        "uniform": 1,
+        "quantity": 1,
+        "student_name": "Nhữ Khánh Tường",
+        "note": "Kho nợ",
+        "is_resolved": false,
+        "created_at": "2026-05-13T06:47:54.322Z"
+    }
+},
+{
+    "model": "inventory.debt",
+    "pk": 84,
+    "fields": {
+        "branch": "HPO",
+        "request_date": "2026-05-13",
+        "uniform": 1,
+        "quantity": 1,
+        "student_name": "Phạm Gia Hào",
+        "note": "Kho nợ",
+        "is_resolved": false,
+        "created_at": "2026-05-13T06:47:54.325Z"
+    }
+},
+{
+    "model": "inventory.debt",
+    "pk": 85,
+    "fields": {
+        "branch": "HPO",
+        "request_date": "2026-05-13",
+        "uniform": 1,
+        "quantity": 1,
+        "student_name": "Phạm Quốc Thái",
+        "note": "Kho nợ",
+        "is_resolved": false,
+        "created_at": "2026-05-13T06:47:54.328Z"
+    }
+},
+{
+    "model": "inventory.debt",
+    "pk": 86,
+    "fields": {
+        "branch": "HPO",
+        "request_date": "2026-05-13",
+        "uniform": 1,
+        "quantity": 1,
+        "student_name": "Trần Quang Ân",
+        "note": "Kho nợ",
+        "is_resolved": false,
+        "created_at": "2026-05-13T06:47:54.330Z"
+    }
+},
+{
+    "model": "inventory.debt",
+    "pk": 87,
+    "fields": {
+        "branch": "HPO",
+        "request_date": "2026-05-13",
+        "uniform": 1,
+        "quantity": 1,
+        "student_name": "Bian Shuhui",
+        "note": "Kho nợ",
+        "is_resolved": false,
+        "created_at": "2026-05-13T06:47:54.334Z"
+    }
+},
+{
+    "model": "inventory.debt",
+    "pk": 88,
+    "fields": {
+        "branch": "HPO",
+        "request_date": "2026-05-13",
+        "uniform": 1,
+        "quantity": 1,
+        "student_name": "Bùi Nhã Thanh",
+        "note": "Kho nợ",
+        "is_resolved": false,
+        "created_at": "2026-05-13T06:47:54.338Z"
+    }
+},
+{
+    "model": "inventory.debt",
+    "pk": 89,
+    "fields": {
+        "branch": "Orchard",
+        "request_date": "2026-03-24",
+        "uniform": 1,
+        "quantity": 1,
+        "student_name": "Nguyễn Anh Tú",
+        "note": "Kho nợ",
+        "is_resolved": false,
+        "created_at": "2026-05-13T06:47:54.346Z"
+    }
+},
+{
+    "model": "inventory.debt",
+    "pk": 90,
+    "fields": {
+        "branch": "Orchard",
+        "request_date": "2026-03-24",
+        "uniform": 1,
+        "quantity": 1,
+        "student_name": "Hà Ngọc Châu Anh",
+        "note": "Kho nợ",
+        "is_resolved": false,
+        "created_at": "2026-05-13T06:47:54.354Z"
+    }
+},
+{
+    "model": "inventory.debt",
+    "pk": 91,
+    "fields": {
+        "branch": "Lexington",
+        "request_date": "2026-04-07",
+        "uniform": 1,
+        "quantity": 1,
+        "student_name": "Phùng Ngọc Nhã Uyên",
+        "note": "Kho nợ",
+        "is_resolved": false,
+        "created_at": "2026-05-13T06:47:54.361Z"
+    }
+},
+{
+    "model": "inventory.debt",
+    "pk": 92,
+    "fields": {
+        "branch": "Newcity",
+        "request_date": "2026-04-07",
+        "uniform": 1,
+        "quantity": 1,
+        "student_name": "Ngô Gia Hoàng Nhật Dương",
+        "note": "Kho nợ",
+        "is_resolved": false,
+        "created_at": "2026-05-13T06:47:54.365Z"
+    }
+},
+{
+    "model": "inventory.debt",
+    "pk": 93,
+    "fields": {
+        "branch": "Newcity",
+        "request_date": "2026-04-07",
+        "uniform": 1,
+        "quantity": 1,
+        "student_name": "Lê Bảo Châu",
+        "note": "Kho nợ",
+        "is_resolved": false,
+        "created_at": "2026-05-13T06:47:54.370Z"
+    }
+},
+{
+    "model": "inventory.debt",
+    "pk": 94,
+    "fields": {
+        "branch": "Orchard",
+        "request_date": "2026-04-09",
+        "uniform": 1,
+        "quantity": 1,
+        "student_name": "Nguyễn Minh Quân",
+        "note": "Kho nợ",
+        "is_resolved": false,
+        "created_at": "2026-05-13T06:47:54.372Z"
+    }
+},
+{
+    "model": "inventory.debt",
+    "pk": 95,
+    "fields": {
+        "branch": "Safira",
+        "request_date": "2026-04-06",
+        "uniform": 1,
+        "quantity": 1,
+        "student_name": "Nguyễn Đan Chi",
+        "note": "Kho nợ",
+        "is_resolved": false,
+        "created_at": "2026-05-13T06:47:54.375Z"
+    }
+},
+{
+    "model": "inventory.debt",
+    "pk": 96,
+    "fields": {
+        "branch": "Safira",
+        "request_date": "2026-04-06",
+        "uniform": 1,
+        "quantity": 1,
+        "student_name": "Nguyễn Khánh Vy",
+        "note": "Kho nợ",
+        "is_resolved": false,
+        "created_at": "2026-05-13T06:47:54.378Z"
+    }
+},
+{
+    "model": "inventory.debt",
+    "pk": 97,
+    "fields": {
+        "branch": "Safira",
+        "request_date": "2026-04-06",
+        "uniform": 1,
+        "quantity": 1,
+        "student_name": "Lê Diệp Trâm Anh",
+        "note": "Kho nợ",
+        "is_resolved": false,
+        "created_at": "2026-05-13T06:47:54.380Z"
+    }
+},
+{
+    "model": "inventory.debt",
+    "pk": 98,
+    "fields": {
+        "branch": "Safira",
+        "request_date": "2026-04-06",
+        "uniform": 1,
+        "quantity": 1,
+        "student_name": "Nguyễn Đình Nhân",
+        "note": "Kho nợ",
+        "is_resolved": false,
+        "created_at": "2026-05-13T06:47:54.383Z"
+    }
+},
+{
+    "model": "inventory.debt",
+    "pk": 99,
+    "fields": {
+        "branch": "Safira",
+        "request_date": "2026-04-06",
+        "uniform": 1,
+        "quantity": 1,
+        "student_name": "Trần Quỳnh An",
+        "note": "Kho nợ",
+        "is_resolved": false,
+        "created_at": "2026-05-13T06:47:54.385Z"
+    }
+},
+{
+    "model": "inventory.debt",
+    "pk": 100,
+    "fields": {
+        "branch": "HPO",
+        "request_date": "2026-04-14",
+        "uniform": 1,
+        "quantity": 1,
+        "student_name": "Hoàng Minh Anh",
+        "note": "Kho nợ",
+        "is_resolved": false,
+        "created_at": "2026-05-13T06:47:54.388Z"
+    }
+},
+{
+    "model": "inventory.debt",
+    "pk": 101,
+    "fields": {
+        "branch": "Newcity",
+        "request_date": "2026-04-14",
+        "uniform": 1,
+        "quantity": 1,
+        "student_name": "Nguyễn Minh Khang",
+        "note": "Kho nợ",
+        "is_resolved": false,
+        "created_at": "2026-05-13T06:47:54.392Z"
+    }
+},
+{
+    "model": "inventory.debt",
+    "pk": 102,
+    "fields": {
+        "branch": "Opal Garden",
+        "request_date": "2026-04-14",
+        "uniform": 1,
+        "quantity": 1,
+        "student_name": "Lương Nhật Quỳnh",
+        "note": "Kho nợ",
+        "is_resolved": false,
+        "created_at": "2026-05-13T06:47:54.394Z"
+    }
+},
+{
+    "model": "inventory.debt",
+    "pk": 103,
+    "fields": {
+        "branch": "Safira",
+        "request_date": "2026-04-15",
+        "uniform": 1,
+        "quantity": 1,
+        "student_name": "Lê Linh Đan",
+        "note": "Kho nợ",
+        "is_resolved": false,
+        "created_at": "2026-05-13T06:47:54.397Z"
+    }
+},
+{
+    "model": "inventory.debt",
+    "pk": 104,
+    "fields": {
+        "branch": "Safira",
+        "request_date": "2026-04-15",
+        "uniform": 1,
+        "quantity": 1,
+        "student_name": "Lê Phương Nghi",
+        "note": "Kho nợ",
+        "is_resolved": false,
+        "created_at": "2026-05-13T06:47:54.400Z"
+    }
+},
+{
+    "model": "inventory.debt",
+    "pk": 105,
+    "fields": {
+        "branch": "Safira",
+        "request_date": "2026-04-15",
+        "uniform": 1,
+        "quantity": 1,
+        "student_name": "Nguyễn Quang Hiển",
+        "note": "Kho nợ",
+        "is_resolved": false,
+        "created_at": "2026-05-13T06:47:54.403Z"
+    }
+},
+{
+    "model": "inventory.debt",
+    "pk": 106,
+    "fields": {
+        "branch": "Safira",
+        "request_date": "2026-04-15",
+        "uniform": 1,
+        "quantity": 1,
+        "student_name": "Đinh Gia Nguyên",
+        "note": "Kho nợ",
+        "is_resolved": false,
+        "created_at": "2026-05-13T06:47:54.405Z"
+    }
+},
+{
+    "model": "inventory.debt",
+    "pk": 107,
+    "fields": {
+        "branch": "Safira",
+        "request_date": "2026-04-15",
+        "uniform": 1,
+        "quantity": 1,
+        "student_name": "Huỳnh Ngọc Anh",
+        "note": "Kho nợ",
+        "is_resolved": false,
+        "created_at": "2026-05-13T06:47:54.408Z"
+    }
+},
+{
+    "model": "inventory.debt",
+    "pk": 108,
+    "fields": {
+        "branch": "Safira",
+        "request_date": "2026-04-15",
+        "uniform": 1,
+        "quantity": 1,
+        "student_name": "Võ Hoàng Thiên",
+        "note": "Kho nợ",
+        "is_resolved": false,
+        "created_at": "2026-05-13T06:47:54.411Z"
+    }
+},
+{
+    "model": "inventory.debt",
+    "pk": 109,
+    "fields": {
+        "branch": "Safira",
+        "request_date": "2026-04-15",
+        "uniform": 1,
+        "quantity": 1,
+        "student_name": "Trần Bùi Tuệ Nhi",
+        "note": "Kho nợ",
+        "is_resolved": false,
+        "created_at": "2026-05-13T06:47:54.413Z"
+    }
+},
+{
+    "model": "inventory.debt",
+    "pk": 110,
+    "fields": {
+        "branch": "Safira",
+        "request_date": "2026-04-15",
+        "uniform": 1,
+        "quantity": 1,
+        "student_name": "Nguyễn Ngọc An Nhiên",
+        "note": "Kho nợ",
+        "is_resolved": false,
+        "created_at": "2026-05-13T06:47:54.416Z"
+    }
+},
+{
+    "model": "inventory.debt",
+    "pk": 111,
+    "fields": {
+        "branch": "Safira",
+        "request_date": "2026-04-15",
+        "uniform": 1,
+        "quantity": 1,
+        "student_name": "Nguyễn Minh Đăng",
+        "note": "Kho nợ",
+        "is_resolved": false,
+        "created_at": "2026-05-13T06:47:54.418Z"
+    }
+},
+{
+    "model": "inventory.debt",
+    "pk": 112,
+    "fields": {
+        "branch": "Safira",
+        "request_date": "2026-04-15",
+        "uniform": 1,
+        "quantity": 1,
+        "student_name": "Trần Bùi Minh Khang",
+        "note": "Kho nợ",
+        "is_resolved": false,
+        "created_at": "2026-05-13T06:47:54.421Z"
+    }
+},
+{
+    "model": "inventory.debt",
+    "pk": 113,
+    "fields": {
+        "branch": "Safira",
+        "request_date": "2026-04-15",
+        "uniform": 1,
+        "quantity": 1,
+        "student_name": "Quách Ngọc Minh Anh",
+        "note": "Kho nợ",
+        "is_resolved": false,
+        "created_at": "2026-05-13T06:47:54.423Z"
+    }
+},
+{
+    "model": "inventory.debt",
+    "pk": 114,
+    "fields": {
+        "branch": "Safira",
+        "request_date": "2026-04-15",
+        "uniform": 1,
+        "quantity": 1,
+        "student_name": "Lê Trọng Khiêm",
+        "note": "Kho nợ",
+        "is_resolved": false,
+        "created_at": "2026-05-13T06:47:54.426Z"
+    }
+},
+{
+    "model": "inventory.debt",
+    "pk": 115,
+    "fields": {
+        "branch": "Hưng Phát",
+        "request_date": "2026-04-22",
+        "uniform": 1,
+        "quantity": 1,
+        "student_name": "Trần Uyển Nhi",
+        "note": "Kho nợ",
+        "is_resolved": false,
+        "created_at": "2026-05-13T06:47:54.428Z"
+    }
+},
+{
+    "model": "inventory.debt",
+    "pk": 116,
+    "fields": {
+        "branch": "Sunview",
+        "request_date": "2026-05-05",
+        "uniform": 1,
+        "quantity": 1,
+        "student_name": "Nguyễn Anh Huy",
+        "note": "Kho nợ",
+        "is_resolved": false,
+        "created_at": "2026-05-13T06:47:54.431Z"
+    }
+},
+{
+    "model": "inventory.debt",
+    "pk": 117,
+    "fields": {
+        "branch": "Sunview",
+        "request_date": "2026-05-05",
+        "uniform": 1,
+        "quantity": 1,
+        "student_name": "Trần Diệp Đan Chi",
+        "note": "Kho nợ",
+        "is_resolved": false,
+        "created_at": "2026-05-13T06:47:54.433Z"
+    }
+},
+{
+    "model": "inventory.debt",
+    "pk": 118,
+    "fields": {
+        "branch": "Belleza",
+        "request_date": "2026-05-05",
+        "uniform": 1,
+        "quantity": 1,
+        "student_name": "Trần Hà Phúc Anh",
+        "note": "Kho nợ",
+        "is_resolved": false,
+        "created_at": "2026-05-13T06:47:54.437Z"
+    }
+},
+{
+    "model": "inventory.debt",
+    "pk": 119,
+    "fields": {
+        "branch": "Hưng Phát",
+        "request_date": "2026-05-05",
+        "uniform": 1,
+        "quantity": 1,
+        "student_name": "Trần Minh Khang",
+        "note": "Kho nợ",
+        "is_resolved": false,
+        "created_at": "2026-05-13T06:47:54.440Z"
+    }
+},
+{
+    "model": "inventory.debt",
+    "pk": 120,
+    "fields": {
+        "branch": "Newcity",
+        "request_date": "2026-05-05",
+        "uniform": 1,
+        "quantity": 1,
+        "student_name": "Trần Hoài Nguyên Anh",
+        "note": "Kho nợ",
+        "is_resolved": false,
+        "created_at": "2026-05-13T06:47:54.442Z"
+    }
+},
+{
+    "model": "inventory.debt",
+    "pk": 121,
+    "fields": {
+        "branch": "Safira",
+        "request_date": "2026-05-05",
+        "uniform": 1,
+        "quantity": 1,
+        "student_name": "Võ Trung Kiên",
+        "note": "Kho nợ",
+        "is_resolved": false,
+        "created_at": "2026-05-13T06:47:54.445Z"
+    }
+},
+{
+    "model": "inventory.debt",
+    "pk": 122,
+    "fields": {
+        "branch": "Safira",
+        "request_date": "2026-05-05",
+        "uniform": 1,
+        "quantity": 1,
+        "student_name": "Võ Trung Kiên",
+        "note": "Kho nợ",
+        "is_resolved": false,
+        "created_at": "2026-05-13T06:47:54.448Z"
+    }
+},
+{
+    "model": "inventory.debt",
+    "pk": 123,
+    "fields": {
+        "branch": "Safira",
+        "request_date": "2026-05-05",
+        "uniform": 1,
+        "quantity": 1,
+        "student_name": "Võ Trung Kiên",
+        "note": "Kho nợ",
+        "is_resolved": false,
+        "created_at": "2026-05-13T06:47:54.450Z"
+    }
+},
+{
+    "model": "inventory.staffdebt",
+    "pk": 25,
+    "fields": {
+        "employee_name": "Võ Công Tài",
+        "position": "GVTA",
+        "gender": "Nam",
+        "uniform": 16,
+        "quantity": 1,
+        "issue_date": "2026-01-08",
+        "return_date": "2026-05-15",
+        "branch": "New City",
+        "note": "",
+        "is_resolved": true
+    }
+},
+{
+    "model": "inventory.staffdebt",
+    "pk": 26,
+    "fields": {
+        "employee_name": "Võ Công Tài",
+        "position": "GVTA",
+        "gender": "Nam",
+        "uniform": 16,
+        "quantity": 1,
+        "issue_date": "2026-05-15",
+        "return_date": "2026-05-15",
+        "branch": "New City",
+        "note": "Trả lại kho",
+        "is_resolved": true
+    }
+},
+{
+    "model": "inventory.staffdebt",
+    "pk": 27,
+    "fields": {
+        "employee_name": "Trần Thị Cẩm Hà",
+        "position": "HCNS",
+        "gender": "Nữ",
+        "uniform": 13,
+        "quantity": 1,
+        "issue_date": "2026-01-08",
+        "return_date": "2026-05-15",
+        "branch": "Văn Phòng",
+        "note": "",
+        "is_resolved": true
+    }
+},
+{
+    "model": "inventory.staffdebt",
+    "pk": 28,
+    "fields": {
+        "employee_name": "Ngô Thị Phúc",
+        "position": "Cấp dưỡng",
+        "gender": "Nữ",
+        "uniform": 15,
+        "quantity": 1,
+        "issue_date": "2026-01-30",
+        "return_date": "2026-05-15",
+        "branch": "Sunrise Riverside",
+        "note": "",
+        "is_resolved": true
+    }
+},
+{
+    "model": "inventory.staffdebt",
+    "pk": 29,
+    "fields": {
+        "employee_name": "Cao Bảo Phương Thi",
+        "position": "GV",
+        "gender": "Nữ",
+        "uniform": 13,
+        "quantity": 2,
+        "issue_date": "2026-01-30",
+        "return_date": "2026-05-15",
+        "branch": "Sunrise Riverside",
+        "note": "",
+        "is_resolved": true
+    }
+},
+{
+    "model": "inventory.staffdebt",
+    "pk": 30,
+    "fields": {
+        "employee_name": "Cao Bảo Phương Thi",
+        "position": "GV",
+        "gender": "Nữ",
+        "uniform": 5,
+        "quantity": 1,
+        "issue_date": "2026-01-30",
+        "return_date": "2026-05-15",
+        "branch": "Sunrise Riverside",
+        "note": "",
+        "is_resolved": true
+    }
+},
+{
+    "model": "inventory.staffdebt",
+    "pk": 31,
+    "fields": {
+        "employee_name": "Phan Thị Hòa",
+        "position": "Hiệu trưởng",
+        "gender": "Nữ",
+        "uniform": 13,
+        "quantity": 1,
+        "issue_date": "2026-01-30",
+        "return_date": "2026-05-15",
+        "branch": "New City",
+        "note": "",
+        "is_resolved": true
+    }
+},
+{
+    "model": "inventory.staffdebt",
+    "pk": 32,
+    "fields": {
+        "employee_name": "Nguyễn Thị Kim Oanh",
+        "position": "Trợ giảng",
+        "gender": "Nữ",
+        "uniform": 14,
+        "quantity": 1,
+        "issue_date": "2026-01-30",
+        "return_date": "2026-05-15",
+        "branch": "New City",
+        "note": "",
+        "is_resolved": true
+    }
+},
+{
+    "model": "inventory.staffdebt",
+    "pk": 33,
+    "fields": {
+        "employee_name": "Nguyễn thị Thanh Thúy",
+        "position": "Hiệu trưởng",
+        "gender": "Nữ",
+        "uniform": 15,
+        "quantity": 1,
+        "issue_date": "2026-02-06",
+        "return_date": "2026-05-15",
+        "branch": "Hưng Phát",
+        "note": "",
+        "is_resolved": true
+    }
+},
+{
+    "model": "inventory.staffdebt",
+    "pk": 34,
+    "fields": {
+        "employee_name": "Hà Thị Hoa",
+        "position": "Hiệu phó",
+        "gender": "Nữ",
+        "uniform": 14,
+        "quantity": 1,
+        "issue_date": "2026-02-06",
+        "return_date": "2026-05-15",
+        "branch": "Hưng Phát",
+        "note": "",
+        "is_resolved": true
+    }
+},
+{
+    "model": "inventory.staffdebt",
+    "pk": 35,
+    "fields": {
+        "employee_name": "Phạm Thị Kim Thủy",
+        "position": "Cấp dưỡng",
+        "gender": "Nữ",
+        "uniform": 15,
+        "quantity": 1,
+        "issue_date": "2026-02-06",
+        "return_date": "2026-05-15",
+        "branch": "Hưng Phát",
+        "note": "",
+        "is_resolved": true
+    }
+},
+{
+    "model": "inventory.staffdebt",
+    "pk": 36,
+    "fields": {
+        "employee_name": "MAY ANNE L. AGUILAR",
+        "position": "GVNN",
+        "gender": "Nữ",
+        "uniform": 12,
+        "quantity": 1,
+        "issue_date": "2026-02-06",
+        "return_date": "2026-05-15",
+        "branch": "Lexington",
+        "note": "",
+        "is_resolved": true
+    }
+},
+{
+    "model": "inventory.staffdebt",
+    "pk": 37,
+    "fields": {
+        "employee_name": "MAY ANNE L. AGUILAR",
+        "position": "GVNN",
+        "gender": "Nữ",
+        "uniform": 4,
+        "quantity": 1,
+        "issue_date": "2026-02-06",
+        "return_date": "2026-05-15",
+        "branch": "Lexington",
+        "note": "",
+        "is_resolved": true
+    }
+},
+{
+    "model": "inventory.staffdebt",
+    "pk": 38,
+    "fields": {
+        "employee_name": "Trần Thị Trà My",
+        "position": "BM",
+        "gender": "Nữ",
+        "uniform": 13,
+        "quantity": 1,
+        "issue_date": "2026-02-06",
+        "return_date": "2026-05-15",
+        "branch": "Phú Mỹ",
+        "note": "",
+        "is_resolved": true
+    }
+},
+{
+    "model": "inventory.staffdebt",
+    "pk": 39,
+    "fields": {
+        "employee_name": "Trần Thị Trà My",
+        "position": "BM",
+        "gender": "Nữ",
+        "uniform": 5,
+        "quantity": 1,
+        "issue_date": "2026-02-06",
+        "return_date": "2026-05-15",
+        "branch": "Phú Mỹ",
+        "note": "",
+        "is_resolved": true
+    }
+},
+{
+    "model": "inventory.staffdebt",
+    "pk": 40,
+    "fields": {
+        "employee_name": "Nguyễn Ngọc Phương Huỳnh",
+        "position": "GVTA",
+        "gender": "Nữ",
+        "uniform": 12,
+        "quantity": 1,
+        "issue_date": "2026-02-06",
+        "return_date": "2026-05-15",
+        "branch": "Phú Mỹ",
+        "note": "",
+        "is_resolved": true
+    }
+},
+{
+    "model": "inventory.staffdebt",
+    "pk": 41,
+    "fields": {
+        "employee_name": "Nguyễn Ngọc Phương Huỳnh",
+        "position": "GVTA",
+        "gender": "Nữ",
+        "uniform": 4,
+        "quantity": 1,
+        "issue_date": "2026-02-06",
+        "return_date": "2026-05-15",
+        "branch": "Phú Mỹ",
+        "note": "",
+        "is_resolved": true
+    }
+},
+{
+    "model": "inventory.staffdebt",
+    "pk": 42,
+    "fields": {
+        "employee_name": "Trần Thụy Thủy Tuyên",
+        "position": "GV",
+        "gender": "Nữ",
+        "uniform": 15,
+        "quantity": 1,
+        "issue_date": "2026-02-06",
+        "return_date": "2026-05-15",
+        "branch": "HPO",
+        "note": "",
+        "is_resolved": true
+    }
+},
+{
+    "model": "inventory.staffdebt",
+    "pk": 43,
+    "fields": {
+        "employee_name": "Trần Thụy Thủy Tuyên",
+        "position": "GV",
+        "gender": "Nữ",
+        "uniform": 7,
+        "quantity": 1,
+        "issue_date": "2026-02-06",
+        "return_date": "2026-05-15",
+        "branch": "HPO",
+        "note": "",
+        "is_resolved": true
+    }
+},
+{
+    "model": "inventory.staffdebt",
+    "pk": 44,
+    "fields": {
+        "employee_name": "Chung Thị Nhã Trân",
+        "position": "BM",
+        "gender": "Nữ",
+        "uniform": 14,
+        "quantity": 1,
+        "issue_date": "2026-02-27",
+        "return_date": "2026-05-15",
+        "branch": "City Gate",
+        "note": "",
+        "is_resolved": true
+    }
+},
+{
+    "model": "inventory.staffdebt",
+    "pk": 45,
+    "fields": {
+        "employee_name": "Trần Thị Ngọc Lành",
+        "position": "BM",
+        "gender": "Nữ",
+        "uniform": 16,
+        "quantity": 1,
+        "issue_date": "2026-02-27",
+        "return_date": "2026-05-15",
+        "branch": "City Gate",
+        "note": "",
+        "is_resolved": true
+    }
+},
+{
+    "model": "inventory.staffdebt",
+    "pk": 46,
+    "fields": {
+        "employee_name": "Trần Thị Ngọc Lành",
+        "position": "BM",
+        "gender": "Nữ",
+        "uniform": 8,
+        "quantity": 1,
+        "issue_date": "2026-02-27",
+        "return_date": "2026-05-15",
+        "branch": "City Gate",
+        "note": "",
+        "is_resolved": true
+    }
+},
+{
+    "model": "inventory.staffdebt",
+    "pk": 47,
+    "fields": {
+        "employee_name": "Nguyễn Hoàng Bảo Ngọc",
+        "position": "NVYT",
+        "gender": "Nữ",
+        "uniform": 16,
+        "quantity": 1,
+        "issue_date": "2026-02-27",
+        "return_date": "2026-05-15",
+        "branch": "City Gate",
+        "note": "",
+        "is_resolved": true
+    }
+},
+{
+    "model": "inventory.staffdebt",
+    "pk": 48,
+    "fields": {
+        "employee_name": "Trần Thị Trà My",
+        "position": "BM",
+        "gender": "Nữ",
+        "uniform": 13,
+        "quantity": 1,
+        "issue_date": "2026-02-27",
+        "return_date": "2026-05-15",
+        "branch": "Phú Mỹ",
+        "note": "",
+        "is_resolved": true
+    }
+},
+{
+    "model": "inventory.staffdebt",
+    "pk": 49,
+    "fields": {
+        "employee_name": "Nguyễn Ngọc Phương Huỳnh",
+        "position": "GVTA",
+        "gender": "Nữ",
+        "uniform": 12,
+        "quantity": 1,
+        "issue_date": "2026-02-27",
+        "return_date": "2026-05-15",
+        "branch": "Phú Mỹ",
+        "note": "",
+        "is_resolved": true
+    }
+},
+{
+    "model": "inventory.staffdebt",
+    "pk": 50,
+    "fields": {
+        "employee_name": "Nguyễn Thị Thanh Lan",
+        "position": "BM",
+        "gender": "Nữ",
+        "uniform": 15,
+        "quantity": 1,
+        "issue_date": "2026-02-27",
+        "return_date": "2026-05-15",
+        "branch": "Phú Mỹ",
+        "note": "",
+        "is_resolved": true
+    }
+},
+{
+    "model": "inventory.staffdebt",
+    "pk": 51,
+    "fields": {
+        "employee_name": "Nguyễn Thị Thanh Lan",
+        "position": "BM",
+        "gender": "Nữ",
+        "uniform": 7,
+        "quantity": 1,
+        "issue_date": "2026-02-27",
+        "return_date": "2026-05-15",
+        "branch": "Phú Mỹ",
+        "note": "",
+        "is_resolved": true
+    }
+},
+{
+    "model": "inventory.staffdebt",
+    "pk": 52,
+    "fields": {
+        "employee_name": "Nguyễn Thị Hồng",
+        "position": "GV",
+        "gender": "Nữ",
+        "uniform": 15,
+        "quantity": 1,
+        "issue_date": "2026-02-27",
+        "return_date": "2026-05-15",
+        "branch": "Phú Mỹ",
+        "note": "",
+        "is_resolved": true
+    }
+},
+{
+    "model": "inventory.staffdebt",
+    "pk": 53,
+    "fields": {
+        "employee_name": "Roland Jude Castor",
+        "position": "GVNN",
+        "gender": "Nam",
+        "uniform": 16,
+        "quantity": 1,
+        "issue_date": "2026-02-27",
+        "return_date": "2026-05-15",
+        "branch": "Opal Riverside",
+        "note": "",
+        "is_resolved": true
+    }
+},
+{
+    "model": "inventory.staffdebt",
+    "pk": 54,
+    "fields": {
+        "employee_name": "Roland Jude Castor",
+        "position": "GVNN",
+        "gender": "Nam",
+        "uniform": 8,
+        "quantity": 1,
+        "issue_date": "2026-02-27",
+        "return_date": "2026-05-15",
+        "branch": "Opal Riverside",
+        "note": "",
+        "is_resolved": true
+    }
+},
+{
+    "model": "inventory.staffdebt",
+    "pk": 55,
+    "fields": {
+        "employee_name": "Trần Thị Bích Nhung",
+        "position": "GV",
+        "gender": "Nữ",
+        "uniform": 14,
+        "quantity": 1,
+        "issue_date": "2026-03-05",
+        "return_date": "2026-05-15",
+        "branch": "Opal Garden",
+        "note": "",
+        "is_resolved": true
+    }
+},
+{
+    "model": "inventory.staffdebt",
+    "pk": 56,
+    "fields": {
+        "employee_name": "Trần Thị Bích Nhung",
+        "position": "GV",
+        "gender": "Nữ",
+        "uniform": 6,
+        "quantity": 1,
+        "issue_date": "2026-03-05",
+        "return_date": "2026-05-15",
+        "branch": "Opal Garden",
+        "note": "",
+        "is_resolved": true
+    }
+},
+{
+    "model": "inventory.staffdebt",
+    "pk": 57,
+    "fields": {
+        "employee_name": "Đào Ngọc Hương Lan",
+        "position": "GV",
+        "gender": "Nữ",
+        "uniform": 14,
+        "quantity": 1,
+        "issue_date": "2026-03-05",
+        "return_date": "2026-05-15",
+        "branch": "HPO",
+        "note": "",
+        "is_resolved": true
+    }
+},
+{
+    "model": "inventory.staffdebt",
+    "pk": 58,
+    "fields": {
+        "employee_name": "Đào Ngọc Hương Lan",
+        "position": "GV",
+        "gender": "Nữ",
+        "uniform": 6,
+        "quantity": 1,
+        "issue_date": "2026-03-05",
+        "return_date": "2026-05-15",
+        "branch": "HPO",
+        "note": "",
+        "is_resolved": true
+    }
+},
+{
+    "model": "inventory.staffdebt",
+    "pk": 59,
+    "fields": {
+        "employee_name": "Nguyễn Thị Thanh Thư",
+        "position": "BM",
+        "gender": "Nữ",
+        "uniform": 14,
+        "quantity": 1,
+        "issue_date": "2026-03-05",
+        "return_date": "2026-05-15",
+        "branch": "HPO",
+        "note": "",
+        "is_resolved": true
+    }
+},
+{
+    "model": "inventory.staffdebt",
+    "pk": 60,
+    "fields": {
+        "employee_name": "Nguyễn Thị Thanh Thư",
+        "position": "BM",
+        "gender": "Nữ",
+        "uniform": 6,
+        "quantity": 1,
+        "issue_date": "2026-03-05",
+        "return_date": "2026-05-15",
+        "branch": "HPO",
+        "note": "",
+        "is_resolved": true
+    }
+},
+{
+    "model": "inventory.staffdebt",
+    "pk": 61,
+    "fields": {
+        "employee_name": "Vũ Thị Bích Trâm",
+        "position": "BM",
+        "gender": "Nữ",
+        "uniform": 16,
+        "quantity": 2,
+        "issue_date": "2026-03-12",
+        "return_date": "2026-05-15",
+        "branch": "City Gate",
+        "note": "",
+        "is_resolved": true
+    }
+},
+{
+    "model": "inventory.staffdebt",
+    "pk": 62,
+    "fields": {
+        "employee_name": "Vũ Thị Bích Trâm",
+        "position": "BM",
+        "gender": "Nữ",
+        "uniform": 8,
+        "quantity": 1,
+        "issue_date": "2026-03-12",
+        "return_date": "2026-05-15",
+        "branch": "City Gate",
+        "note": "",
+        "is_resolved": true
+    }
+},
+{
+    "model": "inventory.staffdebt",
+    "pk": 63,
+    "fields": {
+        "employee_name": "Nguyễn Thị Đoan Trang",
+        "position": "GV",
+        "gender": "Nữ",
+        "uniform": 16,
+        "quantity": 1,
+        "issue_date": "2026-03-20",
+        "return_date": "2026-05-15",
+        "branch": "City Gate",
+        "note": "",
+        "is_resolved": true
+    }
+},
+{
+    "model": "inventory.staffdebt",
+    "pk": 64,
+    "fields": {
+        "employee_name": "Nguyễn Thị Đoan Trang",
+        "position": "GV",
+        "gender": "Nữ",
+        "uniform": 8,
+        "quantity": 1,
+        "issue_date": "2026-03-20",
+        "return_date": "2026-05-15",
+        "branch": "City Gate",
+        "note": "",
+        "is_resolved": true
+    }
+},
+{
+    "model": "inventory.staffdebt",
+    "pk": 65,
+    "fields": {
+        "employee_name": "Phạm Nguyễn Thị Trúc Phương",
+        "position": "BM",
+        "gender": "Nữ",
+        "uniform": 14,
+        "quantity": 2,
+        "issue_date": "2026-03-20",
+        "return_date": "2026-05-15",
+        "branch": "Hưng Phát",
+        "note": "",
+        "is_resolved": true
+    }
+},
+{
+    "model": "inventory.staffdebt",
+    "pk": 66,
+    "fields": {
+        "employee_name": "Phạm Nguyễn Thị Trúc Phương",
+        "position": "BM",
+        "gender": "Nữ",
+        "uniform": 6,
+        "quantity": 1,
+        "issue_date": "2026-03-20",
+        "return_date": "2026-05-15",
+        "branch": "Hưng Phát",
+        "note": "",
+        "is_resolved": true
+    }
+},
+{
+    "model": "inventory.staffdebt",
+    "pk": 67,
+    "fields": {
+        "employee_name": "Võ Thị Mỹ Linh",
+        "position": "Y tế",
+        "gender": "Nữ",
+        "uniform": 17,
+        "quantity": 1,
+        "issue_date": "2026-03-20",
+        "return_date": "2026-05-15",
+        "branch": "Sunview",
+        "note": "",
+        "is_resolved": true
+    }
+},
+{
+    "model": "inventory.staffdebt",
+    "pk": 68,
+    "fields": {
+        "employee_name": "Trần Kim Thơ",
+        "position": "GV",
+        "gender": "Nữ",
+        "uniform": 6,
+        "quantity": 1,
+        "issue_date": "2026-03-26",
+        "return_date": "2026-05-15",
+        "branch": "City Gate",
+        "note": "",
+        "is_resolved": true
+    }
+},
+{
+    "model": "inventory.staffdebt",
+    "pk": 69,
+    "fields": {
+        "employee_name": "Trần Kim Thơ",
+        "position": "GV",
+        "gender": "Nữ",
+        "uniform": 14,
+        "quantity": 1,
+        "issue_date": "2026-03-26",
+        "return_date": "2026-05-15",
+        "branch": "City Gate",
+        "note": "",
+        "is_resolved": true
+    }
+},
+{
+    "model": "inventory.staffdebt",
+    "pk": 70,
+    "fields": {
+        "employee_name": "Nguyễn Thị Hà",
+        "position": "BM",
+        "gender": "Nữ",
+        "uniform": 6,
+        "quantity": 1,
+        "issue_date": "2026-04-01",
+        "return_date": "2026-05-15",
+        "branch": "Sunrise Riverside",
+        "note": "",
+        "is_resolved": true
+    }
+},
+{
+    "model": "inventory.staffdebt",
+    "pk": 71,
+    "fields": {
+        "employee_name": "Nguyễn Thị Hà",
+        "position": "BM",
+        "gender": "Nữ",
+        "uniform": 14,
+        "quantity": 1,
+        "issue_date": "2026-04-01",
+        "return_date": "2026-05-15",
+        "branch": "Sunrise Riverside",
+        "note": "",
+        "is_resolved": true
+    }
+},
+{
+    "model": "inventory.staffdebt",
+    "pk": 72,
+    "fields": {
+        "employee_name": "MAY ANNE L. AGUILAR",
+        "position": "GVNN",
+        "gender": "Nữ",
+        "uniform": 12,
+        "quantity": 1,
+        "issue_date": "2026-04-08",
+        "return_date": "2026-05-15",
+        "branch": "Lexington",
+        "note": "",
+        "is_resolved": true
+    }
+},
+{
+    "model": "inventory.staffdebt",
+    "pk": 73,
+    "fields": {
+        "employee_name": "Lê Hồng Thúy Ngọc",
+        "position": "TVTS",
+        "gender": "Nữ",
+        "uniform": 13,
+        "quantity": 1,
+        "issue_date": "2026-04-08",
+        "return_date": "2026-05-15",
+        "branch": "Lexington",
+        "note": "",
+        "is_resolved": true
+    }
+},
+{
+    "model": "inventory.staffdebt",
+    "pk": 74,
+    "fields": {
+        "employee_name": "Lê Hồng Thúy Ngọc",
+        "position": "TVTS",
+        "gender": "Nữ",
+        "uniform": 5,
+        "quantity": 1,
+        "issue_date": "2026-04-08",
+        "return_date": "2026-05-15",
+        "branch": "Lexington",
+        "note": "",
+        "is_resolved": true
+    }
+},
+{
+    "model": "inventory.staffdebt",
+    "pk": 75,
+    "fields": {
+        "employee_name": "Lê Thị Ngọc Hiếu",
+        "position": "TVTS",
+        "gender": "Nữ",
+        "uniform": 13,
+        "quantity": 1,
+        "issue_date": "2026-04-08",
+        "return_date": "2026-05-15",
+        "branch": "Sunview",
+        "note": "",
+        "is_resolved": true
+    }
+},
+{
+    "model": "inventory.staffdebt",
+    "pk": 76,
+    "fields": {
+        "employee_name": "Lê Thị Ngọc Hiếu",
+        "position": "TVTS",
+        "gender": "Nữ",
+        "uniform": 5,
+        "quantity": 1,
+        "issue_date": "2026-04-08",
+        "return_date": "2026-05-15",
+        "branch": "Sunview",
+        "note": "",
+        "is_resolved": true
+    }
+},
+{
+    "model": "inventory.staffdebt",
+    "pk": 77,
+    "fields": {
+        "employee_name": "Lê Thị Kim Liên",
+        "position": "Phụ bếp",
+        "gender": "Nữ",
+        "uniform": 15,
+        "quantity": 1,
+        "issue_date": "2026-04-29",
+        "return_date": "2026-05-15",
+        "branch": "City Gate",
+        "note": "",
+        "is_resolved": true
+    }
+},
+{
+    "model": "inventory.staffdebt",
+    "pk": 78,
+    "fields": {
+        "employee_name": "Trần Kim Phương",
+        "position": "BM",
+        "gender": "Nữ",
+        "uniform": 15,
+        "quantity": 1,
+        "issue_date": "2026-04-29",
+        "return_date": "2026-05-15",
+        "branch": "City Gate",
+        "note": "",
+        "is_resolved": true
+    }
+},
+{
+    "model": "inventory.staffdebt",
+    "pk": 79,
+    "fields": {
+        "employee_name": "Trần Kim Phương",
+        "position": "BM",
+        "gender": "Nữ",
+        "uniform": 7,
+        "quantity": 1,
+        "issue_date": "2026-04-29",
+        "return_date": "2026-05-15",
+        "branch": "City Gate",
+        "note": "",
+        "is_resolved": true
+    }
+},
+{
+    "model": "inventory.staffdebt",
+    "pk": 80,
+    "fields": {
+        "employee_name": "Huỳnh Thị Bé Ngọc",
+        "position": "GV",
+        "gender": "Nữ",
+        "uniform": 14,
+        "quantity": 1,
+        "issue_date": "2026-04-29",
+        "return_date": "2026-05-15",
+        "branch": "HPO",
+        "note": "",
+        "is_resolved": true
+    }
+},
+{
+    "model": "inventory.staffdebt",
+    "pk": 81,
+    "fields": {
+        "employee_name": "Huỳnh Thị Bé Ngọc",
+        "position": "GV",
+        "gender": "Nữ",
+        "uniform": 6,
+        "quantity": 1,
+        "issue_date": "2026-04-29",
+        "return_date": "2026-05-15",
+        "branch": "HPO",
+        "note": "",
+        "is_resolved": true
+    }
+},
+{
+    "model": "inventory.staffdebt",
+    "pk": 82,
+    "fields": {
+        "employee_name": "Nguyễn Thị Hiền",
+        "position": "GV",
+        "gender": "Nữ",
+        "uniform": 14,
+        "quantity": 1,
+        "issue_date": "2026-04-29",
+        "return_date": "2026-05-15",
+        "branch": "HPO",
+        "note": "",
+        "is_resolved": true
+    }
+},
+{
+    "model": "inventory.staffdebt",
+    "pk": 83,
+    "fields": {
+        "employee_name": "Nguyễn Thị Hiền",
+        "position": "GV",
+        "gender": "Nữ",
+        "uniform": 6,
+        "quantity": 1,
+        "issue_date": "2026-04-29",
+        "return_date": "2026-05-15",
+        "branch": "HPO",
+        "note": "",
+        "is_resolved": true
+    }
+},
+{
+    "model": "inventory.staffdebt",
+    "pk": 84,
+    "fields": {
+        "employee_name": "Lê Thị Thúy",
+        "position": "BM",
+        "gender": "Nữ",
+        "uniform": 12,
+        "quantity": 1,
+        "issue_date": "2026-04-29",
+        "return_date": "2026-05-15",
+        "branch": "Orchard",
+        "note": "",
+        "is_resolved": true
+    }
+},
+{
+    "model": "inventory.staffdebt",
+    "pk": 85,
+    "fields": {
+        "employee_name": "Lê Thị Thúy",
+        "position": "BM",
+        "gender": "Nữ",
+        "uniform": 4,
+        "quantity": 1,
+        "issue_date": "2026-04-29",
+        "return_date": "2026-05-15",
+        "branch": "Orchard",
+        "note": "",
+        "is_resolved": true
+    }
+},
+{
+    "model": "inventory.staffdebt",
+    "pk": 86,
+    "fields": {
+        "employee_name": "Nguyễn Ngọc Thu Ngân",
+        "position": "BM",
+        "gender": "Nữ",
+        "uniform": 12,
+        "quantity": 1,
+        "issue_date": "2026-04-29",
+        "return_date": "2026-05-15",
+        "branch": "Orchard",
+        "note": "",
+        "is_resolved": true
+    }
+},
+{
+    "model": "inventory.staffdebt",
+    "pk": 87,
+    "fields": {
+        "employee_name": "Nguyễn Ngọc Thu Ngân",
+        "position": "BM",
+        "gender": "Nữ",
+        "uniform": 4,
+        "quantity": 1,
+        "issue_date": "2026-04-29",
+        "return_date": "2026-05-15",
+        "branch": "Orchard",
+        "note": "",
+        "is_resolved": true
+    }
+},
+{
+    "model": "inventory.staffdebt",
+    "pk": 88,
+    "fields": {
+        "employee_name": "Mai Lệ Huyền",
+        "position": "BM",
+        "gender": "Nữ",
+        "uniform": 14,
+        "quantity": 1,
+        "issue_date": "2026-04-29",
+        "return_date": "2026-05-15",
+        "branch": "Sunrise Riverside",
+        "note": "",
+        "is_resolved": true
+    }
+},
+{
+    "model": "inventory.staffdebt",
+    "pk": 89,
+    "fields": {
+        "employee_name": "Mai Lệ Huyền",
+        "position": "BM",
+        "gender": "Nữ",
+        "uniform": 6,
+        "quantity": 1,
+        "issue_date": "2026-04-29",
+        "return_date": "2026-05-15",
+        "branch": "Sunrise Riverside",
+        "note": "",
+        "is_resolved": true
+    }
+},
+{
+    "model": "inventory.staffdebt",
+    "pk": 90,
+    "fields": {
+        "employee_name": "Đồ Thị Nhàn",
+        "position": "BM",
+        "gender": "Nữ",
+        "uniform": 14,
+        "quantity": 1,
+        "issue_date": "2026-04-29",
+        "return_date": "2026-05-15",
+        "branch": "Sunview",
+        "note": "",
+        "is_resolved": true
+    }
+},
+{
+    "model": "inventory.staffdebt",
+    "pk": 91,
+    "fields": {
+        "employee_name": "Đồ Thị Nhàn",
+        "position": "BM",
+        "gender": "Nữ",
+        "uniform": 6,
+        "quantity": 1,
+        "issue_date": "2026-04-29",
+        "return_date": "2026-05-15",
+        "branch": "Sunview",
+        "note": "",
+        "is_resolved": true
+    }
+},
+{
+    "model": "inventory.staffdebt",
+    "pk": 92,
+    "fields": {
+        "employee_name": "Nguyễn Thị Thu Hiền",
+        "position": "Kế toán công nợ",
+        "gender": "Nữ",
+        "uniform": 13,
+        "quantity": 1,
+        "issue_date": "2026-04-29",
+        "return_date": "2026-05-15",
+        "branch": "Văn Phòng",
+        "note": "Chưa xuất",
+        "is_resolved": true
+    }
+},
+{
+    "model": "inventory.staffdebt",
+    "pk": 93,
+    "fields": {
+        "employee_name": "Lâm Vũ Minh Trinh",
+        "position": "NV Câp dưỡng",
+        "gender": "Nữ",
+        "uniform": 14,
+        "quantity": 1,
+        "issue_date": "2026-04-29",
+        "return_date": "2026-05-15",
+        "branch": "New City",
+        "note": "",
+        "is_resolved": true
+    }
+},
+{
+    "model": "inventory.staffdebt",
+    "pk": 94,
+    "fields": {
+        "employee_name": "Trần Tuyết Phượng",
+        "position": "NV Phụ bếp",
+        "gender": "Nữ",
+        "uniform": 14,
+        "quantity": 1,
+        "issue_date": "2026-04-29",
+        "return_date": "2026-05-15",
+        "branch": "New City",
+        "note": "",
+        "is_resolved": true
+    }
+},
+{
+    "model": "inventory.staffdebt",
+    "pk": 95,
+    "fields": {
+        "employee_name": "Nguyễn Thụy Phương Thanh",
+        "position": "GVTA",
+        "gender": "Nữ",
+        "uniform": 16,
+        "quantity": 1,
+        "issue_date": "2026-04-29",
+        "return_date": "2026-05-15",
+        "branch": "New City",
+        "note": "",
+        "is_resolved": true
+    }
+},
+{
+    "model": "inventory.staffdebt",
+    "pk": 96,
+    "fields": {
+        "employee_name": "Nguyễn Thụy Phương Thanh",
+        "position": "GVTA",
+        "gender": "Nữ",
+        "uniform": 8,
+        "quantity": 1,
+        "issue_date": "2026-04-29",
+        "return_date": "2026-05-15",
+        "branch": "New City",
+        "note": "",
+        "is_resolved": true
+    }
+},
+{
+    "model": "inventory.staffdebt",
+    "pk": 97,
+    "fields": {
+        "employee_name": "Phan Thị Hòa",
+        "position": "HT",
+        "gender": "Nữ",
+        "uniform": 14,
+        "quantity": 1,
+        "issue_date": "2026-04-29",
+        "return_date": "2026-05-15",
+        "branch": "New City",
+        "note": "",
+        "is_resolved": true
+    }
+},
+{
+    "model": "inventory.staffdebt",
+    "pk": 98,
+    "fields": {
+        "employee_name": "Josephine D.Tero",
+        "position": "GVNN",
+        "gender": "Nữ",
+        "uniform": 14,
+        "quantity": 1,
+        "issue_date": "2026-04-29",
+        "return_date": "2026-05-15",
+        "branch": "New City",
+        "note": "",
+        "is_resolved": true
+    }
+},
+{
+    "model": "inventory.staffdebt",
+    "pk": 99,
+    "fields": {
+        "employee_name": "Josephine D.Tero",
+        "position": "GVNN",
+        "gender": "Nữ",
+        "uniform": 6,
+        "quantity": 1,
+        "issue_date": "2026-04-29",
+        "return_date": "2026-05-15",
+        "branch": "New City",
+        "note": "",
+        "is_resolved": true
+    }
+},
+{
+    "model": "inventory.staffdebt",
+    "pk": 100,
+    "fields": {
+        "employee_name": "Nguyễn Thị Kiều",
+        "position": "NVYT",
+        "gender": "Nữ",
+        "uniform": 14,
+        "quantity": 1,
+        "issue_date": "2026-04-29",
+        "return_date": "2026-05-15",
+        "branch": "New City",
+        "note": "",
+        "is_resolved": true
+    }
+},
+{
+    "model": "inventory.staffdebt",
+    "pk": 101,
+    "fields": {
+        "employee_name": "Vinh",
+        "position": "IT",
+        "gender": "Nam",
+        "uniform": 15,
+        "quantity": 1,
+        "issue_date": "2026-05-15",
+        "return_date": "2026-05-15",
+        "branch": "VP",
+        "note": "",
+        "is_resolved": true
+    }
+},
+{
+    "model": "inventory.staffdebt",
+    "pk": 102,
+    "fields": {
+        "employee_name": "Vinh",
+        "position": "IT",
+        "gender": "Nam",
+        "uniform": 17,
+        "quantity": 1,
+        "issue_date": "2026-05-15",
+        "return_date": "2026-05-15",
+        "branch": "VP",
+        "note": "",
+        "is_resolved": true
+    }
+},
+{
+    "model": "inventory.staffdebt",
+    "pk": 103,
+    "fields": {
+        "employee_name": "Vinh",
+        "position": "IT",
+        "gender": "Nam",
+        "uniform": 18,
+        "quantity": 1,
+        "issue_date": "2026-05-15",
+        "return_date": "2026-05-15",
+        "branch": "VP",
+        "note": "",
+        "is_resolved": true
+    }
+}
+]
