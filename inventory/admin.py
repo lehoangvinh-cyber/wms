@@ -3,6 +3,7 @@ from .models import Uniform, Transaction
 
 @admin.register(Uniform)
 class UniformAdmin(admin.ModelAdmin):
+
     list_display = ('sku', 'name', 'size', 'quantity')
     list_editable = ('quantity',)
     search_fields = ('sku', 'name')
