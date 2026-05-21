@@ -24,7 +24,6 @@ SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 CSRF_TRUSTED_ORIGINS = [
     'https://wms.vinhle.site',
     'http://wms.vinhle.site',
-    'wms.vinhle.site'
 ]
 DEBUG = True
 INSTALLED_APPS = [
