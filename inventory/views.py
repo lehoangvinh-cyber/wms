@@ -79,7 +79,7 @@ def register(request):
         form = UserCreationForm()
     return render(request, 'register.html', {'form': form})
 
-
+@csrf_exempt # <-- Thêm dòng này để miễn kiểm tra mã bảo mật khi logout
 def xu_ly_dang_xuat(request):
     """Đăng xuất khỏi hệ thống"""
     logout(request)
