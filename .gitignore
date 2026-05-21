@@ -1,16 +1,16 @@
-# Python
+# Django rác
+*.pyc
 __pycache__/
-*.py[cod]
-*$py.class
-.venv/
-venv/
-env/
-
-# Django
 db.sqlite3
-*.log
-.env
-local_settings.py
+media/
+staticfiles/
 
-# PyCharm IDE
-.idea/
+# Docker & Hệ thống
+.env
+.DS_Store
+wms_data/
+mysql_data/
+
+# Thư mục môi trường ảo nếu có
+env/
+venv/
