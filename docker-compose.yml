@@ -4,6 +4,7 @@ services:
   db:
     image: mysql:8.0
     container_name: wms_mysql
+    restart: unless-stopped
     environment:
       MYSQL_DATABASE: wms_db
       MYSQL_USER: wms_user
@@ -13,32 +14,41 @@ services:
       - "3306:3306"
     volumes:
       - mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-proot_password"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
 
-  web:
+  wms-app:
     build: .
-    container_name: wms_django
-    # Tự động gom file CSS, tạo bảng và bật server
-    command: sh -c "python manage.py collectstatic --noinput && python manage.py migrate && gunicorn WMS.wsgi:application --bind 0.0.0.0:8000"
+    container_name: wms-app
+    restart: unless-stopped
+    command: sh -c "python manage.py migrate --noinput && python manage.py collectstatic --noinput && gunicorn WMS.wsgi:application --bind 0.0.0.0:8000"
+    ports:
+      - "8000:8000"
     volumes:
       - .:/app
       - static_volume:/app/staticfiles
       - media_volume:/app/media
     depends_on:
-      - db
+      db:
+        condition: service_healthy
 
   nginx:
-    image: nginx:latest
+    image: nginx:alpine
     container_name: wms_nginx
+    restart: unless-stopped
     ports:
-      - "80:80"
+      - "8085:80" # <--- PORT NGINX ĐÃ ĐƯỢC ĐỔI THÀNH 8085
     volumes:
-      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
+      - ./nginx:/etc/nginx/conf.d
       - static_volume:/app/staticfiles
       - media_volume:/app/media
     depends_on:
-      - web
+      - wms-app
 
 volumes:
+  mysql_data:
   static_volume:
   media_volume:
-  mysql_data:
