@@ -33,12 +33,14 @@
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h3 class="fw-bold"><i class="bi bi-journal-text me-2"></i>THEO DÕI NỢ ĐỒNG PHỤC</h3>
         <div>
+            {% if request.user.is_superuser %}
             <button type="button" class="btn btn-primary rounded-pill px-3 me-2 shadow-sm" data-bs-toggle="modal" data-bs-target="#importExcelModal">
                 <i class="bi bi-file-earmark-arrow-up"></i> Nhập từ Excel
             </button>
             <a href="{% url 'export_debt_excel' %}" class="btn btn-success rounded-pill px-3 me-2 shadow-sm">
                 <i class="bi bi-file-earmark-excel"></i> Xuất Excel
             </a>
+            {% endif %}
             <button class="btn btn-outline-secondary rounded-pill me-2 shadow-sm" onclick="window.print()"><i class="bi bi-printer"></i> In PDF</button>
             <a href="{% url 'dashboard' %}" class="btn btn-dark px-4 rounded-pill shadow-sm">Quay lại Dashboard</a>
         </div>

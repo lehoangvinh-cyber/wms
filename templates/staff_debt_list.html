@@ -35,9 +35,11 @@
             <button type="button" onclick="printSelected()" class="btn btn-outline-info rounded-pill px-3 shadow-sm">
                 <i class="bi bi-printer me-1"></i> In phiếu đã chọn
             </button>
+            {% if request.user.is_superuser %}
             <button class="btn btn-outline-success rounded-pill px-3 shadow-sm" data-bs-toggle="modal" data-bs-target="#importModal">
                 <i class="bi bi-file-earmark-excel me-1"></i> Nhập Excel
             </button>
+            {% endif %}
             <a href="{% url 'export_staff_debt_excel' %}" class="btn btn-outline-primary rounded-pill px-3 shadow-sm">
                 <i class="bi bi-download me-1"></i> Xuất Báo Cáo
             </a>
