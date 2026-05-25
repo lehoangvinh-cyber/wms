@@ -82,6 +82,7 @@
             <span class="text-white me-3">Xin chào, <b>{{ request.user.username }}</b></span>
 
             <a href="{% url 'logout' %}" class="btn btn-light btn-sm rounded-pill px-3 fw-bold shadow-sm">
+                <i class="bi bi-box-arrow-right me-1"></i> Thoát
     </a>
         </div>
     </div>
@@ -93,13 +94,20 @@
         <!-- Cột trái: Sidebar Menu -->
         <div class="col-md-3">
          {% if request.user.is_superuser %}
-            <a href="{% url 'stock_in' %}" class="btn-sidebar btn-import">
-                <i class="bi bi-plus-circle"></i> NHẬP KHO (NCC)
-            </a>
-        {% endif %}
-            <a href="{% url 'stock_out' %}" class="btn-sidebar btn-export">
-                <i class="bi bi-box-arrow-up-right"></i> XUẤT KHO (CẤP PHÁT)
-            </a>
+                <a href="{% url 'stock_in' %}" class="btn-sidebar btn-import">
+                    <i class="bi bi-plus-circle"></i> NHẬP KHO (NCC)
+                </a>
+                <a href="{% url 'stock_out' %}" class="btn-sidebar btn-export">
+                    <i class="bi bi-box-arrow-up-right"></i> XUẤT KHO (CẤP PHÁT)
+                </a>
+            {% else %}
+                <button class="btn-sidebar btn-import" style="opacity: 0.4; cursor: not-allowed; filter: grayscale(60%);" title="Chỉ Admin mới có quyền" disabled>
+                    <i class="bi bi-plus-circle"></i> NHẬP KHO (NCC) <i class="bi bi-lock-fill ms-auto"></i>
+                </button>
+                <button class="btn-sidebar btn-export" style="opacity: 0.4; cursor: not-allowed; filter: grayscale(60%);" title="Chỉ Admin mới có quyền" disabled>
+                    <i class="bi bi-box-arrow-up-right"></i> XUẤT KHO (CẤP PHÁT) <i class="bi bi-lock-fill ms-auto"></i>
+                </button>
+            {% endif %}
 
             <a href="{% url 'summary_nxt' %}" class="btn-sidebar btn-report">
                 <i class="bi bi-file-earmark-bar-graph"></i> BÁO CÁO TỒN KHO

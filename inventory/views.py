@@ -14,7 +14,7 @@ from django.core.paginator import Paginator
 from django.db.models import Q, Sum
 from django.http import HttpResponse
 from django.utils.safestring import mark_safe
-from django.views.decorators.csrf import csrf_exempt
+
 from .models import Uniform, Debt, Transaction, StaffDebt, ActionLog
 
 
@@ -78,9 +78,10 @@ def register(request):
     else:
         form = UserCreationForm()
     return render(request, 'register.html', {'form': form})
-@csrf_exempt # <-- Thêm dòng này để miễn kiểm tra mã bảo mật khi logout
+
+
 def xu_ly_dang_xuat(request):
-    """Đăng xuất khỏi hệ thống"""
+    """Đăng xuất khỏi hệ thống mượt mà (Bỏ form POST, dùng GET an toàn)"""
     logout(request)
     return redirect('login')
 
@@ -89,7 +90,7 @@ def xu_ly_dang_xuat(request):
 # QUAN SÁT & THỐNG KÊ (DASHBOARD)
 # ==============================================================================
 
-@login_required(login_url='/dang-nhap/')
+@login_required(login_url='login')
 def dashboard(request):
     """Hiển thị tổng quan kho, vẽ đồ thị và cảnh báo hàng sắp hết"""
     uniforms = Uniform.objects.all().order_by('name')
@@ -113,7 +114,7 @@ def dashboard(request):
     return render(request, 'dashboard.html', context)
 
 
-@login_required
+@login_required(login_url='login')
 def summary_nxt(request):
     """Báo cáo tổng hợp Nhập - Xuất - Tồn"""
     uniforms = Uniform.objects.all()
@@ -142,17 +143,20 @@ def summary_nxt(request):
 # QUẢN LÝ NHẬP XUẤT KHO THỰC TẾ
 # ==============================================================================
 
-@login_required
+@login_required(login_url='login')
 def stock_action(request, action_type):
     """Xử lý chung cho cả tác vụ Nhập và Xuất kho trực tiếp từ danh sách"""
+
+    # --- CHẶN ĐỨNG NGƯỜI DÙNG THƯỜNG NGAY TỪ CỬA ---
+    if not request.user.is_superuser:
+        messages.error(request, "Lỗi bảo mật: Chỉ Admin mới có quyền Nhập kho và Cấp phát!")
+        return redirect('dashboard')
+    # -----------------------------------------------
+
     if request.method == 'POST':
         uniform_id = request.POST.get('uniform')
         amount = int(request.POST.get('amount', 1))
         uniform_obj = Uniform.objects.get(id=uniform_id)
-
-        if action_type == 'IN' and not request.user.is_superuser:
-            messages.error(request, "Lỗi bảo mật: Bạn không có quyền truy cập tính năng Nhập Kho!")
-            return redirect('dashboard')
 
         if action_type == 'OUT' and uniform_obj.quantity < amount:
             messages.error(request,
@@ -192,18 +196,21 @@ def stock_action(request, action_type):
     return render(request, template, {'uniforms': uniforms})
 
 
-@login_required
+@login_required(login_url='login')
 def stock_form(request):
     """Trang điền Form nhập/xuất kho nâng cao đầy đủ thông tin"""
+
+    # --- CHẶN ĐỨNG NGƯỜI DÙNG THƯỜNG NGAY TỪ CỬA ---
+    if not request.user.is_superuser:
+        messages.error(request, "Lỗi bảo mật: Chỉ Admin mới có quyền Nhập kho và Cấp phát!")
+        return redirect('dashboard')
+    # -----------------------------------------------
+
     if request.method == 'POST':
         action_type = request.POST.get('type')
         uniform_id = request.POST.get('uniform')
         amount = int(request.POST.get('amount', 1))
         uniform_obj = Uniform.objects.get(id=uniform_id)
-
-        if action_type == 'IN' and not request.user.is_superuser:
-            messages.error(request, "Lỗi bảo mật: Bạn không có quyền truy cập tính năng Nhập Kho!")
-            return redirect('dashboard')
 
         if action_type == 'OUT' and uniform_obj.quantity < amount:
             messages.error(request,
@@ -248,7 +255,7 @@ def stock_form(request):
 # QUẢN LÝ NỢ ĐỒNG PHỤC HỌC SINH (DEBTS)
 # ==============================================================================
 
-@login_required
+@login_required(login_url='login')
 def debt_list(request):
     """Xem danh sách nợ, tìm kiếm, lọc và thêm khoản nợ học sinh mới"""
     if request.method == 'POST' and 'branch' in request.POST:
@@ -302,7 +309,7 @@ def debt_list(request):
     })
 
 
-@login_required
+@login_required(login_url='login')
 def resolve_debt(request, debt_id):
     """Gạch nợ nhanh cho từng học sinh đơn lẻ"""
     debt = get_object_or_404(Debt, id=debt_id)
@@ -320,7 +327,7 @@ def resolve_debt(request, debt_id):
     return redirect('debt_list')
 
 
-@login_required
+@login_required(login_url='login')
 def auto_resolve_debt(request, uniform_id):
     """Hệ thống tự động cấn trừ gạch nợ hàng loạt cho học sinh khi có hàng về"""
     uniform = get_object_or_404(Uniform, id=uniform_id)
@@ -351,7 +358,7 @@ def auto_resolve_debt(request, uniform_id):
     return redirect('debt_list')
 
 
-@login_required
+@login_required(login_url='login')
 def export_debt_excel(request):
     """Xuất file Excel báo cáo nợ của học sinh"""
     response = HttpResponse(content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
@@ -380,7 +387,7 @@ def export_debt_excel(request):
     return response
 
 
-@login_required
+@login_required(login_url='login')
 def import_debt_excel(request):
     """Nạp hàng loạt dữ liệu nợ học sinh từ file Excel vào DB"""
     if request.method == 'POST':
@@ -432,7 +439,7 @@ def import_debt_excel(request):
 # QUẢN LÝ CẤP PHÁT ĐỒNG PHỤC NHÂN VIÊN (STAFF DEBTS)
 # ==============================================================================
 
-@login_required
+@login_required(login_url='login')
 def staff_debt_list(request):
     """Xem và tạo phiếu cấp phát trang phục cho nhân viên nhà trường"""
     if request.method == 'POST' and 'employee_name' in request.POST:
@@ -492,7 +499,7 @@ def staff_debt_list(request):
     })
 
 
-@login_required
+@login_required(login_url='login')
 def resolve_staff_debt(request, debt_id):
     """Xác nhận nhân viên đã nhận áo thành công và tiến hành trừ kho"""
     debt = get_object_or_404(StaffDebt, id=debt_id)
@@ -517,7 +524,7 @@ def resolve_staff_debt(request, debt_id):
     return redirect('staff_debt_list')
 
 
-@login_required
+@login_required(login_url='login')
 def edit_staff_debt(request, debt_id):
     """Chỉnh sửa thông tin cấp phát áo của nhân viên"""
     debt = get_object_or_404(StaffDebt, id=debt_id)
@@ -545,7 +552,7 @@ def edit_staff_debt(request, debt_id):
     return render(request, 'edit_staff_debt.html', {'debt': debt, 'uniforms': uniforms})
 
 
-@login_required
+@login_required(login_url='login')
 def delete_staff_debt(request, debt_id):
     """Xóa hồ sơ cấp phát áo nhân viên (hoàn lại kho nếu chưa nhận)"""
     debt = get_object_or_404(StaffDebt, id=debt_id)
@@ -566,7 +573,7 @@ def delete_staff_debt(request, debt_id):
     return redirect('staff_debt_list')
 
 
-@login_required
+@login_required(login_url='login')
 def export_staff_debt_excel(request):
     """Xuất danh sách cấp phát trang phục nhân viên ra Excel"""
     response = HttpResponse(content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
@@ -592,7 +599,7 @@ def export_staff_debt_excel(request):
     return response
 
 
-@login_required
+@login_required(login_url='login')
 def import_staff_debt_excel(request):
     """Đổ dữ liệu phân phát áo nhân viên hàng loạt bằng Excel"""
     if request.method == 'POST' and request.FILES.get('excel_file'):
@@ -653,7 +660,7 @@ def import_staff_debt_excel(request):
 # HỆ THỐNG IN ẤN & GIÁM SÁT AN NINH (AUDIT LOG & RECEIPTS)
 # ==============================================================================
 
-@login_required
+@login_required(login_url='login')
 def audit_log(request):
     """Nhật ký hệ thống (Chỉ Admin tối cao mới được xem)"""
     if not request.user.is_superuser:
@@ -666,7 +673,7 @@ def audit_log(request):
     return render(request, 'audit_log.html', {'page_obj': page_obj})
 
 
-@login_required
+@login_required(login_url='login')
 def print_receipt(request):
     """Gom nhóm dữ liệu và xuất phiếu in bàn giao đồng phục"""
     ids_str = request.GET.get('ids', '')
