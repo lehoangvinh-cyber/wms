@@ -337,15 +337,39 @@ def import_debt_excel(request):
 
 @login_required(login_url='login')
 def staff_debt_list(request):
-    # Tương tự, User thường được xem, Admin mới được sửa/xóa/gạch
-    if request.method == 'POST' and 'employee_name' in request.POST:
+    # Khôi phục tính năng Lưu dữ liệu (Thêm mới)
+    if request.method == 'POST':
         if not request.user.is_superuser:
             messages.error(request, "Lỗi bảo mật: Chỉ Admin mới có quyền Cấp Phát cho Nhân Viên!")
             return redirect('staff_debt_list')
-        # Logic cấp phát...
+
+        uniform_id = request.POST.get('uniform')
+        if uniform_id:
+            uniform_obj = Uniform.objects.get(id=uniform_id)
+            StaffDebt.objects.create(
+                employee_name=request.POST.get('employee_name'),
+                role=request.POST.get('role', ''),
+                gender=request.POST.get('gender', 'Nam'),
+                uniform=uniform_obj,
+                quantity=int(request.POST.get('quantity', 1)),
+                issue_date=request.POST.get('issue_date') or timezone.now().date(),
+                branch=request.POST.get('branch', ''),
+                note=request.POST.get('note', '')
+            )
+            ActionLog.objects.create(
+                user=request.user,
+                action="CẤP PHÁT NV",
+                description=f"Cấp áo cho nhân viên {request.POST.get('employee_name')}."
+            )
+            messages.success(request, "Đã lưu dữ liệu cấp phát mới!")
         return redirect('staff_debt_list')
 
+    # Code hiển thị danh sách và tìm kiếm
     staff_debts = StaffDebt.objects.all().order_by('is_resolved', '-issue_date')
+    search_query = request.GET.get('search', '')
+    if search_query:
+        staff_debts = staff_debts.filter(Q(employee_name__icontains=search_query) | Q(branch__icontains=search_query))
+
     return render(request, 'staff_debt_list.html', {
         'page_obj': Paginator(staff_debts, 15).get_page(request.GET.get('page')),
         'uniforms': Uniform.objects.all().order_by('name'),
@@ -375,7 +399,27 @@ def edit_staff_debt(request, debt_id):
     if not request.user.is_superuser:
         messages.error(request, "Lỗi bảo mật: Tác vụ dành riêng cho Admin!")
         return redirect('staff_debt_list')
-    # ... logic (lược bớt HTML form)
+
+    debt = get_object_or_404(StaffDebt, id=debt_id)
+    if request.method == 'POST':
+        debt.employee_name = request.POST.get('employee_name')
+        debt.role = request.POST.get('role', '')
+        debt.gender = request.POST.get('gender', 'Nam')
+
+        uniform_id = request.POST.get('uniform')
+        if uniform_id:
+            debt.uniform_id = uniform_id
+
+        debt.quantity = int(request.POST.get('quantity', 1))
+        debt.issue_date = request.POST.get('issue_date') or debt.issue_date
+        debt.branch = request.POST.get('branch', '')
+        debt.note = request.POST.get('note', '')
+        debt.save()
+
+        messages.success(request, f"Đã cập nhật thông tin của {debt.employee_name}!")
+        return redirect('staff_debt_list')
+
+    # Nếu không phải POST thì chuyển về trang cũ (vì form sửa thường dùng Modal popup)
     return redirect('staff_debt_list')
 
 
