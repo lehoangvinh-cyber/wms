@@ -31,7 +31,7 @@ def xu_ly_dang_nhap(request):
     if request.method == 'POST':
         turnstile_response = request.POST.get('cf-turnstile-response')
         data = urllib.parse.urlencode({
-            'secret': '0x4AAAAAADTcbVMPTiNavXly',  # Hãy chắc chắn đây là SECRET KEY
+            'secret': '0x4AAAAAADTcbRcgIPcBA48OWFqUfzxpEzA',  # Hãy chắc chắn đây là SECRET KEY
             'response': turnstile_response
         }).encode()
 
