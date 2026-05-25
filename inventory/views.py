@@ -337,10 +337,10 @@ def import_debt_excel(request):
 
 @login_required(login_url='login')
 def staff_debt_list(request):
-    # Khôi phục tính năng Lưu dữ liệu (Thêm mới)
+    # --- XỬ LÝ LƯU DỮ LIỆU MỚI (POST) ---
     if request.method == 'POST':
         if not request.user.is_superuser:
-            messages.error(request, "Lỗi bảo mật: Chỉ Admin mới có quyền Cấp Phát cho Nhân Viên!")
+            messages.error(request, "Lỗi bảo mật: Chỉ Admin mới có quyền Cấp Phát!")
             return redirect('staff_debt_list')
 
         uniform_id = request.POST.get('uniform')
@@ -357,22 +357,42 @@ def staff_debt_list(request):
                 note=request.POST.get('note', '')
             )
             ActionLog.objects.create(
-                user=request.user,
-                action="CẤP PHÁT NV",
+                user=request.user, action="CẤP PHÁT NV",
                 description=f"Cấp áo cho nhân viên {request.POST.get('employee_name')}."
             )
             messages.success(request, "Đã lưu dữ liệu cấp phát mới!")
         return redirect('staff_debt_list')
 
-    # Code hiển thị danh sách và tìm kiếm
+    # --- XỬ LÝ BỘ LỌC ĐA NĂNG (GET FILTER) ---
     staff_debts = StaffDebt.objects.all().order_by('is_resolved', '-issue_date')
-    search_query = request.GET.get('search', '')
+
+    # Đọc dữ liệu từ 3 ô lọc trên giao diện của bạn
+    search_query = request.GET.get('search', '').strip()
+    filter_role = request.GET.get('role', '').strip()
+    filter_branch = request.GET.get('branch', '').strip()
+
+    # 1. Ô 1: Tìm theo tên nhân viên hoặc tên sản phẩm
     if search_query:
-        staff_debts = staff_debts.filter(Q(employee_name__icontains=search_query) | Q(branch__icontains=search_query))
+        staff_debts = staff_debts.filter(
+            Q(employee_name__icontains=search_query) |
+            Q(uniform__name__icontains=search_query)
+        )
+
+    # 2. Ô 2: Lọc theo Chức vụ
+    if filter_role:
+        staff_debts = staff_debts.filter(role__icontains=filter_role)
+
+    # 3. Ô 3: Lọc theo Cơ sở
+    if filter_branch:
+        staff_debts = staff_debts.filter(branch__icontains=filter_branch)
 
     return render(request, 'staff_debt_list.html', {
         'page_obj': Paginator(staff_debts, 15).get_page(request.GET.get('page')),
         'uniforms': Uniform.objects.all().order_by('name'),
+        # Truyền ngược lại giá trị để giữ chữ trên ô input sau khi bấm Lọc
+        'search_query': search_query,
+        'filter_role': filter_role,
+        'filter_branch': filter_branch,
     })
 
 
@@ -401,6 +421,8 @@ def edit_staff_debt(request, debt_id):
         return redirect('staff_debt_list')
 
     debt = get_object_or_404(StaffDebt, id=debt_id)
+
+    # Nếu form sửa gửi dữ liệu lên để cập nhật
     if request.method == 'POST':
         debt.employee_name = request.POST.get('employee_name')
         debt.role = request.POST.get('role', '')
@@ -411,16 +433,25 @@ def edit_staff_debt(request, debt_id):
             debt.uniform_id = uniform_id
 
         debt.quantity = int(request.POST.get('quantity', 1))
-        debt.issue_date = request.POST.get('issue_date') or debt.issue_date
+
+        # Đồng bộ ngày tháng (Xử lý chuỗi rỗng từ input date)
+        issue_date_str = request.POST.get('issue_date')
+        if issue_date_str:
+            debt.issue_date = issue_date_str
+
         debt.branch = request.POST.get('branch', '')
         debt.note = request.POST.get('note', '')
         debt.save()
 
+        ActionLog.objects.create(
+            user=request.user, action="SỬA THÔNG TIN NV",
+            description=f"Sửa thông tin cấp phát của {debt.employee_name}."
+        )
         messages.success(request, f"Đã cập nhật thông tin của {debt.employee_name}!")
         return redirect('staff_debt_list')
 
-    # Nếu không phải POST thì chuyển về trang cũ (vì form sửa thường dùng Modal popup)
-    return redirect('staff_debt_list')
+    # Nếu gọi bằng phương thức GET (để load dữ liệu sửa lên trang riêng hoặc xử lý API)
+    return render(request, 'edit_staff_debt.html', {'debt': debt, 'uniforms': Uniform.objects.all()})
 
 
 @login_required(login_url='login')
