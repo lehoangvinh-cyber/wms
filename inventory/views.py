@@ -16,7 +16,8 @@ from django.http import HttpResponse
 from django.utils.safestring import mark_safe
 
 from .models import Uniform, Debt, Transaction, StaffDebt, ActionLog
-
+from django.core.mail import send_mail
+from django.conf import settings
 
 # ==============================================================================
 # HỆ THỐNG ĐĂNG NHẬP & ĐĂNG KÝ (TÍCH HỢP CLOUDFLARE TURNSTILE CHỐNG BOT)
@@ -67,12 +68,40 @@ def xu_ly_dang_nhap(request):
 
 
 def register(request):
-    """Đăng ký tài khoản hệ thống mới"""
+    """Đăng ký tài khoản hệ thống mới và gửi email thông báo"""
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
         if form.is_valid():
             user = form.save()
             login(request, user)
+
+            # --- BẮT ĐẦU ĐOẠN GỬI EMAIL THÔNG BÁO ---
+            try:
+                tieu_de = f"🎉 [WMS] Có người dùng mới đăng ký: {user.username}"
+                noi_dung = f"""
+Chào Admin,
+
+Hệ thống WMS vừa ghi nhận một tài khoản mới đăng ký thành công.
+- Tên tài khoản: {user.username}
+- Thời gian tạo: {timezone.now().strftime('%d/%m/%Y %H:%M:%S')}
+
+Vui lòng đăng nhập vào trang Quản trị (Admin) để phân quyền cho người dùng này nếu cần thiết!
+                """
+                # Thay bằng email bạn muốn NHẬN thông báo (có thể giống email gửi)
+                nguoi_nhan = ['vinh20002000@gmail.com']
+
+                send_mail(
+                    subject=tieu_de,
+                    message=noi_dung,
+                    from_email=settings.DEFAULT_FROM_EMAIL,
+                    recipient_list=nguoi_nhan,
+                    fail_silently=True,
+                    # Bùa hộ mệnh: Nếu rớt mạng không gửi được mail thì web vẫn không bị sập lỗi 500
+                )
+            except Exception as e:
+                print(f"Lỗi gửi email: {e}")
+                # --- KẾT THÚC ĐOẠN GỬI EMAIL ---
+
             messages.success(request, "Đăng ký tài khoản thành công!")
             return redirect('dashboard')
     else:

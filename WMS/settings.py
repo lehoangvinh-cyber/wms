@@ -117,3 +117,18 @@ STATIC_ROOT = BASE_DIR / 'staticfiles'
 LOGIN_URL = '/login/'
 # Chỉ định nơi quay về sau khi đăng nhập thành công
 LOGIN_REDIRECT_URL = 'dashboard'
+# ==============================================================================
+# CẤU HÌNH GỬI EMAIL THÔNG BÁO (GMAIL)
+# ==============================================================================
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+
+# Điền email của bạn vào đây (dùng làm email gửi đi)
+EMAIL_HOST_USER = 'vinh81800135@gmail.com'
+
+# BẮT BUỘC: Đây là "Mật khẩu ứng dụng" (App Password) của Google, không phải mật khẩu đăng nhập Gmail!
+EMAIL_HOST_PASSWORD = 'oybp mwzs ypor nllh'
+
+DEFAULT_FROM_EMAIL = 'Hệ thống Quản lý Kho WMS vinh81800135@gmail.com>'
