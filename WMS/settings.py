@@ -129,6 +129,6 @@ EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'vinh81800135@gmail.com'
 
 # BẮT BUỘC: Đây là "Mật khẩu ứng dụng" (App Password) của Google, không phải mật khẩu đăng nhập Gmail!
-EMAIL_HOST_PASSWORD = 'oybp mwzs ypor nllh'
+EMAIL_HOST_PASSWORD = 'oybpmwzsypornllh'
 
-DEFAULT_FROM_EMAIL = 'Hệ thống Quản lý Kho WMS vinh81800135@gmail.com>'
+DEFAULT_FROM_EMAIL = 'Hệ thống Quản lý Kho WMS <vinh81800135@gmail.com>'
