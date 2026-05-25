@@ -337,10 +337,10 @@ def import_debt_excel(request):
 
 @login_required(login_url='login')
 def staff_debt_list(request):
-    # --- XỬ LÝ LƯU DỮ LIỆU MỚI (POST) ---
+    # --- 1. XỬ LÝ LƯU DỮ LIỆU CẤP PHÁT MỚI (POST) ---
     if request.method == 'POST':
         if not request.user.is_superuser:
-            messages.error(request, "Lỗi bảo mật: Chỉ Admin mới có quyền Cấp Phát!")
+            messages.error(request, "Lỗi bảo mật: Chỉ Admin mới có quyền Cấp Phát cho Nhân Viên!")
             return redirect('staff_debt_list')
 
         uniform_id = request.POST.get('uniform')
@@ -348,7 +348,7 @@ def staff_debt_list(request):
             uniform_obj = Uniform.objects.get(id=uniform_id)
             StaffDebt.objects.create(
                 employee_name=request.POST.get('employee_name'),
-                role=request.POST.get('role', ''),
+                position=request.POST.get('position', ''),  # Đã sửa thành position
                 gender=request.POST.get('gender', 'Nam'),
                 uniform=uniform_obj,
                 quantity=int(request.POST.get('quantity', 1)),
@@ -363,33 +363,33 @@ def staff_debt_list(request):
             messages.success(request, "Đã lưu dữ liệu cấp phát mới!")
         return redirect('staff_debt_list')
 
-    # --- XỬ LÝ BỘ LỌC ĐA NĂNG (GET FILTER) ---
+    # --- 2. XỬ LÝ BỘ LỌC ĐA NĂNG ĐỘC LẬP (GET FILTER) ---
     staff_debts = StaffDebt.objects.all().order_by('is_resolved', '-issue_date')
 
-    # Đọc dữ liệu từ 3 ô lọc trên giao diện của bạn
+    # Đọc dữ liệu từ 3 ô lọc trên giao diện (image_c82c27.png)
     search_query = request.GET.get('search', '').strip()
-    filter_role = request.GET.get('role', '').strip()
-    filter_branch = request.GET.get('branch', '').strip()
+    filter_role = request.GET.get('role', '').strip()  # Nhận từ ô "Lọc theo Chức vụ"
+    filter_branch = request.GET.get('branch', '').strip()  # Nhận từ ô "Lọc theo Cơ sở"
 
-    # 1. Ô 1: Tìm theo tên nhân viên hoặc tên sản phẩm
+    # Ô 1: Tìm theo tên nhân viên hoặc tên sản phẩm đồng phục
     if search_query:
         staff_debts = staff_debts.filter(
             Q(employee_name__icontains=search_query) |
             Q(uniform__name__icontains=search_query)
         )
 
-    # 2. Ô 2: Lọc theo Chức vụ
+    # Ô 2: Tìm kiếm chức vụ (So khớp với trường position trong DB)
     if filter_role:
-        staff_debts = staff_debts.filter(role__icontains=filter_role)
+        staff_debts = staff_debts.filter(position__icontains=filter_role)
 
-    # 3. Ô 3: Lọc theo Cơ sở
+    # Ô 3: Tìm kiếm theo cơ sở
     if filter_branch:
         staff_debts = staff_debts.filter(branch__icontains=filter_branch)
 
     return render(request, 'staff_debt_list.html', {
         'page_obj': Paginator(staff_debts, 15).get_page(request.GET.get('page')),
         'uniforms': Uniform.objects.all().order_by('name'),
-        # Truyền ngược lại giá trị để giữ chữ trên ô input sau khi bấm Lọc
+        # Giữ lại chữ trên các ô input sau khi trang web tải lại dữ liệu lọc
         'search_query': search_query,
         'filter_role': filter_role,
         'filter_branch': filter_branch,
@@ -422,10 +422,9 @@ def edit_staff_debt(request, debt_id):
 
     debt = get_object_or_404(StaffDebt, id=debt_id)
 
-    # Nếu form sửa gửi dữ liệu lên để cập nhật
     if request.method == 'POST':
         debt.employee_name = request.POST.get('employee_name')
-        debt.role = request.POST.get('role', '')
+        debt.position = request.POST.get('position', '')  # Đã sửa thành position
         debt.gender = request.POST.get('gender', 'Nam')
 
         uniform_id = request.POST.get('uniform')
@@ -434,25 +433,34 @@ def edit_staff_debt(request, debt_id):
 
         debt.quantity = int(request.POST.get('quantity', 1))
 
-        # Đồng bộ ngày tháng (Xử lý chuỗi rỗng từ input date)
+        # Xử lý cập nhật Ngày Xuất
         issue_date_str = request.POST.get('issue_date')
         if issue_date_str:
             debt.issue_date = issue_date_str
 
+        # Xử lý cập nhật Ngày Trả (nếu có form điền vào)
+        return_date_str = request.POST.get('return_date')
+        if return_date_str:
+            debt.return_date = return_date_str
+
         debt.branch = request.POST.get('branch', '')
         debt.note = request.POST.get('note', '')
+
+        # Tự động cập nhật trạng thái nếu có tích chọn đã trả kho
+        is_resolved_val = request.POST.get('is_resolved')
+        if is_resolved_val is not None:
+            debt.is_resolved = is_resolved_val == 'true' or is_resolved_val == 'on'
+
         debt.save()
 
         ActionLog.objects.create(
             user=request.user, action="SỬA THÔNG TIN NV",
-            description=f"Sửa thông tin cấp phát của {debt.employee_name}."
+            description=f"Cập nhật thông tin cấp phát của nhân viên {debt.employee_name}."
         )
-        messages.success(request, f"Đã cập nhật thông tin của {debt.employee_name}!")
+        messages.success(request, f"Đã cập nhật thông tin thành công cho {debt.employee_name}!")
         return redirect('staff_debt_list')
 
-    # Nếu gọi bằng phương thức GET (để load dữ liệu sửa lên trang riêng hoặc xử lý API)
-    return render(request, 'edit_staff_debt.html', {'debt': debt, 'uniforms': Uniform.objects.all()})
-
+    return redirect('staff_debt_list')
 
 @login_required(login_url='login')
 def delete_staff_debt(request, debt_id):
