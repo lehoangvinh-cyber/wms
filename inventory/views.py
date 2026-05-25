@@ -481,15 +481,124 @@ def delete_staff_debt(request, debt_id):
 
 @login_required(login_url='login')
 def export_staff_debt_excel(request):
+    """Xuất toàn bộ dữ liệu trong bảng cấp phát nhân viên ra file Excel"""
     if not request.user.is_superuser:
+        messages.error(request, "Lỗi bảo mật: Chỉ Admin mới có quyền Xuất Excel!")
         return redirect('staff_debt_list')
-    return HttpResponse("File Excel Staff")
+
+    # 1. Khởi tạo một file Excel mới trên bộ nhớ đại diện
+    response = HttpResponse(content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+    response['Content-Disposition'] = 'attachment; filename=Bao_cao_cap_phat_nhan_vien.xlsx'
+
+    workbook = openpyxl.Workbook()
+    worksheet = workbook.active
+    worksheet.title = "Danh sách cấp phát"
+
+    # 2. Tạo hàng tiêu đề (Header) cho các cột trong bảng dữ liệu
+    worksheet.append([
+        'STT', 'Tên nhân viên', 'Chức vụ', 'Giới tính',
+        'Tên sản phẩm', 'Kích cỡ', 'Số lượng',
+        'Ngày xuất', 'Ngày nhập (Trả lại)', 'Cơ sở', 'Ghi chú', 'Trạng thái'
+    ])
+
+    # 3. Lấy toàn bộ dữ liệu từ bảng StaffDebt xếp theo thứ tự ngày xuất mới nhất lên đầu
+    staff_debts = StaffDebt.objects.all().order_by('is_resolved', '-issue_date')
+
+    # 4. Vòng lặp đổ dữ liệu từng dòng vào file Excel
+    for index, debt in enumerate(staff_debts, start=1):
+        # Định dạng lại ngày tháng hiển thị dạng Ngày/Tháng/Năm cho dễ nhìn
+        ngay_xuat = debt.issue_date.strftime('%d/%m/%Y') if debt.issue_date else ''
+        ngay_nhap_lai = debt.return_date.strftime('%d/%m/%Y') if debt.return_date else '---'
+
+        trang_thai = 'Đã nhận đủ' if debt.is_resolved else 'Đang sử dụng (Chưa trả)'
+
+        worksheet.append([
+            index,
+            debt.employee_name,
+            debt.position,
+            debt.gender,
+            debt.uniform.name,
+            debt.uniform.size,
+            debt.quantity,
+            ngay_xuat,
+            ngay_nhap_lai,
+            debt.branch,
+            debt.note or '',
+            trang_thai
+        ])
+
+    # 5. Lưu cấu trúc và gửi file về cho trình duyệt của người dùng tự động tải xuống
+    workbook.save(response)
+    return response
 
 
 @login_required(login_url='login')
 def import_staff_debt_excel(request):
+    """Đọc file Excel và import hàng loạt dữ liệu vào bảng cấp phát nhân viên"""
     if not request.user.is_superuser:
+        messages.error(request, "Lỗi bảo mật: Chỉ Admin mới có quyền Nhập dữ liệu từ Excel!")
         return redirect('staff_debt_list')
+
+    if request.method == 'POST' and request.FILES.get('excel_file'):
+        try:
+            excel_file = request.FILES['excel_file']
+
+            # Đọc file excel từ bộ nhớ (data_only=True để lấy giá trị text thay vì công thức)
+            wb = openpyxl.load_workbook(excel_file, data_only=True)
+            sheet = wb.active
+
+            success_count = 0
+            error_count = 0
+
+            # Vòng lặp đọc từ dòng thứ 2 (bỏ qua hàng tiêu đề)
+            for row in sheet.iter_rows(min_row=2, values_only=True):
+                # Nếu dòng đó trống rỗng (không có tên nhân viên) thì bỏ qua
+                if not row[1]:
+                    continue
+
+                ten_nhan_vien = str(row[1]).strip()
+                chuc_vu = str(row[2]).strip() if row[2] else ''
+                gioi_tinh = str(row[3]).strip() if row[3] in ['Nam', 'Nữ'] else 'Nam'
+                ten_san_pham = str(row[4]).strip()
+                so_luong = int(row[6]) if row[6] else 1
+                co_so = str(row[9]).strip() if row[9] else ''
+                ghi_chu = str(row[10]).strip() if row[10] else ''
+
+                # Tìm kiếm sản phẩm trong kho bằng tên (không phân biệt hoa thường)
+                uniform_obj = Uniform.objects.filter(name__icontains=ten_san_pham).first()
+
+                if uniform_obj:
+                    # Tạo bản ghi cấp phát mới
+                    StaffDebt.objects.create(
+                        employee_name=ten_nhan_vien,
+                        position=chuc_vu,
+                        gender=gioi_tinh,
+                        uniform=uniform_obj,
+                        quantity=so_luong,
+                        issue_date=timezone.now().date(),  # Mặc định lấy ngày import làm ngày xuất
+                        branch=co_so,
+                        note=ghi_chu
+                    )
+                    success_count += 1
+                else:
+                    # Ghi nhận số dòng lỗi do không tìm thấy tên áo tương ứng trong danh mục kho
+                    error_count += 1
+
+            # Lưu lại nhật ký hệ thống
+            if success_count > 0:
+                ActionLog.objects.create(
+                    user=request.user,
+                    action="IMPORT DATA NV",
+                    description=f"Import thành công {success_count} nhân viên từ file Excel."
+                )
+                messages.success(request, f"Nhập thành công {success_count} dòng dữ liệu!")
+
+            if error_count > 0:
+                messages.warning(request, f"Có {error_count} dòng bị bỏ qua do tên sản phẩm không tồn tại trong kho.")
+
+        except Exception as e:
+            messages.error(request, f"Lỗi đọc file Excel: {str(e)}")
+
     return redirect('staff_debt_list')
 
 
