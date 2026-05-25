@@ -14,7 +14,7 @@ from django.core.paginator import Paginator
 from django.db.models import Q, Sum
 from django.http import HttpResponse
 from django.utils.safestring import mark_safe
-
+from django.views.decorators.csrf import csrf_exempt
 from .models import Uniform, Debt, Transaction, StaffDebt, ActionLog
 
 
@@ -78,7 +78,6 @@ def register(request):
     else:
         form = UserCreationForm()
     return render(request, 'register.html', {'form': form})
-
 @csrf_exempt # <-- Thêm dòng này để miễn kiểm tra mã bảo mật khi logout
 def xu_ly_dang_xuat(request):
     """Đăng xuất khỏi hệ thống"""
@@ -90,7 +89,7 @@ def xu_ly_dang_xuat(request):
 # QUAN SÁT & THỐNG KÊ (DASHBOARD)
 # ==============================================================================
 
-@login_required
+@login_required(login_url='/dang-nhap/')
 def dashboard(request):
     """Hiển thị tổng quan kho, vẽ đồ thị và cảnh báo hàng sắp hết"""
     uniforms = Uniform.objects.all().order_by('name')

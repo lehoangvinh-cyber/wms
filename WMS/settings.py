@@ -114,6 +114,6 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
-LOGIN_URL = 'login'
+LOGIN_URL = '/dang-nhap/'
 # Chỉ định nơi quay về sau khi đăng nhập thành công
 LOGIN_REDIRECT_URL = 'dashboard'

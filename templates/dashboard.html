@@ -81,12 +81,8 @@
         <div class="d-flex align-items-center text-white">
             <span class="text-white me-3">Xin chào, <b>{{ request.user.username }}</b></span>
 
-            <form action="{% url 'logout' %}" method="POST" class="d-inline">
-                {% csrf_token %}
-                <button type="submit" class="btn btn-light btn-sm rounded-pill px-3 fw-bold shadow-sm">
-                    Thoát
-                </button>
-            </form>
+            <a href="{% url 'logout' %}" class="btn btn-light btn-sm rounded-pill px-3 fw-bold shadow-sm">
+    </a>
         </div>
     </div>
 </nav>
