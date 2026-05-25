@@ -204,30 +204,64 @@ def stock_form(request):
 
 @login_required(login_url='login')
 def debt_list(request):
-    # Ai cũng được xem và thêm nợ mới
+    # --- 1. XỬ LÝ LƯU KHOẢN NỢ MỚI (POST) ---
     if request.method == 'POST' and 'branch' in request.POST:
         uniform_id = request.POST.get('uniform')
         if uniform_id:
             Debt.objects.create(
                 branch=request.POST.get('branch'),
                 request_date=request.POST.get('request_date') or timezone.now().date(),
-                uniform_id=uniform_id, quantity=request.POST.get('quantity', 1),
-                student_name=request.POST.get('student_name'), note="Kho nợ"
+                uniform_id=uniform_id,
+                quantity=int(request.POST.get('quantity', 1)),
+                student_name=request.POST.get('student_name'),
+                note="Kho nợ"
             )
             messages.success(request, "Lưu khoản nợ thành công!")
         return redirect('debt_list')
 
+    # --- 2. XỬ LÝ BỘ LỌC ĐA NĂNG ĐỘC LẬP (GET FILTER) ---
     debts = Debt.objects.all().order_by('is_resolved', '-request_date')
-    search_query = request.GET.get('search', '')
-    if search_query:
-        debts = debts.filter(Q(student_name__icontains=search_query) | Q(uniform__name__icontains=search_query))
 
+    # Đọc dữ liệu từ 3 ô lọc trên giao diện (image_fcd046.png)
+    search_query = request.GET.get('search', '').strip()
+    filter_branch = request.GET.get('branch', '').strip()
+    filter_status = request.GET.get('status', '').strip()
+
+    # Ô 1: Tìm theo tên học sinh hoặc tên đồng phục
+    if search_query:
+        debts = debts.filter(
+            Q(student_name__icontains=search_query) |
+            Q(uniform__name__icontains=search_query)
+        )
+
+    # Ô 2: Lọc theo Cơ sở
+    if filter_branch:
+        debts = debts.filter(branch__icontains=filter_branch)
+
+    # Ô 3: Lọc theo Trạng thái (Chưa trả hoặc Đã xong)
+    if filter_status == 'resolved':
+        debts = debts.filter(is_resolved=True)
+    elif filter_status == 'pending':
+        debts = debts.filter(is_resolved=False)
+
+    # --- 3. TÍNH TOÁN SỐ LIỆU THỰC TẾ CHO 3 THẺ THỐNG KÊ ---
+    total_debts = debts.aggregate(Sum('quantity'))['quantity__sum'] or 0  # Tổng giao dịch nợ
+    pending_debts = debts.filter(is_resolved=False).aggregate(Sum('quantity'))['quantity__sum'] or 0  # Đang chờ trả mới
+    resolved_debts = debts.filter(is_resolved=True).aggregate(Sum('quantity'))['quantity__sum'] or 0  # Đã hoàn thành
+
+    # --- 4. PHÂN TRANG VÀ TRẢ DỮ LIỆU ---
     paginator = Paginator(debts, 15)
     return render(request, 'debt_list.html', {
         'page_obj': paginator.get_page(request.GET.get('page')),
         'uniforms': Uniform.objects.all(),
-        'total_debts': debts.count(),
-        'pending_debts': debts.filter(is_resolved=False).count(),
+        # Giữ lại chữ trên các ô nhập sau khi bấm Lọc
+        'search_query': search_query,
+        'filter_branch': filter_branch,
+        'filter_status': filter_status,
+        # Truyền 3 con số thống kê chuẩn sang HTML
+        'total_debts': total_debts,
+        'pending_debts': pending_debts,
+        'resolved_debts': resolved_debts,
     })
 
 
