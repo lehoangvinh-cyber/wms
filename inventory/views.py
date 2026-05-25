@@ -385,7 +385,10 @@ def staff_debt_list(request):
     # Ô 3: Tìm kiếm theo cơ sở
     if filter_branch:
         staff_debts = staff_debts.filter(branch__icontains=filter_branch)
+    tong_luot_cap_phat = staff_debts.aggregate(Sum('quantity'))['quantity__sum'] or 0
 
+    # Đang sử dụng (Chưa trả) = các bản ghi có is_resolved=False
+    dang_su_dung = staff_debts.filter(is_resolved=False).aggregate(Sum('quantity'))['quantity__sum'] or 0
     return render(request, 'staff_debt_list.html', {
         'page_obj': Paginator(staff_debts, 15).get_page(request.GET.get('page')),
         'uniforms': Uniform.objects.all().order_by('name'),
@@ -393,6 +396,8 @@ def staff_debt_list(request):
         'search_query': search_query,
         'filter_role': filter_role,
         'filter_branch': filter_branch,
+        'tong_luot_cap_phat': tong_luot_cap_phat,
+        'dang_su_dung': dang_su_dung,
     })
 
 
