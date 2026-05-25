@@ -33,7 +33,7 @@ def xu_ly_dang_nhap(request):
 
         # 2. Gửi token và Secret Key lên Cloudflare để xác minh
         data = urllib.parse.urlencode({
-            'secret': '0x4AAAAAADTcbRcgIPcBA48OWFqUfzxPEzA',  # Secret Key của Vinh
+            'secret': '0x4AAAAAADTcbRcgIPcBA48OWFqUfzxpEzA',  # Secret Key của Vinh
             'response': turnstile_response
         }).encode()
 
