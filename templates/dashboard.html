@@ -219,7 +219,7 @@
                     <tbody id="inventoryTableBody">
                         {% for item in uniforms %}
                         <tr>
-                            <td class="fw-bold text-secondary">#{{ item.sku|default:item.id }}</td>
+                            <td class="fw-bold text-secondary">{{ item.sku|default:item.id }}</td>
                             <td class="fw-bold text-primary">{{ item.name }}</td>
                             <td class="text-center"><span class="badge bg-light text-dark border">{{ item.size }}</span></td>
                             <td class="text-center fw-bold fs-6">{{ item.quantity }}</td>
