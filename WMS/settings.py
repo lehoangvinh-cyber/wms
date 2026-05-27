@@ -43,7 +43,7 @@ INSTALLED_APPS = [
 ]
 
 # --- SỬA LỖI THỤT LỀ CỦA ALLAUTH ĐỂ TRÁNH SẬP WEB ---
-SITE_ID = 1
+SITE_ID = 2
 
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
