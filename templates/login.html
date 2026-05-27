@@ -239,7 +239,19 @@
                     </div>
 
                     <button type="submit" class="btn btn-login w-100 mb-4">Login</button>
+                    <div class="d-flex align-items-center my-3">
+    <hr class="flex-grow-1 text-muted">
+    <span class="mx-2 text-muted small fw-bold">OR</span>
+    <hr class="flex-grow-1 text-muted">
+</div>
 
+{% load socialaccount %}
+<a href="{% provider_login_url 'google' %}" class="btn w-100 d-flex align-items-center justify-content-center border py-2 mb-3" style="border-radius: 12px; background-color: #ffffff; color: #475569; font-weight: 600; font-size: 0.95rem; transition: all 0.2s;">
+    <svg class="me-2" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24">
+        <path fill="#EA4335" d="M12.24 10.285V14.4h6.887c-.648 2.41-2.519 4.114-5.136 4.114A5.94 5.94 0 0 1 8 12.63a5.94 5.94 0 0 1 5.99-5.89c2.443 0 4.212.94 5.136 1.82l3.242-3.242C20.4 3.49 17.41 2 13.99 2 7.92 2 3 6.92 3 13s4.92 11 10.99 11c6.28 0 10.51-4.41 10.51-10.71 0-.73-.07-1.42-.2-2H12.24z"/>
+    </svg>
+    Sign in with Google
+</a>
                     <div class="text-center signup-text mt-2" style="font-size: 0.85rem; color: #64748b;">
                         Don't have an account? <a href="{% url 'register' %}" class="signup-link">Sign up</a>
                     </div>
