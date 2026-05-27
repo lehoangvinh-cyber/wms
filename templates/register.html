@@ -218,16 +218,21 @@
                 {% endif %}
 
                 <form method="POST" action="{% url 'register' %}">
-                    {% csrf_token %}
+    {% csrf_token %}
 
-                    {{ form.as_p }}
+    <p>
+        <label for="id_email">Email address:</label>
+        <input type="email" name="email" id="id_email" class="form-control" placeholder="example@gmail.com" required>
+        <span class="helptext">Bắt buộc. Dùng để khôi phục mật khẩu khi bị quên.</span>
+    </p>
+    {{ form.as_p }}
 
-                    <button type="submit" class="btn btn-register w-100 mb-4 mt-3">Register</button>
+    <button type="submit" class="btn btn-register w-100 mb-4 mt-3">Register</button>
 
-                    <div class="text-center login-text mt-2" style="font-size: 0.85rem; color: #64748b;">
-                        Already have an account? <a href="{% url 'login' %}" class="login-link">Sign in</a>
-                    </div>
-                </form>
+    <div class="text-center login-text mt-2" style="font-size: 0.85rem; color: #64748b;">
+        Already have an account? <a href="{% url 'login' %}" class="login-link">Sign in</a>
+    </div>
+</form>
             </div>
 
         </div>

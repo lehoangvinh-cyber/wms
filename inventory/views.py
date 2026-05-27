@@ -64,10 +64,19 @@ def xu_ly_dang_nhap(request):
 
 def register(request):
     if request.method == 'POST':
+        # Ép bộ form mặc định lấy thêm dữ liệu từ trường email
         form = UserCreationForm(request.POST)
+        email_input = request.POST.get('email')  # Lấy email người dùng nhập từ giao diện
+
         if form.is_valid():
-            user = form.save()
+            user = form.save(commit=False)
+            user.email = email_input  # Đẩy email vào tài khoản trước khi lưu chính thức
+            user.save()
+
+            # Tự động đăng nhập sau khi đăng ký thành công
             login(request, user)
+
+            # --- Logic gửi email thông báo Admin (Giữ nguyên code cũ của bạn) ---
 
             try:
                 tieu_de = f"🎉 [WMS] Người dùng mới: {user.username}"

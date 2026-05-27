@@ -132,3 +132,4 @@ EMAIL_HOST_USER = 'vinh81800135@gmail.com'
 EMAIL_HOST_PASSWORD = 'oybpmwzsypornllh'
 
 DEFAULT_FROM_EMAIL = 'Hệ thống Quản lý Kho WMS <vinh81800135@gmail.com>'
+PASSWORD_RESET_TIMEOUT = 86400
