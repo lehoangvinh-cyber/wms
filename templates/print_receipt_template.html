@@ -92,37 +92,73 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {% for item in selected_uniform_data %}
-                    <tr>
-                        <td>{{ forloop.counter }}
-                            <input type="hidden" name="final_ids" value="{{ item.id }}">
-                        </td>
-                        <td class="text-start" style="padding-left: 12px;">{{ item.name }} (Size: {{ item.size }})</td>
-                        <td>{{ item.sku }}</td>
-                        <td><input type="text" class="cell-input" value="Cái"></td>
-                        <td>
-                            <input type="number" name="final_quantities" value="{{ item.export_quantity }}" class="cell-input fw-bold-input target-quantity" readonly style="pointer-events: none;">
-                        </td>
-                        <td><input type="text" class="cell-input text-start-input" placeholder="..."></td>
-                    </tr>
-                    {% endfor %}
+    {% for item in selected_uniform_data|default:selected_uniforms_data %}
+    <tr>
+        <td>{{ forloop.counter }}
+            <input type="hidden" name="final_ids" value="{{ item.id }}">
+        </td>
+        <td class="text-start" style="padding-left: 12px;">{{ item.name }} {% if item.size %}(Size: {{ item.size }}){% endif %}</td>
+        <td>{{ item.sku }}</td>
+        <td><input type="text" class="cell-input" value="Cái"></td>
+        <td>
+            <input type="number" name="final_quantities" value="{{ item.export_quantity }}" class="cell-input fw-bold-input target-quantity" readonly style="pointer-events: none;">
+        </td>
+        <td><input type="text" class="cell-input text-start-input" placeholder="..."></td>
+    </tr>
+    {% empty %}
+    <tr>
+        <td colspan="6" class="text-center text-danger fw-bold py-3 no-print">
+            ⚠️ Hệ thống chưa nhận được dữ liệu mảng tích chọn! Vui lòng kiểm tra lại views.py
+        </td>
+    </tr>
+    {% endfor %}
 
-                    {% with total_items=selected_uniform_data|length %}
-                        {% if total_items < 6 %}
-                            <tr><td>{{ total_items|add:"1" }}</td><td></td><td></td><td><input type="text" class="cell-input"></td><td></td><td><input type="text" class="cell-input"></td></tr>
-                            <tr><td>{{ total_items|add:"2" }}</td><td></td><td></td><td><input type="text" class="cell-input"></td><td></td><td><input type="text" class="cell-input"></td></tr>
-                            <tr><td>{{ total_items|add:"3" }}</td><td></td><td></td><td><input type="text" class="cell-input"></td><td></td><td><input type="text" class="cell-input"></td></tr>
-                        {% endif %}
-                    {% endwith %}
+    {% with total_items=selected_uniform_data|length|default:selected_uniforms_data|length %}
+        <tr style="{% if total_items >= 6 %}display: none;{% endif %}">
+            <td>{% if total_items < 1 %}{% else %}{{ total_items|add:"1" }}{% endif %}</td>
+            <td></td><td></td>
+            <td><input type="text" class="cell-input"></td>
+            <td></td>
+            <td><input type="text" class="cell-input"></td>
+        </tr>
+        <tr style="{% if total_items|add:"1" >= 6 %}display: none;{% endif %}">
+            <td>{{ total_items|add:"2" }}</td>
+            <td></td><td></td>
+            <td><input type="text" class="cell-input"></td>
+            <td></td>
+            <td><input type="text" class="cell-input"></td>
+        </tr>
+        <tr style="{% if total_items|add:"2" >= 6 %}display: none;{% endif %}">
+            <td>{{ total_items|add:"3" }}</td>
+            <td></td><td></td>
+            <td><input type="text" class="cell-input"></td>
+            <td></td>
+            <td><input type="text" class="cell-input"></td>
+        </tr>
+        <tr style="{% if total_items|add:"3" >= 6 %}display: none;{% endif %}">
+            <td>{{ total_items|add:"4" }}</td>
+            <td></td><td></td>
+            <td><input type="text" class="cell-input"></td>
+            <td></td>
+            <td><input type="text" class="cell-input"></td>
+        </tr>
+        <tr style="{% if total_items|add:"4" >= 6 %}display: none;{% endif %}">
+            <td>{{ total_items|add:"5" }}</td>
+            <td></td><td></td>
+            <td><input type="text" class="cell-input"></td>
+            <td></td>
+            <td><input type="text" class="cell-input"></td>
+        </tr>
+    {% endwith %}
 
-                    <tr class="total-row">
-                        <td colspan="2" class="text-center">Tổng cộng / Total amount</td>
-                        <td>X</td>
-                        <td>X</td>
-                        <td class="text-center fw-bold text-decoration-underline" id="total-amount-display">0</td>
-                        <td>X</td>
-                    </tr>
-                </tbody>
+    <tr class="total-row">
+        <td colspan="2" class="text-center">Tổng cộng / Total amount</td>
+        <td>X</td>
+        <td>X</td>
+        <td class="text-center fw-bold text-decoration-underline" id="total-amount-display">0</td>
+        <td>X</td>
+    </tr>
+</tbody>
             </table>
 
             <div class="signature-section">
