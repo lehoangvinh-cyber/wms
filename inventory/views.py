@@ -724,7 +724,19 @@ def confirm_export_stock(request):
                     # CHÍNH THỨC TRỪ KHO TRONG DATABASE
                     item.quantity -= qty
                     item.save()
+                    # Thu thập thông tin dòng hàng này để chuẩn bị ghi log
+                    audit_log.append(f"{item.name} (Size: {item.size}) [SL Xuất: {qty}]")
 
+                    # 2. GHI NHẬT KÝ THAO TÁC (AUDIT LOG) VÀO DATABASE
+                    # Gom toàn bộ các mặt hàng xuất trong phiếu này thành một chuỗi văn bản lịch sự
+                action_detail = "Xuất kho in phiếu: " + ", ".join(audit_log)
+
+                ActionLog.objects.create(
+                    user=request.user,  # Người thực hiện (Lê Hoàng Vinh)
+                    action_type="XUẤT KHO",  # Phân loại hành động
+                    details=action_detail,  # Nội dung chi tiết các món hàng và số lượng
+                    timestamp=timezone.now()  # Mốc thời gian thực tế theo múi giờ VN
+                )
                 messages.success(request, "Đã xuất kho, cập nhật số lượng và in chứng từ thành công!")
                 return redirect('dashboard')
                 # Trả về mã JSON báo thành công để JavaScript gọi lệnh in của máy in
