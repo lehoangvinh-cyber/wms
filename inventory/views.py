@@ -4,6 +4,7 @@ import urllib.request
 import urllib.parse
 from datetime import datetime, date
 
+from django.db import transaction
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
@@ -675,17 +676,56 @@ def print_receipt(request):
 @login_required
 def print_uniform_receipt(request):
     if request.method == 'POST':
-        # Lấy mảng danh sách các ID đã được tick chọn gửi lên từ giao diện
+        # 1. Lấy danh sách ID và danh sách số lượng được gửi lên từ Form
         uniform_ids = request.POST.getlist('uniform_ids')
+        quantities = request.POST.getlist('quantities')
 
-        # Truy vấn ra toàn bộ các bản ghi đồng phục nằm trong danh sách ID đó
-        selected_uniforms = Uniform.objects.filter(id__in=uniform_ids)
+        # Tạo một cấu trúc dữ liệu kết hợp {id_san_pham: so_luong_xuat}
+        # Ví dụ: {'5': 2, '8': 1}
+        items_to_export = {}
+        for idx, u_id in enumerate(uniform_ids):
+            try:
+                items_to_export[u_id] = int(quantities[idx])
+            except (IndexError, ValueError):
+                items_to_export[u_id] = 1  # Mặc định là 1 nếu có lỗi
 
-        context = {
-            'selected_uniforms': selected_uniforms,
-            'user': request.user,
-        }
-        # Trả về trang thiết kế biểu mẫu in ấn thô để trình duyệt tự in
-        return render(request, 'print_receipt_template.html', context)
+        # 2. Sử dụng 'atomic' để đảm bảo an toàn dữ liệu (nếu lỗi 1 mặt hàng thì hủy toàn bộ quy trình)
+        try:
+            with transaction.atomic():
+                selected_uniforms_data = []
+
+                for u_id, qty in items_to_export.items():
+                    # Lấy sản phẩm ra từ DB
+                    item = get_object_or_404(Uniform, id=u_id)
+
+                    # Kiểm tra xem kho còn đủ hàng để trừ không
+                    if item.quantity < qty:
+                        messages.error(request,
+                                       f"Mặt hàng {item.name} không đủ số lượng trong kho! (Tồn: {item.quantity}, Yêu cầu: {qty})")
+                        return redirect('dashboard')
+
+                    # THỰC HIỆN TRỪ SỐ LƯỢNG TỒN KHO TRỰC TIẾP
+                    item.quantity -= qty
+                    item.save()
+
+                    # Lưu thông tin tạm thời để đẩy sang phôi hiển thị HTML khi in
+                    selected_uniforms_data.append({
+                        'name': item.name,
+                        'sku': item.sku if hasattr(item, 'sku') else item.id,
+                        'size': item.size if hasattr(item, 'size') else 'Free Size',
+                        'export_quantity': qty  # Số lượng đã chọn để xuất
+                    })
+
+                # Trả dữ liệu về trang phôi in
+                context = {
+                    'selected_uniforms_data': selected_uniforms_data,
+                    'user': request.user,
+                }
+                messages.success(request, f"Đã xuất kho thành công {len(selected_uniforms_data)} mặt hàng!")
+                return render(request, 'print_receipt_template.html', context)
+
+        except Exception as e:
+            messages.error(request, f"Có lỗi xảy ra trong quá trình trừ kho: {str(e)}")
+            return redirect('dashboard')
 
     return redirect('dashboard')
