@@ -11,59 +11,57 @@
         .company-title { font-weight: bold; font-size: 12pt; text-transform: uppercase; margin-bottom: 20px; }
         .receipt-title { font-weight: bold; font-size: 18pt; text-align: center; margin-bottom: 5px; font-family: 'Arial', sans-serif; }
 
-        /* CĂN ĐỀU VÀ CĂN GIỮA KHỐI THỜI GIAN */
         .receipt-date-container { text-align: center; font-style: italic; font-size: 13pt; margin-bottom: 25px; display: flex; justify-content: center; align-items: flex-end; gap: 5px; }
         .date-input { border: none; border-bottom: 1px dotted #000; text-align: center; font-style: italic; width: 45px; background: transparent; font-family: 'Times New Roman'; font-size: 13pt; font-weight: bold; padding: 0; }
         .date-input:focus { outline: none; }
         .year-input { width: 65px; }
 
-        /* ĐỊNH DẠNG HÀNG THÔNG TIN GIAO NHẬN CĂN ĐỀU MƯỢT MÀ */
         .info-row { display: flex; margin-bottom: 12px; align-items: flex-end; width: 100%; }
         .info-label { font-weight: normal; white-space: nowrap; }
         .info-value-input { border: none; border-bottom: 1px dotted #000; flex-grow: 1; padding-left: 10px; font-weight: bold; font-family: 'Times New Roman'; font-size: 13pt; background: transparent; transition: all 0.2s; }
         .info-value-input:focus { outline: none; border-bottom-color: #0d6efd; }
 
-        /* BẢNG DỮ LIỆU ĐỒNG PHỤC */
         .table-receipt { width: 100%; border-collapse: collapse; margin-top: 20px; margin-bottom: 15px; }
         .table-receipt th, .table-receipt td { border: 1px solid #000 !important; padding: 6px 8px; font-size: 11pt; vertical-align: middle; }
         .table-receipt th { font-weight: bold; text-align: center; background-color: #ffffff !important; }
         .sub-header-row td { text-align: center; font-size: 10pt; color: #000; padding: 2px !important; }
         .total-row td { font-weight: bold; }
 
-        /* Ô NHẬP SỐ LƯỢNG LUÔN CĂN GIỮA */
-        .quantity-input { width: 100%; text-align: center; border: 1px solid #ccc; border-radius: 4px; font-weight: bold; font-size: 11pt; padding: 2px; -moz-appearance: textfield; }
-        .quantity-input::-webkit-outer-spin-button,
-        .quantity-input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
-        .quantity-input:focus { outline: none; border-color: #0d6efd; }
+        /* Ô nhập liệu trong bảng (ĐVT, Số lượng, Ghi chú) */
+        .cell-input { width: 100%; text-align: center; border: 1px solid #eee; border-radius: 4px; font-size: 11pt; padding: 4px; background: transparent; font-family: 'Times New Roman'; }
+        .cell-input:focus { outline: none; border-color: #0d6efd; background: #fff; }
+        .text-start-input { text-align: left !important; padding-left: 8px !important; }
+        .fw-bold-input { font-weight: bold; }
 
-        /* KHỐI CHỮ KÝ CĂN ĐỀU ĐỐI XỨNG */
         .signature-section { margin-top: 30px; display: flex; justify-content: space-between; text-align: center; width: 100%; }
         .signature-box { width: 45%; display: flex; flex-direction: column; align-items: center; min-height: 180px; justify-content: start; }
         .signature-title { font-weight: bold; font-size: 13pt; margin-bottom: 2px; width: 100%; }
         .signature-subtitle { font-style: italic; font-size: 11pt; color: #555; width: 100%; }
-
-        /* Tên người lập phiếu căn chính giữa khối bên trái */
         .signature-name-fill { font-weight: bold; font-size: 13pt; margin-top: auto; width: 100%; text-align: center; padding-top: 60px; }
 
-        /* 🔴 ĐỊNH DẠNG CSS ÉP CĂN GIỮA VÀ XÓA KHUNG TUYỆT ĐỐI KHI IN */
+        /* 🔴 ÉP XÓA KHUNG VÀ ĐƯỜNG VIỀN KHI IN */
         @media print {
             .no-print { display: none; }
             body { padding: 0; margin: 0; }
             .print-wrapper { max-width: 100%; }
 
-            /* Triệt tiêu mọi dấu chấm dotted và đường viền input khi ra giấy */
-            .date-input, .info-value-input, .quantity-input { border: none !important; background: transparent !important; box-shadow: none !important; padding: 0 !important; outline: none !important; }
-
-            /* Giữ nguyên định dạng căn giữa cho chữ số */
-            .date-input, .quantity-input { text-align: center !important; display: inline-block; }
+            /* Biến tất cả các ô input nhập liệu thành chữ trần trụi, mất viền */
+            .date-input, .info-value-input, .cell-input { border: none !important; background: transparent !important; box-shadow: none !important; padding: 0 !important; outline: none !important; }
+            .date-input, .cell-input { display: inline-block; }
+            .cell-input::placeholder { color: transparent !important; } /* Ẩn dấu chấm gợi ý khi in */
             .receipt-date-container { display: block !important; text-align: center !important; }
+
+            /* Ẩn nút tăng giảm mũi tên của ô số lượng khi in */
+            input[type=number]::-webkit-outer-spin-button,
+            input[type=number]::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+            input[type=number] { -moz-appearance: textfield; }
         }
     </style>
 </head>
 <body>
 
     <div class="no-print text-center mb-4 bg-light p-3 border-bottom">
-        <span class="text-secondary me-3 small"><i class="bi bi-info-circle-fill"></i> Dữ liệu thời gian, người nhận, và số lượng đã được tối ưu căn giữa, căn đều tự động.</span>
+        <span class="text-secondary me-3 small"><i class="bi bi-info-circle-fill"></i> Bạn có thể click trực tiếp vào các ô <b>ĐVT</b> và <b>Ghi chú</b> trên bảng để chỉnh sửa nhanh.</span>
         <button onclick="window.print();" class="btn btn-primary px-4 fw-bold shadow-sm"><i class="fas fa-print me-2"></i>XÁC NHẬN IN / LƯU PDF</button>
         <button onclick="window.close();" class="btn btn-outline-danger px-4 ms-2 shadow-sm">ĐÓNG TRANG</button>
     </div>
@@ -109,19 +107,26 @@
                     <td>{{ forloop.counter }}</td>
                     <td class="text-start" style="padding-left: 12px;">{{ item.name }}</td>
                     <td>{{ item.sku|default:item.id }}</td>
-                    <td>Cái</td>
+
                     <td>
-                        <input type="number" name="quantities" value="1" min="1" class="quantity-input target-quantity" onchange="calculateTotalQuantity()">
+                        <input type="text" value="Cái" class="cell-input">
                     </td>
-                    <td></td>
+
+                    <td>
+                        <input type="number" name="quantities" value="1" min="1" class="cell-input fw-bold-input target-quantity" onchange="calculateTotalQuantity()">
+                    </td>
+
+                    <td>
+                        <input type="text" class="cell-input text-start-input" placeholder="...">
+                    </td>
                 </tr>
                 {% endfor %}
 
                 {% with total_items=selected_uniforms|length %}
                     {% if total_items < 6 %}
-                        <tr><td>{{ total_items|add:"1" }}</td><td></td><td></td><td></td><td></td><td></td></tr>
-                        <tr><td>{{ total_items|add:"2" }}</td><td></td><td></td><td></td><td></td><td></td></tr>
-                        <tr><td>{{ total_items|add:"3" }}</td><td></td><td></td><td></td><td></td><td></td></tr>
+                        <tr><td>{{ total_items|add:"1" }}</td><td></td><td></td><td><input type="text" class="cell-input"></td><td></td><td><input type="text" class="cell-input"></td></tr>
+                        <tr><td>{{ total_items|add:"2" }}</td><td></td><td></td><td><input type="text" class="cell-input"></td><td></td><td><input type="text" class="cell-input"></td></tr>
+                        <tr><td>{{ total_items|add:"3" }}</td><td></td><td></td><td><input type="text" class="cell-input"></td><td></td><td><input type="text" class="cell-input"></td></tr>
                     {% endif %}
                 {% endwith %}
 
@@ -150,7 +155,6 @@
     </div>
 
     <script>
-        // Tự động nạp ngày tháng thực tế
         document.addEventListener("DOMContentLoaded", function() {
             const today = new Date();
             document.getElementById('receipt-day').value = today.getDate();
@@ -159,7 +163,6 @@
             calculateTotalQuantity();
         });
 
-        // Tính tổng lượng xuất thời gian thực
         function calculateTotalQuantity() {
             let total = 0;
             const inputs = document.querySelectorAll('.target-quantity');
