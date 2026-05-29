@@ -675,61 +675,63 @@ def print_receipt(request):
 
 @login_required
 def print_uniform_receipt(request):
+    """ Hàm này CHỈ ĐỌC dữ liệu ra để hiển thị phôi xem trước, CHƯA TRỪ KHO """
     if request.method == 'POST':
-        # 1. Lấy toàn bộ danh sách ID được tick chọn
         selected_ids = request.POST.getlist('uniform_ids')
-
         if not selected_ids:
-            messages.error(request, "Vui lòng tích chọn ít nhất 1 mặt hàng để in phiếu!")
+            messages.error(request, "Vui lòng tích chọn ít nhất 1 mặt hàng!")
             return redirect('dashboard')
+
+        selected_uniforms_data = []
+        for u_id in selected_ids:
+            item = get_object_or_404(Uniform, id=u_id)
+            qty = int(request.POST.get(f'quantity_for_{u_id}', 1))
+
+            selected_uniforms_data.append({
+                'id': item.id,
+                'name': item.name,
+                'sku': item.sku if hasattr(item, 'sku') else item.id,
+                'size': item.size if hasattr(item, 'size') else 'Tự do',
+                'export_quantity': qty
+            })
+
+        context = {
+            'selected_uniforms_data': selected_uniforms_data,
+            'user': request.user,
+        }
+        return render(request, 'print_receipt_template.html', context)
+    return redirect('dashboard')
+
+
+@login_required
+def confirm_export_stock(request):
+    """ Hàm này mới là hàm CHÍNH THỨC TRỪ KHO khi nhấn nút 'Xác nhận in' """
+    if request.method == 'POST':
+        # Lấy mảng ID và số lượng xuất tương ứng từ trang phôi in gửi lên
+        uniform_ids = request.POST.getlist('final_ids')
+        quantities = request.POST.getlist('final_quantities')
 
         try:
             with transaction.atomic():
-                selected_uniforms_data = []
-
-                for u_id in selected_ids:
+                for idx, u_id in enumerate(uniform_ids):
                     item = get_object_or_404(Uniform, id=u_id)
-
-                    # Tìm đúng ô số lượng xuất tương ứng với ID này được truyền lên
-                    # Bằng cách lấy vị trí cụ thể của hàng dựa vào thuộc tính HTML Form
-                    # Hoặc lấy trực tiếp giá trị số lượng từ request
-                    qty_value = request.POST.get(f'qty_{u_id}')
-                    if not qty_value:
-                        # Fallback nếu gộp form chung: tìm theo thứ tự dòng vật lý
-                        all_ids = request.POST.getlist(
-                            'all_ids_placeholder_if_needed')  # hoặc xử lý loop nhanh bên dưới:
-                        qty_value = 1
-
-                    # Để đơn giản và chính xác tuyệt đối 100% không lệch dòng,
-                    # ta sẽ tinh chỉnh JavaScript ở Bước 3 tự động đổi thuộc tính name của ô nhập liệu khi gõ.
-                    # Cho nên tại Backend, ta chỉ cần gọi trực tiếp name riêng biệt của từng ID:
-                    qty = int(request.POST.get(f'quantity_for_{u_id}', 1))
+                    qty = int(quantities[idx])
 
                     if item.quantity < qty:
-                        messages.error(request,
-                                       f"Mặt hàng {item.name} không đủ tồn kho! (Còn: {item.quantity}, Yêu cầu xuất: {qty})")
+                        messages.error(request, f"Mặt hàng {item.name} không đủ tồn kho thực tế!")
                         return redirect('dashboard')
 
-                    # THỰC HIỆN TRỪ KHO THỰC TẾ
+                    # CHÍNH THỨC TRỪ KHO TRONG DATABASE
                     item.quantity -= qty
                     item.save()
 
-                    selected_uniforms_data.append({
-                        'name': item.name,
-                        'sku': item.sku if hasattr(item, 'sku') else item.id,
-                        'size': item.size if hasattr(item, 'size') else 'Tự do',
-                        'export_quantity': qty
-                    })
-
-                context = {
-                    'selected_uniforms_data': selected_uniforms_data,
-                    'user': request.user,
-                }
-                messages.success(request, f"Đã xuất kho và trừ số lượng thành công!")
-                return render(request, 'print_receipt_template.html', context)
+                messages.success(request, "Đã xuất kho và cập nhật số lượng tồn kho thành công!")
+                # Trả về mã JSON báo thành công để JavaScript gọi lệnh in của máy in
+                from django.http import JsonResponse
+                return JsonResponse({'status': 'success'})
 
         except Exception as e:
-            messages.error(request, f"Lỗi trừ kho: {str(e)}")
-            return redirect('dashboard')
+            from django.http import JsonResponse
+            return JsonResponse({'status': 'error', 'message': str(e)})
 
     return redirect('dashboard')

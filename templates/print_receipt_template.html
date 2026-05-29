@@ -7,148 +7,140 @@
     <style>
         body { font-family: 'Times New Roman', Times, serif; background: #fff; color: #000; padding: 20px; font-size: 13pt; }
         .print-wrapper { max-width: 900px; margin: 0 auto; padding: 10px; }
-
         .company-title { font-weight: bold; font-size: 12pt; text-transform: uppercase; margin-bottom: 20px; }
         .receipt-title { font-weight: bold; font-size: 18pt; text-align: center; margin-bottom: 5px; font-family: 'Arial', sans-serif; }
-
         .receipt-date-container { text-align: center; font-style: italic; font-size: 13pt; margin-bottom: 25px; display: flex; justify-content: center; align-items: flex-end; gap: 5px; }
         .date-input { border: none; border-bottom: 1px dotted #000; text-align: center; font-style: italic; width: 45px; background: transparent; font-family: 'Times New Roman'; font-size: 13pt; font-weight: bold; padding: 0; }
         .date-input:focus { outline: none; }
         .year-input { width: 65px; }
-
         .info-row { display: flex; margin-bottom: 12px; align-items: flex-end; width: 100%; }
         .info-label { font-weight: normal; white-space: nowrap; }
-        .info-value-input { border: none; border-bottom: 1px dotted #000; flex-grow: 1; padding-left: 10px; font-weight: bold; font-family: 'Times New Roman'; font-size: 13pt; background: transparent; transition: all 0.2s; }
+        .info-value-input { border: none; border-bottom: 1px dotted #000; flex-grow: 1; padding-left: 10px; font-weight: bold; font-family: 'Times New Roman'; font-size: 13pt; background: transparent; }
         .info-value-input:focus { outline: none; border-bottom-color: #0d6efd; }
-
         .table-receipt { width: 100%; border-collapse: collapse; margin-top: 20px; margin-bottom: 15px; }
         .table-receipt th, .table-receipt td { border: 1px solid #000 !important; padding: 6px 8px; font-size: 11pt; vertical-align: middle; }
         .table-receipt th { font-weight: bold; text-align: center; background-color: #ffffff !important; }
         .sub-header-row td { text-align: center; font-size: 10pt; color: #000; padding: 2px !important; }
         .total-row td { font-weight: bold; }
-
-        /* Ô nhập liệu trong bảng (ĐVT, Số lượng, Ghi chú) */
         .cell-input { width: 100%; text-align: center; border: 1px solid #eee; border-radius: 4px; font-size: 11pt; padding: 4px; background: transparent; font-family: 'Times New Roman'; }
-        .cell-input:focus { outline: none; border-color: #0d6efd; background: #fff; }
+        .cell-input:focus { outline: none; border-color: #0d6efd; }
         .text-start-input { text-align: left !important; padding-left: 8px !important; }
         .fw-bold-input { font-weight: bold; }
-
         .signature-section { margin-top: 30px; display: flex; justify-content: space-between; text-align: center; width: 100%; }
         .signature-box { width: 45%; display: flex; flex-direction: column; align-items: center; min-height: 180px; justify-content: start; }
         .signature-title { font-weight: bold; font-size: 13pt; margin-bottom: 2px; width: 100%; }
         .signature-subtitle { font-style: italic; font-size: 11pt; color: #555; width: 100%; }
         .signature-name-fill { font-weight: bold; font-size: 13pt; margin-top: auto; width: 100%; text-align: center; padding-top: 60px; }
 
-        /* 🔴 ÉP XÓA KHUNG VÀ ĐƯỜNG VIỀN KHI IN */
         @media print {
             .no-print { display: none; }
             body { padding: 0; margin: 0; }
             .print-wrapper { max-width: 100%; }
-
-            /* Biến tất cả các ô input nhập liệu thành chữ trần trụi, mất viền */
             .date-input, .info-value-input, .cell-input { border: none !important; background: transparent !important; box-shadow: none !important; padding: 0 !important; outline: none !important; }
             .date-input, .cell-input { display: inline-block; }
-            .cell-input::placeholder { color: transparent !important; } /* Ẩn dấu chấm gợi ý khi in */
+            .cell-input::placeholder { color: transparent !important; }
             .receipt-date-container { display: block !important; text-align: center !important; }
-
-            /* Ẩn nút tăng giảm mũi tên của ô số lượng khi in */
-            input[type=number]::-webkit-outer-spin-button,
-            input[type=number]::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
-            input[type=number] { -moz-appearance: textfield; }
         }
     </style>
 </head>
 <body>
 
-    <div class="no-print text-center mb-4 bg-light p-3 border-bottom">
-        <span class="text-secondary me-3 small"><i class="bi bi-info-circle-fill"></i> Bạn có thể click trực tiếp vào các ô <b>ĐVT</b> và <b>Ghi chú</b> trên bảng để chỉnh sửa nhanh.</span>
-        <button onclick="window.print();" class="btn btn-primary px-4 fw-bold shadow-sm"><i class="fas fa-print me-2"></i>XÁC NHẬN IN / LƯU PDF</button>
-        <button onclick="window.close();" class="btn btn-outline-danger px-4 ms-2 shadow-sm">ĐÓNG TRANG</button>
+    <div class="no-print text-center mb-4 bg-light p-3 border-bottom d-flex align-items-center justify-content-center gap-2">
+        <span class="text-secondary small me-2"><i class="bi bi-info-circle-fill"></i> Kiểm tra thông tin, sau đó bấm Xác nhận để trừ kho và in phiếu.</span>
+        <button onclick="submitAndPrint();" id="btn-trigger-confirm" class="btn btn-primary px-4 fw-bold shadow-sm">
+            <i class="fas fa-print me-2"></i>XÁC NHẬN IN / LƯU PDF
+        </button>
+        <button onclick="window.close();" class="btn btn-outline-danger px-4 shadow-sm">ĐÓNG TRANG</button>
     </div>
 
-    <div class="print-wrapper">
-        <div class="company-title">Đơn vị: CTY CP VISION EDUCATION</div>
-        <div class="receipt-title">PHIẾU XUẤT KHO / STOCK TRANSFER</div>
+    <form id="final-export-form">
+        {% csrf_token %}
 
-        <div class="receipt-date-container">
-            Ngày <input type="number" id="receipt-day" class="date-input" min="1" max="31">
-            tháng <input type="number" id="receipt-month" class="date-input" min="1" max="12">
-            năm <input type="number" id="receipt-year" class="date-input year-input" min="2020" max="2100">
+        <div class="print-wrapper">
+            <div class="company-title">Đơn vị: CTY CP VISION EDUCATION</div>
+            <div class="receipt-title">PHIẾU XUẤT KHO / STOCK TRANSFER</div>
+
+            <div class="receipt-date-container">
+                Ngày <input type="number" id="receipt-day" class="date-input" min="1" max="31">
+                tháng <input type="number" id="receipt-month" class="date-input" min="1" max="12">
+                năm <input type="number" id="receipt-year" class="date-input year-input" min="2020" max="2100">
+            </div>
+
+            <div class="info-section">
+                <div class="info-row">
+                    <span class="info-label">Họ tên người chuyển hàng / Deliverer (Bộ phận):</span>
+                    <input type="text" class="info-value-input" value="Lê Hoàng Vinh">
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Họ tên người nhận hàng / Receiver (Bộ phận):</span>
+                    <input type="text" class="info-value-input" placeholder="..................................................................................................................................">
+                </div>
+            </div>
+
+            <table class="table table-bordered table-receipt align-middle text-center">
+                <thead>
+                    <tr>
+                        <th style="width: 7%;">STT<br><span style="font-size: 9pt; font-weight: normal; font-style: italic;">No.</span></th>
+                        <th style="width: 43%;">Tên hàng (theo Phần mềm)</th>
+                        <th style="width: 20%;">Code hàng<br><span style="font-size: 10pt; font-style: italic; font-weight: normal;">(theo Phần mềm)</span></th>
+                        <th style="width: 10%;">ĐVT</th>
+                        <th style="width: 10%;">Số lượng<br>xuất</th>
+                        <th style="width: 10%;">Ghi chú</th>
+                    </tr>
+                    <tr class="sub-header-row">
+                        <td>A</td><td>B</td><td>C</td><td>D</td><td>E</td><td>F</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in selected_uniform_data %}
+                    <tr>
+                        <td>{{ forloop.counter }}
+                            <input type="hidden" name="final_ids" value="{{ item.id }}">
+                        </td>
+                        <td class="text-start" style="padding-left: 12px;">{{ item.name }} (Size: {{ item.size }})</td>
+                        <td>{{ item.sku }}</td>
+                        <td><input type="text" class="cell-input" value="Cái"></td>
+                        <td>
+                            <input type="number" name="final_quantities" value="{{ item.export_quantity }}" class="cell-input fw-bold-input target-quantity" readonly style="pointer-events: none;">
+                        </td>
+                        <td><input type="text" class="cell-input text-start-input" placeholder="..."></td>
+                    </tr>
+                    {% endfor %}
+
+                    {% with total_items=selected_uniform_data|length %}
+                        {% if total_items < 6 %}
+                            <tr><td>{{ total_items|add:"1" }}</td><td></td><td></td><td><input type="text" class="cell-input"></td><td></td><td><input type="text" class="cell-input"></td></tr>
+                            <tr><td>{{ total_items|add:"2" }}</td><td></td><td></td><td><input type="text" class="cell-input"></td><td></td><td><input type="text" class="cell-input"></td></tr>
+                            <tr><td>{{ total_items|add:"3" }}</td><td></td><td></td><td><input type="text" class="cell-input"></td><td></td><td><input type="text" class="cell-input"></td></tr>
+                        {% endif %}
+                    {% endwith %}
+
+                    <tr class="total-row">
+                        <td colspan="2" class="text-center">Tổng cộng / Total amount</td>
+                        <td>X</td>
+                        <td>X</td>
+                        <td class="text-center fw-bold text-decoration-underline" id="total-amount-display">0</td>
+                        <td>X</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="signature-section">
+                <div class="signature-box">
+                    <div class="signature-title">Người lập phiếu</div>
+                    <div class="signature-subtitle">(Ký, họ tên)</div>
+                    <div class="signature-name-fill">Lê Hoàng Vinh</div>
+                </div>
+                <div class="signature-box">
+                    <div class="signature-title">Người nhận hàng</div>
+                    <div class="signature-subtitle">(Ký, họ tên)</div>
+                    <div class="signature-name-fill" style="visibility: hidden;">Receiver</div>
+                </div>
+            </div>
         </div>
+    </form>
 
-        <div class="info-section">
-            <div class="info-row">
-                <span class="info-label">Họ tên người chuyển hàng / Deliverer (Bộ phận):</span>
-                <input type="text" class="info-value-input" value="Lê Hoàng Vinh">
-            </div>
-            <div class="info-row">
-                <span class="info-label">Họ tên người nhận hàng / Receiver (Bộ phận):</span>
-                <input type="text" class="info-value-input" placeholder="..................................................................................................................................">
-            </div>
-        </div>
-
-        <table class="table table-bordered table-receipt align-middle text-center">
-            <thead>
-                <tr>
-                    <th style="width: 7%;">STT<br><span style="font-size: 9pt; font-weight: normal; font-style: italic;">No.</span></th>
-                    <th style="width: 43%;">Tên hàng (theo Phần mềm)</th>
-                    <th style="width: 20%;">Code hàng<br><span style="font-size: 10pt; font-style: italic; font-weight: normal;">(theo Phần mềm)</span></th>
-                    <th style="width: 10%;">ĐVT</th>
-                    <th style="width: 10%;">Số lượng<br>xuất</th>
-                    <th style="width: 10%;">Ghi chú</th>
-                </tr>
-                <tr class="sub-header-row">
-                    <td>A</td><td>B</td><td>C</td><td>D</td><td>E</td><td>F</td>
-                </tr>
-            </thead>
-            <tbody>
-    {% for item in selected_uniforms_data %}
-    <tr>
-        <td>{{ forloop.counter }}</td>
-        <td class="text-start" style="padding-left: 12px;">{{ item.name }}</td>
-        <td>{{ item.sku }}</td>
-        <td><input type="text" value="Cái" class="cell-input"></td>
-
-        <td class="fw-bold">
-            <input type="number" name="quantities_disabled" value="{{ item.export_quantity }}" class="cell-input fw-bold-input target-quantity" readonly>
-        </td>
-
-        <td><input type="text" class="cell-input text-start-input" placeholder="..."></td>
-    </tr>
-    {% endfor %}
-
-    {% with total_items=selected_uniforms_data|length %}
-        {% if total_items < 6 %}
-            <tr><td>{{ total_items|add:"1" }}</td><td></td><td></td><td><input type="text" class="cell-input"></td><td></td><td><input type="text" class="cell-input"></td></tr>
-            <tr><td>{{ total_items|add:"2" }}</td><td></td><td></td><td><input type="text" class="cell-input"></td><td></td><td><input type="text" class="cell-input"></td></tr>
-            <tr><td>{{ total_items|add:"3" }}</td><td></td><td></td><td><input type="text" class="cell-input"></td><td></td><td><input type="text" class="cell-input"></td></tr>
-        {% endif %}
-    {% endwith %}
-
-    <tr class="total-row">
-        <td colspan="2" class="text-center">Tổng cộng / Total amount</td>
-        <td>X</td>
-        <td>X</td>
-        <td class="text-center fw-bold text-decoration-underline" id="total-amount-display">0</td>
-        <td>X</td>
-    </tr>
-</tbody>
-        </table>
-
-        <div class="signature-section">
-            <div class="signature-box">
-                <div class="signature-title">Người lập phiếu</div>
-                <div class="signature-subtitle">(Ký, họ tên)</div>
-                <div class="signature-name-fill">Lê Hoàng Vinh</div>
-            </div>
-            <div class="signature-box">
-                <div class="signature-title">Người nhận hàng</div>
-                <div class="signature-subtitle">(Ký, họ tên)</div>
-                <div class="signature-name-fill" style="visibility: hidden;">Receiver</div>
-            </div>
-        </div>
-    </div>
-
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             const today = new Date();
@@ -156,20 +148,61 @@
             document.getElementById('receipt-month').value = today.getMonth() + 1;
             document.getElementById('receipt-year').value = today.getFullYear();
             calculateTotalQuantity();
+
+            // ❌ KHÔNG tự động kích hoạt window.print() khi load trang nữa, để nhân viên gõ chữ xong mới in
         });
 
         function calculateTotalQuantity() {
             let total = 0;
             const inputs = document.querySelectorAll('.target-quantity');
             inputs.forEach(input => {
-                let val = parseInt(input.value);
-                if (isNaN(val) || val < 1) {
-                    val = 1;
-                    input.value = 1;
-                }
-                total += val;
+                total += parseInt(input.value) || 0;
             });
             document.getElementById('total-amount-display').textContent = total;
+        }
+
+        // 🚀 HÀM XỬ LÝ AJAX: BẮM XÁC NHẬN MỚI TRỪ KHO VÀ GỌI LỆNH IN
+        function submitAndPrint() {
+            const form = document.getElementById('final-export-form');
+            const formData = new FormData(form);
+            const btn = document.getElementById('btn-trigger-confirm');
+
+            btn.setAttribute('disabled', 'true');
+            btn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Đang trừ kho...';
+
+            // Gửi AJAX POST lên backend để chính thức trừ kho
+            fetch("{% url 'confirm_export_stock' %}", {
+                method: "POST",
+                body: formData,
+                headers: {
+                    "X-Requested-With": "XMLHttpRequest"
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'success') {
+                    // Nếu trừ kho ở Database thành công, gọi lệnh in của trình duyệt ngay lập tức
+                    window.print();
+
+                    // Khôi phục lại trạng thái nút bấm
+                    btn.removeAttribute('disabled');
+                    btn.innerHTML = '<i class="fas fa-print me-2"></i>XÁC NHẬN IN / LƯU PDF';
+                } else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Lỗi trừ kho!',
+                        text: data.message || 'Vui lòng kiểm tra lại số lượng tồn kho thực tế.',
+                        confirmButtonColor: '#3085d6'
+                    });
+                    btn.removeAttribute('disabled');
+                    btn.innerHTML = '<i class="fas fa-print me-2"></i>XÁC NHẬN IN / LƯU PDF';
+                }
+            })
+            .catch(error => {
+                console.error("Error:", error);
+                btn.removeAttribute('disabled');
+                btn.innerHTML = '<i class="fas fa-print me-2"></i>XÁC NHẬN IN / LƯU PDF';
+            });
         }
     </script>
 </body>
