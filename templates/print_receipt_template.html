@@ -144,62 +144,45 @@
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            const today = new Date();
-            document.getElementById('receipt-day').value = today.getDate();
-            document.getElementById('receipt-month').value = today.getMonth() + 1;
-            document.getElementById('receipt-year').value = today.getFullYear();
-            calculateTotalQuantity();
+    document.addEventListener("DOMContentLoaded", function() {
+        // 1. Tự động điền ngày tháng hiện tại
+        const today = new Date();
+        document.getElementById('receipt-day').value = today.getDate();
+        document.getElementById('receipt-month').value = today.getMonth() + 1;
+        document.getElementById('receipt-year').value = today.getFullYear();
+        calculateTotalQuantity();
+    });
+
+    function calculateTotalQuantity() {
+        let total = 0;
+        const inputs = document.querySelectorAll('.target-quantity');
+        inputs.forEach(input => {
+            total += parseInt(input.value) || 0;
         });
+        document.getElementById('total-amount-display').textContent = total;
+    }
 
-        function calculateTotalQuantity() {
-            let total = 0;
-            const inputs = document.querySelectorAll('.target-quantity');
-            inputs.forEach(input => {
-                total += parseInt(input.value) || 0;
-            });
-            document.getElementById('total-amount-display').textContent = total;
-        }
+    // 🚀 HÀM ĐỔI MỚI: SỬ DỤNG PHƯƠNG PHÁP SUBMIT TRUYỀN THỐNG KẾT HỢP GỌI IN AN TOÀN
+    function submitAndPrint() {
+        const btn = document.getElementById('btn-trigger-confirm');
 
-        function submitAndPrint() {
-            const form = document.getElementById('final-export-form');
-            const formData = new FormData(form);
-            const btn = document.getElementById('btn-trigger-confirm');
+        // Vừa bấm nút là gọi Driver máy in bật lên ngay lập tức để qua mặt bộ chặn trình duyệt
+        window.print();
 
-            btn.setAttribute('disabled', 'true');
-            btn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Đang trừ kho...';
+        // Ngay sau khi hộp thoại in hiện ra (hoặc nhân viên bấm Cancel/Save),
+        // Hệ thống sẽ kích hoạt lệnh gạt Form để Backend tiến hành trừ kho thực tế
+        btn.setAttribute('disabled', 'true');
+        btn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Đang ghi nhận kho...';
 
-            fetch("{% url 'confirm_export_stock' %}", {
-                method: "POST",
-                body: formData,
-                headers: {
-                    "X-Requested-With": "XMLHttpRequest"
-                }
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.status === 'success') {
-                    // Gọi lệnh in của trình duyệt sau khi DB trừ thành công
-                    window.print();
-                    btn.removeAttribute('disabled');
-                    btn.innerHTML = '<i class="fas fa-print me-2"></i>XÁC NHẬN IN / LƯU PDF';
-                } else {
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Lỗi trừ kho!',
-                        text: data.message || 'Vui lòng kiểm tra lại số lượng tồn kho.',
-                        confirmButtonColor: '#0d6efd'
-                    });
-                    btn.removeAttribute('disabled');
-                    btn.innerHTML = '<i class="fas fa-print me-2"></i>XÁC NHẬN IN / LƯU PDF';
-                }
-            })
-            .catch(error => {
-                console.error("Error:", error);
-                btn.removeAttribute('disabled');
-                btn.innerHTML = '<i class="fas fa-print me-2"></i>XÁC NHẬN IN / LƯU PDF';
-            });
-        }
-    </script>
+        const form = document.getElementById('final-export-form');
+        form.method = "POST";
+        form.action = "{% url 'confirm_export_stock' %}";
+
+        // Ép form gửi dữ liệu trực tiếp về Backend để trừ kho và tự động đóng/chuyển trang
+        setTimeout(function() {
+            form.submit();
+        }, 500);
+    }
+</script>
 </body>
 </html>

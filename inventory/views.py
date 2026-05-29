@@ -725,13 +725,15 @@ def confirm_export_stock(request):
                     item.quantity -= qty
                     item.save()
 
-                messages.success(request, "Đã xuất kho và cập nhật số lượng tồn kho thành công!")
+                messages.success(request, "Đã xuất kho, cập nhật số lượng và in chứng từ thành công!")
+                return redirect('dashboard')
                 # Trả về mã JSON báo thành công để JavaScript gọi lệnh in của máy in
                 from django.http import JsonResponse
                 return JsonResponse({'status': 'success'})
 
-        except Exception as e:
-            from django.http import JsonResponse
-            return JsonResponse({'status': 'error', 'message': str(e)})
 
-    return redirect('dashboard')
+        except Exception as e:
+
+            messages.error(request, f"Lỗi hệ thống: {str(e)}")
+
+            return redirect('dashboard')
