@@ -730,7 +730,8 @@ def confirm_export_stock(request):
 
                 # Ghi nhật ký thao tác
                 action_detail = "Xuất kho in phiếu: " + ", ".join(audit_log)
-
+                if len(action_detail) > 150:  # Bạn có thể đổi thành 50 hoặc 100 nếu cột trong DB quá ngắn
+                    action_detail = action_detail[:145] + "..."
                 ActionLog.objects.create(
                     user=request.user,
                     action=action_detail,
