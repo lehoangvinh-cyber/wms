@@ -13,7 +13,7 @@ from django.contrib import messages
 from django.utils import timezone
 from django.core.paginator import Paginator
 from django.db.models import Q, Sum
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.utils.safestring import mark_safe
 from django.core.mail import send_mail
 from django.conf import settings
@@ -705,47 +705,43 @@ def print_uniform_receipt(request):
 
 @login_required
 def confirm_export_stock(request):
-    """ Hàm này mới là hàm CHÍNH THỨC TRỪ KHO khi nhấn nút 'Xác nhận in' """
     if request.method == 'POST':
-        # Lấy mảng ID và số lượng xuất tương ứng từ trang phôi in gửi lên
         uniform_ids = request.POST.getlist('final_ids')
         quantities = request.POST.getlist('final_quantities')
 
         try:
             with transaction.atomic():
+                audit_log = []  # Tên mảng mà Vinh đặt ở bước trước
+
                 for idx, u_id in enumerate(uniform_ids):
                     item = get_object_or_404(Uniform, id=u_id)
                     qty = int(quantities[idx])
 
                     if item.quantity < qty:
-                        messages.error(request, f"Mặt hàng {item.name} không đủ tồn kho thực tế!")
-                        return redirect('dashboard')
+                        # Thay vì redirect, ta trả về thông báo lỗi JSON
+                        return JsonResponse(
+                            {'status': 'error', 'message': f"Mặt hàng {item.name} không đủ tồn kho thực tế!"})
 
-                    # CHÍNH THỨC TRỪ KHO TRONG DATABASE
+                    # Trừ kho
                     item.quantity -= qty
                     item.save()
-                    # Thu thập thông tin dòng hàng này để chuẩn bị ghi log
+
                     audit_log.append(f"{item.name} (Size: {item.size}) [SL Xuất: {qty}]")
 
-                    # 2. GHI NHẬT KÝ THAO TÁC (AUDIT LOG) VÀO DATABASE
-                    # Gom toàn bộ các mặt hàng xuất trong phiếu này thành một chuỗi văn bản lịch sự
+                # Ghi nhật ký thao tác
                 action_detail = "Xuất kho in phiếu: " + ", ".join(audit_log)
-
                 ActionLog.objects.create(
-                    user=request.user,  # Người thực hiện (Lê Hoàng Vinh)
-                    action_type="XUẤT KHO",  # Phân loại hành động
-                    details=action_detail,  # Nội dung chi tiết các món hàng và số lượng
-                    timestamp=timezone.now()  # Mốc thời gian thực tế theo múi giờ VN
+                    user=request.user,
+                    action_type="XUẤT KHO",
+                    details=action_detail,
+                    timestamp=timezone.now()
                 )
-                messages.success(request, "Đã xuất kho, cập nhật số lượng và in chứng từ thành công!")
-                return redirect('dashboard')
-                # Trả về mã JSON báo thành công để JavaScript gọi lệnh in của máy in
-                from django.http import JsonResponse
+
+                # 🟢 TRẢ VỀ KẾT QUẢ THÀNH CÔNG DẠNG JSON ĐỂ KÍCH HOẠT LỆNH IN
                 return JsonResponse({'status': 'success'})
 
-
         except Exception as e:
+            # 🔴 TRẢ VỀ LỖI HỆ THỐNG DẠNG JSON
+            return JsonResponse({'status': 'error', 'message': str(e)})
 
-            messages.error(request, f"Lỗi hệ thống: {str(e)}")
-
-            return redirect('dashboard')
+    return redirect('dashboard')

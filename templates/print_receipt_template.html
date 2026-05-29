@@ -145,7 +145,6 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
     document.addEventListener("DOMContentLoaded", function() {
-        // 1. Tự động điền ngày tháng hiện tại
         const today = new Date();
         document.getElementById('receipt-day').value = today.getDate();
         document.getElementById('receipt-month').value = today.getMonth() + 1;
@@ -162,26 +161,67 @@
         document.getElementById('total-amount-display').textContent = total;
     }
 
-    // 🚀 HÀM ĐỔI MỚI: SỬ DỤNG PHƯƠNG PHÁP SUBMIT TRUYỀN THỐNG KẾT HỢP GỌI IN AN TOÀN
-    function submitAndPrint() {
+    // 🚀 HÀM NÂNG CẤP: CHẠY ĐỒNG BỘ ASYNC/AWAIT ĐỂ TRÁNH LỖI HỆ THỐNG
+    async function submitAndPrint() {
+        const form = document.getElementById('final-export-form');
+        const formData = new FormData(form);
         const btn = document.getElementById('btn-trigger-confirm');
 
-        // Vừa bấm nút là gọi Driver máy in bật lên ngay lập tức để qua mặt bộ chặn trình duyệt
-        window.print();
-
-        // Ngay sau khi hộp thoại in hiện ra (hoặc nhân viên bấm Cancel/Save),
-        // Hệ thống sẽ kích hoạt lệnh gạt Form để Backend tiến hành trừ kho thực tế
+        // Khóa nút bấm để tránh nhân viên click 2 lần liên tiếp
         btn.setAttribute('disabled', 'true');
-        btn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Đang ghi nhận kho...';
+        btn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Đang trừ kho...';
 
-        const form = document.getElementById('final-export-form');
-        form.method = "POST";
-        form.action = "{% url 'confirm_export_stock' %}";
+        try {
+            // 1. Gửi lệnh trừ kho lên Backend trước
+            const response = await fetch("{% url 'confirm_export_stock' %}", {
+                method: "POST",
+                body: formData,
+                headers: {
+                    "X-Requested-With": "XMLHttpRequest"
+                }
+            });
 
-        // Ép form gửi dữ liệu trực tiếp về Backend để trừ kho và tự động đóng/chuyển trang
-        setTimeout(function() {
-            form.submit();
-        }, 500);
+            const data = await response.json();
+
+            if (data.status === 'success') {
+                // 2. Trừ kho thành công -> Kích hoạt lệnh in của trình duyệt ngay lập tức
+                window.print();
+
+                // 3. Hiện thông báo thành công đẹp mắt
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Thành công!',
+                    text: 'Đã xuất kho và lưu lịch sử hệ thống.',
+                    confirmButtonText: 'Quay lại Trang chủ',
+                    confirmButtonColor: '#0d6efd'
+                }).then((result) => {
+                    // Sau khi bấm đóng thông báo, tự động đưa người dùng về trang chủ
+                    window.location.href = "{% url 'dashboard' %}";
+                });
+
+            } else {
+                // Nếu Backend báo lỗi (Ví dụ: có ai đó vừa nhanh tay xuất trước làm hết tồn kho)
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Lỗi thao tác!',
+                    text: data.message || 'Số lượng tồn kho thực tế không đủ!',
+                    confirmButtonColor: '#dc3545'
+                });
+                btn.removeAttribute('disabled');
+                btn.innerHTML = '<i class="fas fa-print me-2"></i>XÁC NHẬN IN / LƯU PDF';
+            }
+
+        } catch (error) {
+            console.error("Error:", error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Lỗi đường truyền!',
+                text: 'Không thể kết nối với máy chủ Proxmox.',
+                confirmButtonColor: '#dc3545'
+            });
+            btn.removeAttribute('disabled');
+            btn.innerHTML = '<i class="fas fa-print me-2"></i>XÁC NHẬN IN / LƯU PDF';
+        }
     }
 </script>
 </body>
