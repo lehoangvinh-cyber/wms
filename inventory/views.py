@@ -729,9 +729,11 @@ def confirm_export_stock(request):
                     audit_log.append(f"{item.name} (Size: {item.size}) [SL Xuất: {qty}]")
 
                 # Ghi nhật ký thao tác
-                action_detail = "Xuất kho in phiếu: " + ", ".join(audit_log)
-                if len(action_detail) > 150:  # Bạn có thể đổi thành 50 hoặc 100 nếu cột trong DB quá ngắn
-                    action_detail = action_detail[:145] + "..."
+                action_detail = f"In phieu xuat {len(audit_log)} mat hang"
+
+                # ÉP CẮT KHÓA CỨNG XUỐNG CẬN DƯỚI 45 KÝ TỰ ĐỂ BẢO ĐẢM AN TOÀN TUYỆT ĐỐI CHO MYSQL
+                if len(action_detail) > 45:
+                    action_detail = action_detail[:42] + "..."
                 ActionLog.objects.create(
                     user=request.user,
                     action=action_detail,
