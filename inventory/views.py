@@ -730,11 +730,10 @@ def confirm_export_stock(request):
 
                 # Ghi nhật ký thao tác
                 action_detail = "Xuất kho in phiếu: " + ", ".join(audit_log)
+
                 ActionLog.objects.create(
                     user=request.user,
-                    action_type="XUẤT KHO",
-                    details=action_detail,
-                    timestamp=timezone.now()
+                    action=action_detail,
                 )
 
                 # 🟢 TRẢ VỀ KẾT QUẢ THÀNH CÔNG DẠNG JSON ĐỂ KÍCH HOẠT LỆNH IN
