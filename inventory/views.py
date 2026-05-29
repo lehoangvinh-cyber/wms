@@ -736,7 +736,7 @@ def confirm_export_stock(request):
                     action_detail = action_detail[:42] + "..."
                 ActionLog.objects.create(
                     user=request.user,
-                    action=action_detail,
+                    action="Xuất Kho"
                 )
 
                 # 🟢 TRẢ VỀ KẾT QUẢ THÀNH CÔNG DẠNG JSON ĐỂ KÍCH HOẠT LỆNH IN
