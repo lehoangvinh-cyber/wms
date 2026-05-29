@@ -173,10 +173,16 @@
                             </select>
                         </div>
                         <div class="col-md-4 text-end">
-                            <button type="submit" id="btnPrintReceipt" class="btn btn-outline-primary fw-bold w-100 py-2 shadow-sm d-flex align-items-center justify-content-center" style="border-radius: 8px;" disabled>
-                                <i class="bi bi-printer-fill me-2 fs-5"></i> IN PHIẾU XUẤT (<span id="selectedCount">0</span>)
-                            </button>
-                        </div>
+    {% if request.user.is_superuser %}
+        <button type="submit" id="btnPrintReceipt" class="btn btn-outline-primary fw-bold w-100 py-2 shadow-sm d-flex align-items-center justify-content-center" style="border-radius: 8px;" disabled>
+            <i class="bi bi-printer-fill me-2 fs-5"></i> IN PHIẾU XUẤT (<span id="selectedCount">0</span>)
+        </button>
+    {% else %}
+        <button type="button" class="btn btn-outline-secondary fw-bold w-100 py-2 shadow-sm d-flex align-items-center justify-content-center" style="border-radius: 8px; opacity: 0.5; cursor: not-allowed; filter: grayscale(100%);" title="Chỉ Admin mới có quyền xuất kho" disabled>
+            <i class="bi bi-printer-fill me-2 fs-5"></i> IN PHIẾU XUẤT <i class="bi bi-lock-fill ms-2 text-danger"></i>
+        </button>
+    {% endif %}
+</div>
                     </div>
 
                     <table class="table table-hover align-middle mb-0">
@@ -345,17 +351,21 @@ document.querySelectorAll('.uniform-checkbox').forEach(cb => {
     const countSpan = document.getElementById('selectedCount');
 
     // Hàm điều khiển trạng thái nút bấm In và bộ đếm số lượng hàng được tick
+    // Hàm điều khiển trạng thái nút bấm In
     function updatePrintButton() {
         const checkedCount = document.querySelectorAll('.uniform-checkbox:checked').length;
-        countSpan.textContent = checkedCount;
+        if (countSpan) countSpan.textContent = checkedCount;
 
-        if (checkedCount > 0) {
-            printBtn.removeAttribute('disabled');
-            printBtn.classList.replace('btn-outline-primary', 'btn-primary');
-        } else {
-            printBtn.setAttribute('disabled', 'true');
-            printBtn.classList.replace('btn-primary', 'btn-outline-primary');
-            if(selectAllCheckbox) selectAllCheckbox.checked = false;
+        // Bổ sung lệnh if(printBtn) để kiểm tra xem user có quyền thấy nút thật không
+        if (printBtn) {
+            if (checkedCount > 0) {
+                printBtn.removeAttribute('disabled');
+                printBtn.classList.replace('btn-outline-primary', 'btn-primary');
+            } else {
+                printBtn.setAttribute('disabled', 'true');
+                printBtn.classList.replace('btn-primary', 'btn-outline-primary');
+                if(selectAllCheckbox) selectAllCheckbox.checked = false;
+            }
         }
     }
 
