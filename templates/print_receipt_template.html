@@ -11,50 +11,59 @@
         .company-title { font-weight: bold; font-size: 12pt; text-transform: uppercase; margin-bottom: 20px; }
         .receipt-title { font-weight: bold; font-size: 18pt; text-align: center; margin-bottom: 5px; font-family: 'Arial', sans-serif; }
 
-        /* Định dạng khu vực chọn ngày tháng */
-        .receipt-date-container { text-align: center; font-style: italic; font-size: 12pt; margin-bottom: 25px; }
-        .date-input { border: none; border-bottom: 1px dotted #000; text-align: center; font-style: italic; width: 45px; background: transparent; font-family: 'Times New Roman'; font-size: 12pt; }
+        /* CĂN ĐỀU VÀ CĂN GIỮA KHỐI THỜI GIAN */
+        .receipt-date-container { text-align: center; font-style: italic; font-size: 13pt; margin-bottom: 25px; display: flex; justify-content: center; align-items: flex-end; gap: 5px; }
+        .date-input { border: none; border-bottom: 1px dotted #000; text-align: center; font-style: italic; width: 45px; background: transparent; font-family: 'Times New Roman'; font-size: 13pt; font-weight: bold; padding: 0; }
         .date-input:focus { outline: none; }
-        .year-input { width: 60px; }
+        .year-input { width: 65px; }
 
-        .info-row { display: flex; margin-bottom: 12px; align-items: flex-end; }
+        /* ĐỊNH DẠNG HÀNG THÔNG TIN GIAO NHẬN CĂN ĐỀU MƯỢT MÀ */
+        .info-row { display: flex; margin-bottom: 12px; align-items: flex-end; width: 100%; }
         .info-label { font-weight: normal; white-space: nowrap; }
-        .info-value { border-bottom: 1px dotted #000; flex-grow: 1; padding-left: 10px; font-weight: bold; min-height: 24px; }
+        .info-value-input { border: none; border-bottom: 1px dotted #000; flex-grow: 1; padding-left: 10px; font-weight: bold; font-family: 'Times New Roman'; font-size: 13pt; background: transparent; transition: all 0.2s; }
+        .info-value-input:focus { outline: none; border-bottom-color: #0d6efd; }
 
+        /* BẢNG DỮ LIỆU ĐỒNG PHỤC */
         .table-receipt { width: 100%; border-collapse: collapse; margin-top: 20px; margin-bottom: 15px; }
         .table-receipt th, .table-receipt td { border: 1px solid #000 !important; padding: 6px 8px; font-size: 11pt; vertical-align: middle; }
         .table-receipt th { font-weight: bold; text-align: center; background-color: #ffffff !important; }
         .sub-header-row td { text-align: center; font-size: 10pt; color: #000; padding: 2px !important; }
         .total-row td { font-weight: bold; }
 
-        /* Ô nhập số lượng thông minh */
-        .quantity-input { width: 100%; text-align: center; border: 1px solid #ccc; border-radius: 4px; font-weight: bold; font-size: 11pt; padding: 2px; }
+        /* Ô NHẬP SỐ LƯỢNG LUÔN CĂN GIỮA */
+        .quantity-input { width: 100%; text-align: center; border: 1px solid #ccc; border-radius: 4px; font-weight: bold; font-size: 11pt; padding: 2px; -moz-appearance: textfield; }
+        .quantity-input::-webkit-outer-spin-button,
+        .quantity-input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
         .quantity-input:focus { outline: none; border-color: #0d6efd; }
 
-        .signature-section { margin-top: 30px; display: flex; justify-content: space-between; text-align: center; }
-        .signature-box { width: 45%; display: flex; flex-direction: column; justify-content: space-between; min-height: 180px; }
-        .signature-title { font-weight: bold; margin-bottom: 2px; }
-        .signature-subtitle { font-style: italic; font-size: 11pt; color: #555; }
-        .signature-name { font-weight: bold; margin-top: auto; text-align: left; padding-left: 20px; }
+        /* KHỐI CHỮ KÝ CĂN ĐỀU ĐỐI XỨNG */
+        .signature-section { margin-top: 30px; display: flex; justify-content: space-between; text-align: center; width: 100%; }
+        .signature-box { width: 45%; display: flex; flex-direction: column; align-items: center; min-height: 180px; justify-content: start; }
+        .signature-title { font-weight: bold; font-size: 13pt; margin-bottom: 2px; width: 100%; }
+        .signature-subtitle { font-style: italic; font-size: 11pt; color: #555; width: 100%; }
 
-        /* 🔴 CẤU HÌNH QUAN TRỌNG KHI IN ẤN: Ẩn viền của toàn bộ ô input để giống biểu mẫu giấy trắng */
+        /* Tên người lập phiếu căn chính giữa khối bên trái */
+        .signature-name-fill { font-weight: bold; font-size: 13pt; margin-top: auto; width: 100%; text-align: center; padding-top: 60px; }
+
+        /* 🔴 ĐỊNH DẠNG CSS ÉP CĂN GIỮA VÀ XÓA KHUNG TUYỆT ĐỐI KHI IN */
         @media print {
             .no-print { display: none; }
             body { padding: 0; margin: 0; }
             .print-wrapper { max-width: 100%; }
-            /* Biến ô nhập số lượng và ngày tháng thành chữ thường, mất khung viền */
-            .quantity-input, .date-input { border: none !important; background: transparent !important; box-shadow: none !important; appearance: none; -webkit-appearance: none; -moz-appearance: none; padding: 0; text-align: center; }
-            /* Ẩn nút tăng giảm mũi tên của input type number khi in */
-            .quantity-input::-webkit-outer-spin-button,
-            .quantity-input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+
+            /* Triệt tiêu mọi dấu chấm dotted và đường viền input khi ra giấy */
+            .date-input, .info-value-input, .quantity-input { border: none !important; background: transparent !important; box-shadow: none !important; padding: 0 !important; outline: none !important; }
+
+            /* Giữ nguyên định dạng căn giữa cho chữ số */
+            .date-input, .quantity-input { text-align: center !important; display: inline-block; }
+            .receipt-date-container { display: block !important; text-align: center !important; }
         }
     </style>
 </head>
 <body>
 
-    <!-- Thanh công cụ (Tự ẩn khi in) -->
     <div class="no-print text-center mb-4 bg-light p-3 border-bottom">
-        <span class="text-secondary me-3 small"><i class="bi bi-info-circle-fill"></i> Bạn có thể chỉnh sửa ngày và số lượng trực tiếp trên bảng trước khi bấm in.</span>
+        <span class="text-secondary me-3 small"><i class="bi bi-info-circle-fill"></i> Dữ liệu thời gian, người nhận, và số lượng đã được tối ưu căn giữa, căn đều tự động.</span>
         <button onclick="window.print();" class="btn btn-primary px-4 fw-bold shadow-sm"><i class="fas fa-print me-2"></i>XÁC NHẬN IN / LƯU PDF</button>
         <button onclick="window.close();" class="btn btn-outline-danger px-4 ms-2 shadow-sm">ĐÓNG TRANG</button>
     </div>
@@ -63,7 +72,6 @@
         <div class="company-title">Đơn vị: CTY CP VISION EDUCATION</div>
         <div class="receipt-title">PHIẾU XUẤT KHO / STOCK TRANSFER</div>
 
-        <!-- THÀNH PHẦN 1: CHỌN NGÀY THÁNG LINH HOẠT (Tự động điền ngày hiện tại làm mẫu) -->
         <div class="receipt-date-container">
             Ngày <input type="number" id="receipt-day" class="date-input" min="1" max="31">
             tháng <input type="number" id="receipt-month" class="date-input" min="1" max="12">
@@ -73,15 +81,14 @@
         <div class="info-section">
             <div class="info-row">
                 <span class="info-label">Họ tên người chuyển hàng / Deliverer (Bộ phận):</span>
-                <div class="info-value">Lê Hoàng Vinh</div>
+                <input type="text" class="info-value-input" value="Lê Hoàng Vinh">
             </div>
             <div class="info-row">
                 <span class="info-label">Họ tên người nhận hàng / Receiver (Bộ phận):</span>
-                <div class="info-value" contenteditable="true" style="outline: none;" title="Bấm vào đây để gõ tên người nhận nếu muốn"></div>
+                <input type="text" class="info-value-input" placeholder="..................................................................................................................................">
             </div>
         </div>
 
-        <!-- Bảng vật tư xuất kho -->
         <table class="table table-bordered table-receipt align-middle text-center">
             <thead>
                 <tr>
@@ -103,7 +110,6 @@
                     <td class="text-start" style="padding-left: 12px;">{{ item.name }}</td>
                     <td>{{ item.sku|default:item.id }}</td>
                     <td>Cái</td>
-                    <!-- THÀNH PHẦN 2: Ô CHỌN SỐ LƯỢNG XUẤT CHO TỪNG LOẠI -->
                     <td>
                         <input type="number" name="quantities" value="1" min="1" class="quantity-input target-quantity" onchange="calculateTotalQuantity()">
                     </td>
@@ -111,7 +117,6 @@
                 </tr>
                 {% endfor %}
 
-                <!-- Điền thêm hàng trống giữ dáng Form -->
                 {% with total_items=selected_uniforms|length %}
                     {% if total_items < 6 %}
                         <tr><td>{{ total_items|add:"1" }}</td><td></td><td></td><td></td><td></td><td></td></tr>
@@ -120,7 +125,6 @@
                     {% endif %}
                 {% endwith %}
 
-                <!-- DÒNG TỔNG CỘNG TỰ ĐỘNG NHẢY THEO SỐ LƯỢNG ĐÃ CHỌN -->
                 <tr class="total-row">
                     <td colspan="2" class="text-center">Tổng cộng / Total amount</td>
                     <td>X</td>
@@ -133,36 +137,29 @@
 
         <div class="signature-section">
             <div class="signature-box">
-                <div>
-                    <div class="signature-title">Người lập phiếu</div>
-                    <div class="signature-subtitle">(Ký, họ tên)</div>
-                </div>
-                <div class="signature-name">Lê Hoàng Vinh</div>
+                <div class="signature-title">Người lập phiếu</div>
+                <div class="signature-subtitle">(Ký, họ tên)</div>
+                <div class="signature-name-fill">Lê Hoàng Vinh</div>
             </div>
             <div class="signature-box">
-                <div>
-                    <div class="signature-title">Người nhận hàng</div>
-                    <div class="signature-subtitle">(Ký, họ tên)</div>
-                </div>
-                <div class="signature-name" style="visibility: hidden;">Receiver</div>
+                <div class="signature-title">Người nhận hàng</div>
+                <div class="signature-subtitle">(Ký, họ tên)</div>
+                <div class="signature-name-fill" style="visibility: hidden;">Receiver</div>
             </div>
         </div>
     </div>
 
-    <!-- JAVASCRIPT XỬ LÝ TỰ ĐỘNG ĐIỀN NGÀY VÀ TÍNH TỔNG SỐ LƯỢNG REALTIME -->
     <script>
-        // 1. Tự động điền ngày/tháng/năm hiện tại khi vừa load trang
+        // Tự động nạp ngày tháng thực tế
         document.addEventListener("DOMContentLoaded", function() {
             const today = new Date();
             document.getElementById('receipt-day').value = today.getDate();
             document.getElementById('receipt-month').value = today.getMonth() + 1;
             document.getElementById('receipt-year').value = today.getFullYear();
-
-            // Tính tổng số lượng lần đầu tiên
             calculateTotalQuantity();
         });
 
-        // 2. Hàm tính tổng số lượng dồn tổng cộng của các ô input
+        // Tính tổng lượng xuất thời gian thực
         function calculateTotalQuantity() {
             let total = 0;
             const inputs = document.querySelectorAll('.target-quantity');
