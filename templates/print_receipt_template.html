@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Phiếu Xuất Kho / Stock Transfer - WMS</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* Định dạng chung phục vụ in ấn chuyên nghiệp */
+        body { font-family: 'Times New Roman', Times, serif; background: #fff; color: #000; padding: 20px; font-size: 13pt; }
+        .print-wrapper { max-width: 900px; margin: 0 auto; padding: 10px; }
+
+        /* Tiêu đề biểu mẫu */
+        .company-title { font-weight: bold; font-size: 12pt; text-transform: uppercase; margin-bottom: 20px; }
+        .receipt-title { font-weight: bold; font-size: 18pt; text-align: center; margin-bottom: 5px; font-family: 'Arial', sans-serif; }
+        .receipt-date { text-align: center; font-style: italic; font-size: 12pt; margin-bottom: 25px; }
+
+        /* Khối thông tin giao nhận */
+        .info-row { display: flex; margin-bottom: 12px; align-items: flex-end; }
+        .info-label { font-weight: normal; white-space: nowrap; }
+        .info-value { border-bottom: 1px dotted #000; flex-grow: 1; padding-left: 10px; font-weight: bold; min-height: 24px; }
+
+        /* Định dạng bảng dữ liệu giống hệt ảnh mẫu image_1046da.png */
+        .table-receipt { width: 100%; border-collapse: collapse; margin-top: 20px; margin-bottom: 15px; }
+        .table-receipt th, .table-receipt td { border: 1px solid #000 !important; padding: 6px 8px; font-size: 11pt; vertical-align: middle; }
+        .table-receipt th { font-weight: bold; text-align: center; background-color: #ffffff !important; }
+        .sub-header-row td { text-align: center; font-size: 10pt; color: #000; padding: 2px !important; }
+        .total-row td { font-weight: bold; }
+
+        /* Khối chữ ký chân trang */
+        .signature-section { margin-top: 30px; display: flex; justify-content: space-between; text-align: center; }
+        .signature-box { width: 45%; display: flex; flex-direction: column; justify-content: space-between; min-height: 180px; }
+        .signature-title { font-weight: bold; margin-bottom: 2px; }
+        .signature-subtitle { font-style: italic; font-size: 11pt; color: #555; }
+        .signature-name { font-weight: bold; margin-top: auto; text-align: left; padding-left: 20px; }
+
+        /* Ẩn thanh công cụ điều hướng khi bấm lệnh in ra giấy */
+        @media print {
+            .no-print { display: none; }
+            body { padding: 0; margin: 0; }
+            .print-wrapper { max-width: 100%; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Thanh công cụ hỗ trợ xem trước (Tự động ẩn đi khi in thực tế) -->
+    <div class="no-print text-center mb-4">
+        <button onclick="window.print();" class="btn btn-dark px-4 fw-bold shadow-sm"><i class="fas fa-print me-2"></i>XÁC NHẬN IN / LƯU FILE PDF</button>
+        <button onclick="window.close();" class="btn btn-outline-danger px-4 ms-2 shadow-sm">ĐÓNG TRANG</button>
+    </div>
+
+    <!-- KHỐI BAO BAO TOÀN BỘ PHIẾU IN -->
+    <div class="print-wrapper">
+
+        <!-- Đơn vị chủ quản -->
+        <div class="company-title">
+            Đơn vị: CTY CP VISION EDUCATION
+        </div>
+
+        <!-- Tiêu đề chính -->
+        <div class="receipt-title">
+            PHIẾU XUẤT KHO / STOCK TRANSFER
+        </div>
+        <div class="receipt-date">
+            Ngày ...... tháng ...... năm ......
+        </div>
+
+        <!-- Thông tin Deliverer & Receiver -->
+        <div class="info-section">
+            <div class="info-row">
+                <span class="info-label">Họ tên người chuyển hàng / Deliverer (Bộ phận):</span>
+                <!-- Tên mặc định lấy theo tài khoản đăng nhập giống hình mẫu -->
+                <div class="info-value">Lê Hoàng Vinh</div>
+            </div>
+            <div class="info-row">
+                <span class="info-label">Họ tên người nhận hàng / Receiver (Bộ phận):</span>
+                <div class="info-value"></div>
+            </div>
+        </div>
+
+        <!-- Bảng danh sách vật tư -->
+        <table class="table table-bordered table-receipt align-middle text-center">
+            <thead>
+                <tr>
+                    <th style="width: 7%;">STT<br><span class="font-italic" style="font-size: 9pt; font-weight: normal;">No.</span></th>
+                    <th style="width: 43%;">Tên hàng (theo Phần mềm)</th>
+                    <th style="width: 20%;">Code hàng<br><span class="fw-normal" style="font-size: 10pt; font-style: italic;">(theo Phần mềm)</span></th>
+                    <th style="width: 10%;">ĐVT</th>
+                    <th style="width: 10%;">Số lượng<br>xuất</th>
+                    <th style="width: 10%;">Ghi chú</th>
+                </tr>
+                <!-- Dòng định danh chữ cái A, B, C, D, E, F chuẩn như mẫu excel -->
+                <tr class="sub-header-row">
+                    <td>A</td>
+                    <td>B</td>
+                    <td>C</td>
+                    <td>D</td>
+                    <td>E</td>
+                    <td>F</td>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in selected_uniforms %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <!-- Tên hàng -->
+                    <td class="text-start" style="padding-left: 12px;">{{ item.name }}</td>
+                    <!-- Code hàng (SKU hoặc ID) -->
+                    <td>{{ item.sku|default:item.id }}</td>
+                    <!-- Đơn vị tính mặc định -->
+                    <td>Cái</td>
+                    <!-- Số lượng tích chọn lấy từ hệ thống hoặc để trống điền tay -->
+                    <td class="fw-bold">1</td>
+                    <td></td>
+                </tr>
+                {% endfor %}
+
+                <!-- Điền thêm các dòng trống nếu danh sách ít, đảm bảo form in ra luôn vuông vức đẹp mắt -->
+                {% with total_items=selected_uniforms|length %}
+                    {% if total_items < 10 %}
+                        <!-- Vòng lặp dựng thêm dòng khống -->
+                        <tr><td>{{ total_items|add:"1" }}</td><td></td><td></td><td></td><td></td><td></td></tr>
+                        <tr><td>{{ total_items|add:"2" }}</td><td></td><td></td><td></td><td></td><td></td></tr>
+                        <tr><td>{{ total_items|add:"3" }}</td><td></td><td></td><td></td><td></td><td></td></tr>
+                    {% endif %}
+                {% endwith %}
+
+                <!-- Dòng tổng cộng tổng lượng -->
+                <tr class="total-row">
+                    <td colspan="2" class="text-center font-weight-bold">Tổng cộng / Total amount</td>
+                    <td>X</td>
+                    <td>X</td>
+                    <!-- Hiển thị tổng số lượng dòng được xuất ra phiếu -->
+                    <td class="text-center fw-bold text-decoration-underline">{{ selected_uniforms|length }}</td>
+                    <td>X</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- Khối chữ ký xác nhận đáy trang -->
+        <div class="signature-section">
+            <div class="signature-box">
+                <div>
+                    <div class="signature-title">Người lập phiếu</div>
+                    <div class="signature-subtitle">(Ký, họ tên)</div>
+                </div>
+                <!-- Chân trang hiển thị người lập cố định góc trái như ảnh mẫu -->
+                <div class="signature-name">Lê Hoàng Vinh</div>
+            </div>
+
+            <div class="signature-box">
+                <div>
+                    <div class="signature-title">Người nhận hàng</div>
+                    <div class="signature-subtitle">(Ký, họ tên)</div>
+                </div>
+                <div class="signature-name" style="visibility: hidden;">Receiver</div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Tự kích hoạt tính năng gọi driver máy in của trình duyệt -->
+    <script>
+        window.onload = function() {
+            // Đợi trang nạp CSS xong là tự động mở popup in ngay lập tức
+            setTimeout(function() {
+                window.print();
+            }, 300);
+        }
+    </script>
+</body>
+</html>

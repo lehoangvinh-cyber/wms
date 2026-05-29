@@ -44,4 +44,6 @@ urlpatterns = [
          auth_views.PasswordResetCompleteView.as_view(template_name='password_reset_complete.html'),
          name='password_reset_complete'),
     path('accounts/', include('allauth.urls')), # Thêm dòng này để xử lý luồng Google Callback
+    path('print-uniform-receipt/', views.print_uniform_receipt, name='print_uniform_receipt'),
+
 ]

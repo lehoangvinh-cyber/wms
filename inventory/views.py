@@ -670,3 +670,22 @@ def print_receipt(request):
         return redirect('dashboard')
     # ... logic in phiếu
     return render(request, 'print_receipt.html', {})
+
+
+@login_required
+def print_uniform_receipt(request):
+    if request.method == 'POST':
+        # Lấy mảng danh sách các ID đã được tick chọn gửi lên từ giao diện
+        uniform_ids = request.POST.getlist('uniform_ids')
+
+        # Truy vấn ra toàn bộ các bản ghi đồng phục nằm trong danh sách ID đó
+        selected_uniforms = Uniform.objects.filter(id__in=uniform_ids)
+
+        context = {
+            'selected_uniforms': selected_uniforms,
+            'user': request.user,
+        }
+        # Trả về trang thiết kế biểu mẫu in ấn thô để trình duyệt tự in
+        return render(request, 'print_receipt_template.html', context)
+
+    return redirect('dashboard')

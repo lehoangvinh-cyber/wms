@@ -6,84 +6,40 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
     <style>
-        body { background-color: #f4f7fa; font-family: 'Segoe UI', system-ui, sans-serif; }
-
-        /* Navbar nâng cấp */
+        body { background-color: #f4f7fa; font-family: 'Segoe UI', system-ui, sans-serif; display: flex; flex-direction: column; min-height: 100vh; }
         .navbar-dark-custom { background-color: #1e2229; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
         .nav-link.active { border-bottom: 3px solid #10b981; color: white !important; font-weight: bold; }
-
-        /* Thẻ thống kê (Cards) */
-        .stat-card {
-            background: white; border-radius: 12px; border: none;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.03); transition: all 0.3s ease;
-        }
+        .stat-card { background: white; border-radius: 12px; border: none; box-shadow: 0 4px 15px rgba(0,0,0,0.03); transition: all 0.3s ease; }
         .stat-card:hover { transform: translateY(-3px); box-shadow: 0 8px 25px rgba(0,0,0,0.06); }
         .icon-bg { width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; border-radius: 12px; font-size: 1.5rem; }
-
-        /* Nút Sidebar Mượt Mà */
-        .btn-sidebar {
-            display: flex; align-items: center; justify-content: center;
-            width: 100%; padding: 14px; border-radius: 10px; font-weight: 600;
-            color: white; text-decoration: none; transition: all 0.2s ease;
-            margin-bottom: 12px; border: none; box-shadow: 0 3px 10px rgba(0,0,0,0.1);
-        }
+        .btn-sidebar { display: flex; align-items: center; justify-content: center; width: 100%; padding: 14px; border-radius: 10px; font-weight: 600; color: white; text-decoration: none; transition: all 0.2s ease; margin-bottom: 12px; border: none; box-shadow: 0 3px 10px rgba(0,0,0,0.1); }
         .btn-sidebar i { margin-right: 8px; font-size: 1.1rem; }
         .btn-sidebar:hover { color: white; filter: brightness(1.1); transform: translateY(-2px); box-shadow: 0 5px 15px rgba(0,0,0,0.15); }
-
-        /* Màu sắc nút theo hình image_657120.png */
         .btn-import { background-color: #4378e6; }
         .btn-export { background-color: #e67e22; }
         .btn-report { background-color: #3567b5; }
         .btn-debt { background-color: #d35400; }
         .btn-admin { background-color: #2c3e50; }
-
-        /* Bảng dữ liệu */
         .table-container { background: white; border-radius: 12px; padding: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.03); }
         .table thead { background-color: #f8f9fa; }
         .table th { font-weight: 600; color: #4b5563; font-size: 0.85rem; border-bottom: 2px solid #e5e7eb; }
         .empty-state { padding: 40px 0; text-align: center; color: #9ca3af; }
-        .custom-orange-btn {
-        background-color: #ea580c; /* Màu cam giống hình */
-        border: none;
-        border-radius: 8px; /* Bo góc vừa phải */
-        padding: 12px 20px;
-        transition: all 0.2s;
-        width: 100%; /* Chiều rộng full khối */
-    }
-    .custom-orange-btn:hover {
-        background-color: #c2410c; /* Đậm hơn một chút khi di chuột vào */
-        color: white;
-    }
-    body {
-    background-color: #f4f7f9;
-    font-family: 'Segoe UI', sans-serif;
-    display: flex;             /* Thêm dòng này */
-    flex-direction: column;    /* Thêm dòng này */
-    min-height: 100vh;         /* Thêm dòng này */
-}
-/* Ép nội dung chính đẩy footer xuống đáy */
-.container-fluid { flex: 1; }
+        .custom-orange-btn { background-color: #ea580c; border: none; border-radius: 8px; padding: 12px 20px; transition: all 0.2s; width: 100%; }
+        .custom-orange-btn:hover { background-color: #c2410c; color: white; }
+        .container-fluid { flex: 1; }
     </style>
 </head>
 <body>
 
-<!-- Navbar -->
 <nav class="navbar navbar-expand-lg navbar-dark-custom py-2">
     <div class="container-fluid px-4">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0 flex-row gap-4">
-            <li class="nav-item">
-                <a class="nav-link active py-3" href="{% url 'dashboard' %}">TRANG CHỦ</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link py-3 text-light opacity-75" href="{% url 'summary_nxt' %}">TỔNG HỢP NXT</a>
-            </li>
+            <li class="nav-item"><a class="nav-link active py-3" href="{% url 'dashboard' %}">TRANG CHỦ</a></li>
+            <li class="nav-item"><a class="nav-link py-3 text-light opacity-75" href="{% url 'summary_nxt' %}">TỔNG HỢP NXT</a></li>
         </ul>
         <div class="d-flex align-items-center text-white">
             <span class="text-white me-3">Xin chào, <b>{{ request.user.username }}</b></span>
-
-            <a href="{% url 'logout' %}" class="btn btn-light btn-sm rounded-pill px-3 fw-bold shadow-sm">
-                <i class="bi bi-box-arrow-right me-1"></i> Thoát
-    </a>
+            <a href="{% url 'logout' %}" class="btn btn-light btn-sm rounded-pill px-3 fw-bold shadow-sm"><i class="bi bi-box-arrow-right me-1"></i> Thoát</a>
         </div>
     </div>
 </nav>
@@ -91,49 +47,29 @@
 <div class="container-fluid py-4 px-4">
     <div class="row g-4">
 
-        <!-- Cột trái: Sidebar Menu -->
         <div class="col-md-3">
-         {% if request.user.is_superuser %}
-                <a href="{% url 'stock_in' %}" class="btn-sidebar btn-import">
-                    <i class="bi bi-plus-circle"></i> NHẬP KHO (NCC)
-                </a>
-                <a href="{% url 'stock_out' %}" class="btn-sidebar btn-export">
-                    <i class="bi bi-box-arrow-up-right"></i> XUẤT KHO (CẤP PHÁT)
-                </a>
+            {% if request.user.is_superuser %}
+                <a href="{% url 'stock_in' %}" class="btn-sidebar btn-import"><i class="bi bi-plus-circle"></i> NHẬP KHO (NCC)</a>
+                <a href="{% url 'stock_out' %}" class="btn-sidebar btn-export"><i class="bi bi-box-arrow-up-right"></i> XUẤT KHO (CẤP PHÁT)</a>
             {% else %}
-                <button class="btn-sidebar btn-import" style="opacity: 0.4; cursor: not-allowed; filter: grayscale(60%);" title="Chỉ Admin mới có quyền" disabled>
-                    <i class="bi bi-plus-circle"></i> NHẬP KHO (NCC) <i class="bi bi-lock-fill ms-auto"></i>
-                </button>
-                <button class="btn-sidebar btn-export" style="opacity: 0.4; cursor: not-allowed; filter: grayscale(60%);" title="Chỉ Admin mới có quyền" disabled>
-                    <i class="bi bi-box-arrow-up-right"></i> XUẤT KHO (CẤP PHÁT) <i class="bi bi-lock-fill ms-auto"></i>
-                </button>
+                <button class="btn-sidebar btn-import" style="opacity: 0.4; cursor: not-allowed; filter: grayscale(60%);" title="Chỉ Admin mới có quyền" disabled><i class="bi bi-plus-circle"></i> NHẬP KHO (NCC) <i class="bi bi-lock-fill ms-auto"></i></button>
+                <button class="btn-sidebar btn-export" style="opacity: 0.4; cursor: not-allowed; filter: grayscale(60%);" title="Chỉ Admin mới có quyền" disabled><i class="bi bi-box-arrow-up-right"></i> XUẤT KHO (CẤP PHÁT) <i class="bi bi-lock-fill ms-auto"></i></button>
             {% endif %}
 
-            <a href="{% url 'summary_nxt' %}" class="btn-sidebar btn-report">
-                <i class="bi bi-file-earmark-bar-graph"></i> BÁO CÁO TỒN KHO
-            </a>
-            <a href="{% url 'debt_list' %}" class="btn-sidebar btn-debt">
-                <i class="bi bi-person-exclamation"></i> THEO DÕI NỢ ĐP
-            </a>
+            <a href="{% url 'summary_nxt' %}" class="btn-sidebar btn-report"><i class="bi bi-file-earmark-bar-graph"></i> BÁO CÁO TỒN KHO</a>
+            <a href="{% url 'debt_list' %}" class="btn-sidebar btn-debt"><i class="bi bi-person-exclamation"></i> THEO DÕI NỢ ĐP</a>
             <a href="{% url 'staff_debt_list' %}" class="btn text-white fw-bold shadow-sm d-flex justify-content-center align-items-center custom-orange-btn">
-    <i class="bi bi-person-badge-fill me-2 fs-5"></i> ĐỒNG PHỤC NHÂN VIÊN
-</a>
+                <i class="bi bi-person-badge-fill me-2 fs-5"></i> ĐỒNG PHỤC NHÂN VIÊN
+            </a>
             <hr class="my-4 text-muted">
             {% if request.user.is_superuser %}
-                <a href="{% url 'audit_log' %}" class="btn btn-secondary w-100 mb-2 fw-bold shadow-sm">
-        <i class="bi bi-shield-check me-1"></i> LỊCH SỬ THAO TÁC
-    </a>
-            <a href="/admin/" target="_blank" class="btn-sidebar btn-admin">
-                <i class="bi bi-gear"></i> TRANG QUẢN TRỊ
-            </a>
+                <a href="{% url 'audit_log' %}" class="btn btn-secondary w-100 mb-2 fw-bold shadow-sm"><i class="bi bi-shield-check me-1"></i> LỊCH SỬ THAO TÁC</a>
+                <a href="/admin/" target="_blank" class="btn-sidebar btn-admin"><i class="bi bi-gear"></i> TRANG QUẢN TRỊ</a>
             {% endif %}
-
         </div>
 
-        <!-- Cột phải: Nội dung chính -->
         <div class="col-md-9">
 
-            <!-- 3 Thẻ Thống kê nằm ngang (Đã gộp Thời gian vào đây) -->
             <div class="row g-3 mb-4">
                 <div class="col-md-4">
                     <div class="stat-card p-3 d-flex justify-content-between align-items-center">
@@ -141,9 +77,7 @@
                             <p class="text-muted small fw-bold mb-1">TỔNG LOẠI ĐỒNG PHỤC</p>
                             <h3 class="fw-bold text-primary mb-0">{{ uniforms.count|default:"0" }}</h3>
                         </div>
-                        <div class="icon-bg bg-primary bg-opacity-10 text-primary">
-                            <i class="bi bi-tags"></i>
-                        </div>
+                        <div class="icon-bg bg-primary bg-opacity-10 text-primary"><i class="bi bi-tags"></i></div>
                     </div>
                 </div>
 
@@ -151,15 +85,12 @@
                     <div class="card h-100 border-0 shadow-sm border-start border-danger border-4">
                         <div class="card-body">
                             <div class="d-flex justify-content-between align-items-center">
-                                <h6 class="text-muted fw-bold mb-1">CẦN NHẬP THÊM (<10)</h6>
+                                <h6 class="text-muted fw-bold mb-1">CẦN NHẬP THÊM (&lt;10)</h6>
                                 <i class="bi bi-exclamation-triangle text-danger fs-4"></i>
                             </div>
                             <h3 class="mb-0 text-danger fw-bold">{{ low_stock_count }}</h3>
-
                             {% if low_stock_count > 0 %}
-                            <button class="btn btn-sm btn-outline-danger mt-2" data-bs-toggle="modal" data-bs-target="#lowStockModal">
-                                Xem chi tiết
-                            </button>
+                            <button class="btn btn-sm btn-outline-danger mt-2" data-bs-toggle="modal" data-bs-target="#lowStockModal">Xem chi tiết</button>
                             {% endif %}
                         </div>
                     </div>
@@ -171,112 +102,109 @@
                             <p class="text-muted small fw-bold mb-1">THỜI GIAN</p>
                             <h4 class="fw-bold text-success mb-0" id="live-time">--:-- | --/--</h4>
                         </div>
-                        <div class="icon-bg bg-success bg-opacity-10 text-success">
-                            <i class="bi bi-clock-history"></i>
-                        </div>
+                        <div class="icon-bg bg-success bg-opacity-10 text-success"><i class="bi bi-clock-history"></i></div>
                     </div>
                 </div>
             </div>
+
             <div class="card border-0 shadow-sm mb-4">
-    <div class="card-body">
-        <h6 class="fw-bold text-primary mb-3"><i class="bi bi-bar-chart-fill me-2"></i>BIỂU ĐỒ TOP 7 ĐỒNG PHỤC TỒN KHO NHIỀU NHẤT</h6>
-        <div style="height: 300px;">
-            <canvas id="stockChart"></canvas>
-        </div>
-    </div>
-</div>
-            <!-- Bảng Dữ Liệu -->
-            <div class="table-container">
-                <!-- Thanh công cụ tìm kiếm -->
-                <div class="row g-2 mb-3">
-                    <div class="col-md-8">
-                        <div class="input-group">
-                            <span class="input-group-text bg-light border-end-0"><i class="bi bi-search text-muted"></i></span>
-                            <input type="text" id="searchInput" class="form-control border-start-0 ps-0 bg-light" placeholder="Tìm tên đồng phục hoặc mã SKU...">
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <select id="sizeFilter" class="form-select bg-light">
-                            <option value="">Tất cả kích cỡ (Size)</option>
-                            <option value="S">Size S</option>
-                            <option value="M">Size M</option>
-                            <option value="L">Size L</option>
-                            <option value="Free Size">Free Size</option>
-                        </select>
-                    </div>
+                <div class="card-body">
+                    <h6 class="fw-bold text-primary mb-3"><i class="bi bi-bar-chart-fill me-2"></i>BIỂU ĐỒ TOP 7 ĐỒNG PHỤC TỒN KHO NHIỀU NHẤT</h6>
+                    <div style="height: 300px;"><canvas id="stockChart"></canvas></div>
                 </div>
-
-                <!-- Bảng -->
-                <table class="table table-hover align-middle mb-0">
-                    <thead>
-                        <tr class="text-uppercase">
-                            <th style="width: 15%;">Mã VT</th>
-                            <th style="width: 45%;">Loại đồng phục</th>
-                            <th style="width: 20%;" class="text-center">Kích cỡ</th>
-                            <th style="width: 20%;" class="text-center">Tồn kho thực tế</th>
-                        </tr>
-                    </thead>
-                    <tbody id="inventoryTableBody">
-                        {% for item in uniforms %}
-                        <tr>
-                            <td class="fw-bold text-secondary">{{ item.sku|default:item.id }}</td>
-                            <td class="fw-bold text-primary">{{ item.name }}</td>
-                            <td class="text-center"><span class="badge bg-light text-dark border">{{ item.size }}</span></td>
-                            <td class="text-center fw-bold fs-6">{{ item.quantity }}</td>
-                        </tr>
-                        {% empty %}
-                        <!-- Empty State đẹp mắt hơn -->
-                        <tr>
-                            <td colspan="4">
-                                <div class="empty-state">
-                                    <i class="bi bi-inbox fs-1 text-light opacity-50 mb-2"></i>
-                                    <p class="mb-0 fw-medium">Chưa có dữ liệu đồng phục trong kho.</p>
-                                    <small>Hãy vào Trang Quản Trị hoặc Nhập Kho để bắt đầu.</small>
-                                </div>
-                            </td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
             </div>
 
-        </div>
+            <form id="printUniformForm" method="POST" action="{% url 'print_uniform_receipt' %}" target="_blank">
+                {% csrf_token %}
 
+                <div class="table-container">
+                    <div class="row g-2 mb-3 align-items-center">
+                        <div class="col-md-5">
+                            <div class="input-group">
+                                <span class="input-group-text bg-light border-end-0"><i class="bi bi-search text-muted"></i></span>
+                                <input type="text" id="searchInput" class="form-control border-start-0 ps-0 bg-light" placeholder="Tìm tên đồng phục hoặc mã SKU...">
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <select id="sizeFilter" class="form-select bg-light">
+                                <option value="">Tất cả kích cỡ (Size)</option>
+                                <option value="S">Size S</option>
+                                <option value="M">Size M</option>
+                                <option value="L">Size L</option>
+                                <option value="Free Size">Free Size</option>
+                            </select>
+                        </div>
+                        <div class="col-md-4 text-end">
+                            <button type="submit" id="btnPrintReceipt" class="btn btn-outline-primary fw-bold w-100 py-2 shadow-sm d-flex align-items-center justify-content-center" style="border-radius: 8px;" disabled>
+                                <i class="bi bi-printer-fill me-2 fs-5"></i> IN PHIẾU XUẤT (<span id="selectedCount">0</span>)
+                            </button>
+                        </div>
+                    </div>
+
+                    <table class="table table-hover align-middle mb-0">
+                        <thead>
+                            <tr class="text-uppercase">
+                                <th style="width: 5%;">
+                                    <input type="checkbox" id="selectAllUniforms" class="form-check-input">
+                                </th>
+                                <th style="width: 15%;">Mã VT</th>
+                                <th style="width: 40%;">Loại đồng phục</th>
+                                <th style="width: 20%;" class="text-center">Kích cỡ</th>
+                                <th style="width: 20%;" class="text-center">Tồn kho thực tế</th>
+                            </tr>
+                        </thead>
+                        <tbody id="inventoryTableBody">
+                            {% for item in uniforms %}
+                            <tr>
+                                <td>
+                                    <input type="checkbox" name="uniform_ids" value="{{ item.id }}" class="form-check-input uniform-checkbox">
+                                </td>
+                                <td class="fw-bold text-secondary">{{ item.sku|default:item.id }}</td>
+                                <td class="fw-bold text-primary">{{ item.name }}</td>
+                                <td class="text-center"><span class="badge bg-light text-dark border">{{ item.size }}</span></td>
+                                <td class="text-center fw-bold fs-6">{{ item.quantity }}</td>
+                            </tr>
+                            {% empty %}
+                            <tr>
+                                <td colspan="5">
+                                    <div class="empty-state">
+                                        <i class="bi bi-inbox fs-1 text-light opacity-50 mb-2"></i>
+                                        <p class="mb-0 fw-medium">Chưa có dữ liệu đồng phục trong kho.</p>
+                                        <small>Hãy vào Trang Quản Trị hoặc Nhập Kho để bắt đầu.</small>
+                                    </div>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </form>
+
+        </div>
     </div>
 </div>
-<!-- Kịch bản: Bật Pop-up Cấn trừ nợ nếu có tín hiệu từ Backend -->
+
 {% if auto_debt_info %}
 <div class="modal fade" id="autoDebtModal" tabindex="-1" data-bs-backdrop="static">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content border-0 shadow-lg">
             <div class="modal-header bg-warning text-dark border-0">
-                <h5 class="modal-title fw-bold">
-                    <i class="bi bi-bell-fill me-2"></i>Phát hiện nợ tồn đọng!
-                </h5>
+                <h5 class="modal-title fw-bold"><i class="bi bi-bell-fill me-2"></i>Phát hiện nợ tồn đọng!</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body py-4 text-center">
-                <div class="mb-3">
-                    <i class="bi bi-box-seam text-warning" style="font-size: 3rem;"></i>
-                </div>
+                <div class="mb-3"><i class="bi bi-box-seam text-warning" style="font-size: 3rem;"></i></div>
                 <h6 class="fw-bold fs-5 text-primary">{{ auto_debt_info.uniform_name }}</h6>
-                <p class="mb-0 mt-2 text-secondary">
-                    Hệ thống ghi nhận đang có <b class="text-danger fs-5">{{ auto_debt_info.student_count }} học sinh</b>
-                    đang nợ mặt hàng này.
-                </p>
+                <p class="mb-0 mt-2 text-secondary">Hệ thống ghi nhận đang có <b class="text-danger fs-5">{{ auto_debt_info.student_count }} học sinh</b> đang nợ mặt hàng này.</p>
                 <p class="mb-0 text-secondary">Bạn có muốn hệ thống tự động xuất kho để trả nợ ngay bây giờ không?</p>
             </div>
             <div class="modal-footer justify-content-center border-0 bg-light">
                 <button type="button" class="btn btn-secondary px-4 rounded-pill" data-bs-dismiss="modal">Để sau</button>
-                <a href="{% url 'auto_resolve_debt' auto_debt_info.uniform_id %}" class="btn btn-success px-4 rounded-pill fw-bold shadow-sm">
-                    <i class="bi bi-check-circle me-1"></i> Đồng ý xuất kho trả nợ
-                </a>
+                <a href="{% url 'auto_resolve_debt' auto_debt_info.uniform_id %}" class="btn btn-success px-4 rounded-pill fw-bold shadow-sm"><i class="bi bi-check-circle me-1"></i> Đồng ý xuất kho trả nợ</a>
             </div>
         </div>
     </div>
 </div>
-
-<!-- Script tự động hiển thị Modal -->
 <script>
     document.addEventListener("DOMContentLoaded", function() {
         var myModal = new bootstrap.Modal(document.getElementById('autoDebtModal'));
@@ -284,73 +212,6 @@
     });
 </script>
 {% endif %}
-
-<script>
-    // Cập nhật đồng hồ thời gian thực
-    function updateTime() {
-        const now = new Date();
-        const hours = String(now.getHours()).padStart(2, '0');
-        const minutes = String(now.getMinutes()).padStart(2, '0');
-        const day = String(now.getDate()).padStart(2, '0');
-        const month = String(now.getMonth() + 1).padStart(2, '0');
-        document.getElementById('live-time').innerText = `${hours}:${minutes} | ${day}/${month}`;
-    }
-    setInterval(updateTime, 1000);
-    updateTime();
-
-    // Logic Tìm kiếm & Lọc cơ bản (Frontend)
-    document.getElementById('searchInput').addEventListener('keyup', filterTable);
-    document.getElementById('sizeFilter').addEventListener('change', filterTable);
-
-    function filterTable() {
-        let searchValue = document.getElementById('searchInput').value.toLowerCase();
-        let sizeValue = document.getElementById('sizeFilter').value.toLowerCase();
-        let rows = document.querySelectorAll('#inventoryTableBody tr:not(.empty-state-row)');
-
-        rows.forEach(row => {
-            if (row.cells.length > 1) { // Bỏ qua dòng empty state
-                let name = row.cells[1].textContent.toLowerCase();
-                let sku = row.cells[0].textContent.toLowerCase();
-                let size = row.cells[2].textContent.toLowerCase();
-
-                let matchesSearch = name.includes(searchValue) || sku.includes(searchValue);
-                let matchesSize = sizeValue === "" || size.includes(sizeValue);
-
-                row.style.display = (matchesSearch && matchesSize) ? '' : 'none';
-            }
-        });
-    }
-</script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-<script>
-    // Code vẽ biểu đồ
-    const ctx = document.getElementById('stockChart').getContext('2d');
-    const labels = JSON.parse('{{ chart_labels_json|safe }}');
-    const data = JSON.parse('{{ chart_data_json|safe }}');
-
-    new Chart(ctx, {
-        type: 'bar',
-        data: {
-            labels: labels,
-            datasets: [{
-                label: 'Số lượng tồn kho',
-                data: data,
-                backgroundColor: 'rgba(13, 110, 253, 0.6)', // Màu xanh Blue
-                borderColor: 'rgba(13, 110, 253, 1)',
-                borderWidth: 1,
-                borderRadius: 5
-            }]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            scales: { y: { beginAtZero: true } }
-        }
-    });
-
-</script>
 
 <div class="modal fade" id="lowStockModal" tabindex="-1">
     <div class="modal-dialog">
@@ -372,48 +233,152 @@
         </div>
     </div>
 </div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script>
+    // Đồng hồ thời gian thực
+    function updateTime() {
+        const now = new Date();
+        const hours = String(now.getHours()).padStart(2, '0');
+        const minutes = String(now.getMinutes()).padStart(2, '0');
+        const day = String(now.getDate()).padStart(2, '0');
+        const month = String(now.getMonth() + 1).padStart(2, '0');
+        document.getElementById('live-time').innerText = `${hours}:${minutes} | ${day}/${month}`;
+    }
+    setInterval(updateTime, 1000);
+    updateTime();
+
+    // Lọc tìm kiếm Frontend cũ của bạn (có điều chỉnh bỏ qua checkbox cột 0)
+    document.getElementById('searchInput').addEventListener('keyup', filterTable);
+    document.getElementById('sizeFilter').addEventListener('change', filterTable);
+
+    function filterTable() {
+        let searchValue = document.getElementById('searchInput').value.toLowerCase();
+        let sizeValue = document.getElementById('sizeFilter').value.toLowerCase();
+        let rows = document.querySelectorAll('#inventoryTableBody tr');
+
+        rows.forEach(row => {
+            if (row.cells.length > 2) {
+                let name = row.cells[2].textContent.toLowerCase();
+                let sku = row.cells[1].textContent.toLowerCase();
+                let size = row.cells[3].textContent.toLowerCase();
+
+                let matchesSearch = name.includes(searchValue) || sku.includes(searchValue);
+                let matchesSize = sizeValue === "" || size.includes(sizeValue);
+
+                row.style.display = (matchesSearch && matchesSize) ? '' : 'none';
+            }
+        });
+    }
+
+    // THÊM MỚI: JAVASCRIPT ĐIỀU KHIỂN ĐẾM VÀ BẬT/TẮT NÚT IN PHIẾU
+    document.addEventListener('DOMContentLoaded', function () {
+        const selectAllCheckbox = document.getElementById('selectAllUniforms');
+        const checkboxes = document.querySelectorAll('.uniform-checkbox');
+        const printBtn = document.getElementById('btnPrintReceipt');
+        const countSpan = document.getElementById('selectedCount');
+
+        function updatePrintButton() {
+            const checkedCount = document.querySelectorAll('.uniform-checkbox:checked').length;
+            countSpan.textContent = checkedCount;
+
+            if (checkedCount > 0) {
+                printBtn.removeAttribute('disabled');
+                printBtn.classList.replace('btn-outline-primary', 'btn-primary');
+            } else {
+                printBtn.setAttribute('disabled', 'true');
+                printBtn.classList.replace('btn-primary', 'btn-outline-primary');
+                if(selectAllCheckbox) selectAllCheckbox.checked = false;
+            }
+        }
+
+        if (selectAllCheckbox) {
+            selectAllCheckbox.addEventListener('change', function () {
+                // Chỉ check những dòng đang hiển thị (được tìm thấy)
+                checkboxes.forEach(cb => {
+                    if (cb.closest('tr').style.display !== 'none') {
+                        cb.checked = this.checked;
+                    }
+                });
+                updatePrintButton();
+            });
+        }
+
+        checkboxes.forEach(cb => {
+            cb.addEventListener('change', function () {
+                if (!this.checked && selectAllCheckbox) {
+                    selectAllCheckbox.checked = false;
+                }
+                updatePrintButton();
+            });
+        });
+    });
+</script>
+
+<script>
+    const ctx = document.getElementById('stockChart').getContext('2d');
+    const labels = JSON.parse('{{ chart_labels_json|safe }}');
+    const data = JSON.parse('{{ chart_data_json|safe }}');
+
+    new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: 'Số lượng tồn kho',
+                data: data,
+                backgroundColor: 'rgba(13, 110, 253, 0.6)',
+                borderColor: 'rgba(13, 110, 253, 1)',
+                borderWidth: 1,
+                borderRadius: 5
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: { y: { beginAtZero: true } }
+        }
+    });
+</script>
 
 {% if messages %}
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         {% for message in messages %}
-            // Phân loại thông báo để hiện đúng màu (Lỗi = đỏ, Thành công = xanh)
             let iconType = 'info';
-            {% if message.tags == 'error' %}
-                iconType = 'error';
-            {% elif message.tags == 'success' %}
-                iconType = 'success';
-            {% elif message.tags == 'warning' %}
-                iconType = 'warning';
-            {% endif %}
+            {% if message.tags == 'error' %} iconType = 'error';
+            {% elif message.tags == 'success' %} iconType = 'success';
+            {% elif message.tags == 'warning' %} iconType = 'warning'; {% endif %}
 
-            // Lệnh gọi Popup
             Swal.fire({
                 icon: iconType,
                 title: iconType === 'error' ? 'Lỗi thao tác!' : 'Thành công!',
                 text: '{{ message }}',
                 confirmButtonText: 'Đã hiểu',
                 confirmButtonColor: '#0d6efd',
-                timer: 4000, // Tự động đóng sau 4 giây
+                timer: 4000,
                 timerProgressBar: true,
-                backdrop: `rgba(0,0,0,0.4)` // Làm tối hình nền đằng sau
+                backdrop: `rgba(0,0,0,0.4)`
             });
         {% endfor %}
     });
 </script>
 {% endif %}
-<footer class="mt-5 py-3 bg-white border-top shadow-sm">
-        <div class="container-fluid px-5 d-flex flex-column flex-md-row justify-content-between align-items-center">
-            <span class="text-muted small fw-medium mb-2 mb-md-0">
-                &copy; {% now "Y" %} Hệ Thống Quản Lý Kho Đồng Phục (WMS). All rights reserved.
-            </span>
-            <span class="text-muted small">
-                Được phát triển bởi <span class="fw-bold text-primary">Vinh</span> <i class="bi bi-code-slash ms-1 text-dark"></i>
-            </span>
-        </div>
-    </footer>
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<footer class="mt-5 py-3 bg-white border-top shadow-sm">
+    <div class="container-fluid px-5 d-flex flex-column flex-md-row justify-content-between align-items-center">
+        <span class="text-muted small fw-medium mb-2 mb-md-0">
+            &copy; {% now "Y" %} Hệ Thống Quản Lý Kho Đồng Phục (WMS). All rights reserved.
+        </span>
+        <span class="text-muted small">
+            Được phát triển bởi <span class="fw-bold text-primary">Vinh</span> <i class="bi bi-code-slash ms-1 text-dark"></i>
+        </span>
+    </div>
+</footer>
+
 </body>
 </html>
