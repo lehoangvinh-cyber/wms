@@ -32,21 +32,25 @@
         .signature-subtitle { font-style: italic; font-size: 11pt; color: #555; width: 100%; }
         .signature-name-fill { font-weight: bold; font-size: 13pt; margin-top: auto; width: 100%; text-align: center; padding-top: 60px; }
 
+        /* 🔴 ĐOẠN ĐIỀU KHIỂN ÉP ẨN THANH CÔNG CỤ KHI IN 🔴 */
         @media print {
-            .no-print { display: none; }
+            .action-bar-container { display: none !important; } /* Ẩn triệt để thanh công cụ trên bản in */
             body { padding: 0; margin: 0; }
             .print-wrapper { max-width: 100%; }
             .date-input, .info-value-input, .cell-input { border: none !important; background: transparent !important; box-shadow: none !important; padding: 0 !important; outline: none !important; }
             .date-input, .cell-input { display: inline-block; }
             .cell-input::placeholder { color: transparent !important; }
             .receipt-date-container { display: block !important; text-align: center !important; }
+            input[type=number]::-webkit-outer-spin-button,
+            input[type=number]::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+            input[type=number] { -moz-appearance: textfield; }
         }
     </style>
 </head>
 <body>
 
-    <div class="no-print text-center mb-4 bg-light p-3 border-bottom d-flex align-items-center justify-content-center gap-2">
-        <span class="text-secondary small me-2"><i class="bi bi-info-circle-fill"></i> Kiểm tra thông tin, sau đó bấm Xác nhận để trừ kho và in phiếu.</span>
+    <div class="action-bar-container text-center mb-4 bg-light p-3 border-bottom d-flex align-items-center justify-content-center gap-2">
+        <span class="text-secondary small me-2"><i class="bi bi-info-circle-fill"></i> Bạn có thể gõ thêm tên người nhận, ĐVT, ghi chú... Sau đó bấm nút màu xanh để trừ kho và xuất phiếu.</span>
         <button onclick="submitAndPrint();" id="btn-trigger-confirm" class="btn btn-primary px-4 fw-bold shadow-sm">
             <i class="fas fa-print me-2"></i>XÁC NHẬN IN / LƯU PDF
         </button>
@@ -92,73 +96,35 @@
                     </tr>
                 </thead>
                 <tbody>
-    {% for item in selected_uniform_data|default:selected_uniforms_data %}
-    <tr>
-        <td>{{ forloop.counter }}
-            <input type="hidden" name="final_ids" value="{{ item.id }}">
-        </td>
-        <td class="text-start" style="padding-left: 12px;">{{ item.name }} </td>
-        <td>{{ item.sku }}</td>
-        <td><input type="text" class="cell-input" value="Cái"></td>
-        <td>
-            <input type="number" name="final_quantities" value="{{ item.export_quantity }}" class="cell-input fw-bold-input target-quantity" readonly style="pointer-events: none;">
-        </td>
-        <td><input type="text" class="cell-input text-start-input" placeholder="..."></td>
-    </tr>
-    {% empty %}
-    <tr>
-        <td colspan="6" class="text-center text-danger fw-bold py-3 no-print">
-            ⚠️ Hệ thống chưa nhận được dữ liệu mảng tích chọn! Vui lòng kiểm tra lại views.py
-        </td>
-    </tr>
-    {% endfor %}
+                    {% for item in selected_uniform_data|default:selected_uniforms_data %}
+                    <tr>
+                        <td>{{ forloop.counter }}
+                            <input type="hidden" name="final_ids" value="{{ item.id }}">
+                        </td>
+                        <td class="text-start" style="padding-left: 12px;">{{ item.name }} {% if item.size %}(Size: {{ item.size }}){% endif %}</td>
+                        <td>{{ item.sku }}</td>
+                        <td><input type="text" class="cell-input" value="Cái"></td>
+                        <td>
+                            <input type="number" name="final_quantities" value="{{ item.export_quantity }}" class="cell-input fw-bold-input target-quantity" readonly style="pointer-events: none;">
+                        </td>
+                        <td><input type="text" class="cell-input text-start-input" placeholder="..."></td>
+                    </tr>
+                    {% endfor %}
 
-    {% with total_items=selected_uniform_data|length|default:selected_uniforms_data|length %}
-        <tr style="{% if total_items >= 6 %}display: none;{% endif %}">
-            <td>{% if total_items < 1 %}{% else %}{{ total_items|add:"1" }}{% endif %}</td>
-            <td></td><td></td>
-            <td><input type="text" class="cell-input"></td>
-            <td></td>
-            <td><input type="text" class="cell-input"></td>
-        </tr>
-        <tr style="{% if total_items|add:"1" >= 6 %}display: none;{% endif %}">
-            <td>{{ total_items|add:"2" }}</td>
-            <td></td><td></td>
-            <td><input type="text" class="cell-input"></td>
-            <td></td>
-            <td><input type="text" class="cell-input"></td>
-        </tr>
-        <tr style="{% if total_items|add:"2" >= 6 %}display: none;{% endif %}">
-            <td>{{ total_items|add:"3" }}</td>
-            <td></td><td></td>
-            <td><input type="text" class="cell-input"></td>
-            <td></td>
-            <td><input type="text" class="cell-input"></td>
-        </tr>
-        <tr style="{% if total_items|add:"3" >= 6 %}display: none;{% endif %}">
-            <td>{{ total_items|add:"4" }}</td>
-            <td></td><td></td>
-            <td><input type="text" class="cell-input"></td>
-            <td></td>
-            <td><input type="text" class="cell-input"></td>
-        </tr>
-        <tr style="{% if total_items|add:"4" >= 6 %}display: none;{% endif %}">
-            <td>{{ total_items|add:"5" }}</td>
-            <td></td><td></td>
-            <td><input type="text" class="cell-input"></td>
-            <td></td>
-            <td><input type="text" class="cell-input"></td>
-        </tr>
-    {% endwith %}
+                    {% with total_items=selected_uniform_data|length|default:selected_uniforms_data|length %}
+                        <tr style="{% if total_items >= 6 %}display: none;{% endif %}"><td>{{ total_items|add:"1" }}</td><td></td><td></td><td><input type="text" class="cell-input"></td><td></td><td><input type="text" class="cell-input"></td></tr>
+                        <tr style="{% if total_items|add:"1" >= 6 %}display: none;{% endif %}"><td>{{ total_items|add:"2" }}</td><td></td><td></td><td><input type="text" class="cell-input"></td><td></td><td><input type="text" class="cell-input"></td></tr>
+                        <tr style="{% if total_items|add:"2" >= 6 %}display: none;{% endif %}"><td>{{ total_items|add:"3" }}</td><td></td><td></td><td><input type="text" class="cell-input"></td><td></td><td><input type="text" class="cell-input"></td></tr>
+                    {% endwith %}
 
-    <tr class="total-row">
-        <td colspan="2" class="text-center">Tổng cộng / Total amount</td>
-        <td>X</td>
-        <td>X</td>
-        <td class="text-center fw-bold text-decoration-underline" id="total-amount-display">0</td>
-        <td>X</td>
-    </tr>
-</tbody>
+                    <tr class="total-row">
+                        <td colspan="2" class="text-center">Tổng cộng / Total amount</td>
+                        <td>X</td>
+                        <td>X</td>
+                        <td class="text-center fw-bold text-decoration-underline" id="total-amount-display">0</td>
+                        <td>X</td>
+                    </tr>
+                </tbody>
             </table>
 
             <div class="signature-section">
@@ -184,8 +150,6 @@
             document.getElementById('receipt-month').value = today.getMonth() + 1;
             document.getElementById('receipt-year').value = today.getFullYear();
             calculateTotalQuantity();
-
-            // ❌ KHÔNG tự động kích hoạt window.print() khi load trang nữa, để nhân viên gõ chữ xong mới in
         });
 
         function calculateTotalQuantity() {
@@ -197,7 +161,6 @@
             document.getElementById('total-amount-display').textContent = total;
         }
 
-        // 🚀 HÀM XỬ LÝ AJAX: BẮM XÁC NHẬN MỚI TRỪ KHO VÀ GỌI LỆNH IN
         function submitAndPrint() {
             const form = document.getElementById('final-export-form');
             const formData = new FormData(form);
@@ -206,7 +169,6 @@
             btn.setAttribute('disabled', 'true');
             btn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Đang trừ kho...';
 
-            // Gửi AJAX POST lên backend để chính thức trừ kho
             fetch("{% url 'confirm_export_stock' %}", {
                 method: "POST",
                 body: formData,
@@ -217,18 +179,16 @@
             .then(response => response.json())
             .then(data => {
                 if (data.status === 'success') {
-                    // Nếu trừ kho ở Database thành công, gọi lệnh in của trình duyệt ngay lập tức
+                    // Gọi lệnh in của trình duyệt sau khi DB trừ thành công
                     window.print();
-
-                    // Khôi phục lại trạng thái nút bấm
                     btn.removeAttribute('disabled');
                     btn.innerHTML = '<i class="fas fa-print me-2"></i>XÁC NHẬN IN / LƯU PDF';
                 } else {
                     Swal.fire({
                         icon: 'error',
                         title: 'Lỗi trừ kho!',
-                        text: data.message || 'Vui lòng kiểm tra lại số lượng tồn kho thực tế.',
-                        confirmButtonColor: '#3085d6'
+                        text: data.message || 'Vui lòng kiểm tra lại số lượng tồn kho.',
+                        confirmButtonColor: '#0d6efd'
                     });
                     btn.removeAttribute('disabled');
                     btn.innerHTML = '<i class="fas fa-print me-2"></i>XÁC NHẬN IN / LƯU PDF';
