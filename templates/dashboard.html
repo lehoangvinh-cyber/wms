@@ -166,7 +166,7 @@
             <td class="text-center fw-bold fs-6 target-stock">{{ item.quantity }}</td>
 
             <td>
-                <input type="number" name="quantities" value="1" min="1" max="{{ item.quantity }}" class="form-control form-control-sm text-center fw-bold export-quantity-input" style="border-radius: 6px; border: 1px solid #ced4da;">
+                <input type="number" name="quantities" value="1" min="1" max="{{ item.quantity }}" class="form-control form-control-sm text-center fw-bold export-quantity-input" style="border-radius: 6px; border: 1px solid #ced4da;" disabled>
             </td>
         </tr>
         {% empty %}
@@ -301,46 +301,97 @@ document.querySelectorAll('.uniform-checkbox').forEach(cb => {
 });
     // THÊM MỚI: JAVASCRIPT ĐIỀU KHIỂN ĐẾM VÀ BẬT/TẮT NÚT IN PHIẾU
     document.addEventListener('DOMContentLoaded', function () {
-        const selectAllCheckbox = document.getElementById('selectAllUniforms');
-        const checkboxes = document.querySelectorAll('.uniform-checkbox');
-        const printBtn = document.getElementById('btnPrintReceipt');
-        const countSpan = document.getElementById('selectedCount');
+    const selectAllCheckbox = document.getElementById('selectAllUniforms');
+    const checkboxes = document.querySelectorAll('.uniform-checkbox');
+    const printBtn = document.getElementById('btnPrintReceipt');
+    const countSpan = document.getElementById('selectedCount');
 
-        function updatePrintButton() {
-            const checkedCount = document.querySelectorAll('.uniform-checkbox:checked').length;
-            countSpan.textContent = checkedCount;
+    // Hàm điều khiển trạng thái nút bấm In và bộ đếm số lượng hàng được tick
+    function updatePrintButton() {
+        const checkedCount = document.querySelectorAll('.uniform-checkbox:checked').length;
+        countSpan.textContent = checkedCount;
 
-            if (checkedCount > 0) {
-                printBtn.removeAttribute('disabled');
-                printBtn.classList.replace('btn-outline-primary', 'btn-primary');
-            } else {
-                printBtn.setAttribute('disabled', 'true');
-                printBtn.classList.replace('btn-primary', 'btn-outline-primary');
-                if(selectAllCheckbox) selectAllCheckbox.checked = false;
-            }
+        if (checkedCount > 0) {
+            printBtn.removeAttribute('disabled');
+            printBtn.classList.replace('btn-outline-primary', 'btn-primary');
+        } else {
+            printBtn.setAttribute('disabled', 'true');
+            printBtn.classList.replace('btn-primary', 'btn-outline-primary');
+            if(selectAllCheckbox) selectAllCheckbox.checked = false;
         }
+    }
 
-        if (selectAllCheckbox) {
-            selectAllCheckbox.addEventListener('change', function () {
-                // Chỉ check những dòng đang hiển thị (được tìm thấy)
-                checkboxes.forEach(cb => {
-                    if (cb.closest('tr').style.display !== 'none') {
-                        cb.checked = this.checked;
-                    }
-                });
-                updatePrintButton();
-            });
-        }
+    // LOGIC CHÍNH: Bật/tắt ô nhập liệu dựa trên việc tích chọn checkbox
+    checkboxes.forEach(cb => {
+        const row = cb.closest('tr');
+        const qtyInput = row.querySelector('.export-quantity-input');
+        // Lấy số lượng tồn kho thực tế của dòng từ cột "Tồn kho thực tế"
+        const currentStock = parseInt(row.querySelector('.target-stock').textContent) || 0;
 
-        checkboxes.forEach(cb => {
-            cb.addEventListener('change', function () {
-                if (!this.checked && selectAllCheckbox) {
-                    selectAllCheckbox.checked = false;
+        cb.addEventListener('change', function() {
+            if (this.checked) {
+                // Nếu tồn kho bằng 0 thì không cho chỉnh sửa và tự bỏ check để tránh lỗi
+                if (currentStock <= 0) {
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'Hết hàng!',
+                        text: 'Mặt hàng này đã hết tồn kho thực tế, không thể xuất!',
+                        confirmButtonColor: '#dc3545'
+                    });
+                    this.checked = false;
+                    return;
                 }
-                updatePrintButton();
-            });
+
+                // Mở khóa ô nhập liệu, đổi màu nền trắng để báo hiệu cho chỉnh sửa
+                qtyInput.removeAttribute('disabled');
+                qtyInput.style.backgroundColor = '#ffffff';
+                qtyInput.setAttribute('name', 'quantity_for_' + this.value);
+            } else {
+                // Khóa lại khi bỏ tích chọn, reset số lượng về 1, đổi nền xám mờ
+                qtyInput.setAttribute('disabled', 'true');
+                qtyInput.style.backgroundColor = '#f8f9fa';
+                qtyInput.value = 1;
+                qtyInput.removeAttribute('name');
+            }
+            updatePrintButton();
+        });
+
+        // Phòng trường hợp người dùng tương tác số lượng khi đang tích
+        qtyInput.addEventListener('input', function() {
+            if(cb.checked) {
+                this.setAttribute('name', 'quantity_for_' + cb.value);
+            }
         });
     });
+
+    // Sự kiện xử lý nút Chọn tất cả (Chỉ kích hoạt ô nhập của những dòng có hàng tồn)
+    if (selectAllCheckbox) {
+        selectAllCheckbox.addEventListener('change', function () {
+            checkboxes.forEach(cb => {
+                if (cb.closest('tr').style.display !== 'none') {
+                    const row = cb.closest('tr');
+                    const currentStock = parseInt(row.querySelector('.target-stock').textContent) || 0;
+                    const qtyInput = row.querySelector('.export-quantity-input');
+
+                    if (currentStock > 0) { // Chỉ chọn những dòng còn hàng
+                        cb.checked = this.checked;
+                        if (this.checked) {
+                            qtyInput.removeAttribute('disabled');
+                            qtyInput.style.backgroundColor = '#ffffff';
+                            qtyInput.setAttribute('name', 'quantity_for_' + cb.value);
+                        } else {
+                            qtyInput.setAttribute('disabled', 'true');
+                            qtyInput.style.backgroundColor = '#f8f9fa';
+                            qtyInput.value = 1;
+                            qtyInput.removeAttribute('name');
+                        }
+                    }
+                }
+            });
+            updatePrintButton();
+        });
+    }
+});
 </script>
 
 <script>
