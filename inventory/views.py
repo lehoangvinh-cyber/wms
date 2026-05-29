@@ -676,56 +676,60 @@ def print_receipt(request):
 @login_required
 def print_uniform_receipt(request):
     if request.method == 'POST':
-        # 1. Lấy danh sách ID và danh sách số lượng được gửi lên từ Form
-        uniform_ids = request.POST.getlist('uniform_ids')
-        quantities = request.POST.getlist('quantities')
+        # 1. Lấy toàn bộ danh sách ID được tick chọn
+        selected_ids = request.POST.getlist('uniform_ids')
 
-        # Tạo một cấu trúc dữ liệu kết hợp {id_san_pham: so_luong_xuat}
-        # Ví dụ: {'5': 2, '8': 1}
-        items_to_export = {}
-        for idx, u_id in enumerate(uniform_ids):
-            try:
-                items_to_export[u_id] = int(quantities[idx])
-            except (IndexError, ValueError):
-                items_to_export[u_id] = 1  # Mặc định là 1 nếu có lỗi
+        if not selected_ids:
+            messages.error(request, "Vui lòng tích chọn ít nhất 1 mặt hàng để in phiếu!")
+            return redirect('dashboard')
 
-        # 2. Sử dụng 'atomic' để đảm bảo an toàn dữ liệu (nếu lỗi 1 mặt hàng thì hủy toàn bộ quy trình)
         try:
             with transaction.atomic():
                 selected_uniforms_data = []
 
-                for u_id, qty in items_to_export.items():
-                    # Lấy sản phẩm ra từ DB
+                for u_id in selected_ids:
                     item = get_object_or_404(Uniform, id=u_id)
 
-                    # Kiểm tra xem kho còn đủ hàng để trừ không
+                    # Tìm đúng ô số lượng xuất tương ứng với ID này được truyền lên
+                    # Bằng cách lấy vị trí cụ thể của hàng dựa vào thuộc tính HTML Form
+                    # Hoặc lấy trực tiếp giá trị số lượng từ request
+                    qty_value = request.POST.get(f'qty_{u_id}')
+                    if not qty_value:
+                        # Fallback nếu gộp form chung: tìm theo thứ tự dòng vật lý
+                        all_ids = request.POST.getlist(
+                            'all_ids_placeholder_if_needed')  # hoặc xử lý loop nhanh bên dưới:
+                        qty_value = 1
+
+                    # Để đơn giản và chính xác tuyệt đối 100% không lệch dòng,
+                    # ta sẽ tinh chỉnh JavaScript ở Bước 3 tự động đổi thuộc tính name của ô nhập liệu khi gõ.
+                    # Cho nên tại Backend, ta chỉ cần gọi trực tiếp name riêng biệt của từng ID:
+                    qty = int(request.POST.get(f'quantity_for_{u_id}', 1))
+
                     if item.quantity < qty:
                         messages.error(request,
-                                       f"Mặt hàng {item.name} không đủ số lượng trong kho! (Tồn: {item.quantity}, Yêu cầu: {qty})")
+                                       f"Mặt hàng {item.name} không đủ tồn kho! (Còn: {item.quantity}, Yêu cầu xuất: {qty})")
                         return redirect('dashboard')
 
-                    # THỰC HIỆN TRỪ SỐ LƯỢNG TỒN KHO TRỰC TIẾP
+                    # THỰC HIỆN TRỪ KHO THỰC TẾ
                     item.quantity -= qty
                     item.save()
 
-                    # Lưu thông tin tạm thời để đẩy sang phôi hiển thị HTML khi in
                     selected_uniforms_data.append({
                         'name': item.name,
                         'sku': item.sku if hasattr(item, 'sku') else item.id,
-                        'size': item.size if hasattr(item, 'size') else 'Free Size',
-                        'export_quantity': qty  # Số lượng đã chọn để xuất
+                        'size': item.size if hasattr(item, 'size') else 'Tự do',
+                        'export_quantity': qty
                     })
 
-                # Trả dữ liệu về trang phôi in
                 context = {
                     'selected_uniforms_data': selected_uniforms_data,
                     'user': request.user,
                 }
-                messages.success(request, f"Đã xuất kho thành công {len(selected_uniforms_data)} mặt hàng!")
+                messages.success(request, f"Đã xuất kho và trừ số lượng thành công!")
                 return render(request, 'print_receipt_template.html', context)
 
         except Exception as e:
-            messages.error(request, f"Có lỗi xảy ra trong quá trình trừ kho: {str(e)}")
+            messages.error(request, f"Lỗi trừ kho: {str(e)}")
             return redirect('dashboard')
 
     return redirect('dashboard')

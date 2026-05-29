@@ -142,41 +142,45 @@
                     </div>
 
                     <table class="table table-hover align-middle mb-0">
-                        <thead>
-                            <tr class="text-uppercase">
-                                <th style="width: 5%;">
-                                    <input type="checkbox" id="selectAllUniforms" class="form-check-input">
-                                </th>
-                                <th style="width: 15%;">Mã VT</th>
-                                <th style="width: 40%;">Loại đồng phục</th>
-                                <th style="width: 20%;" class="text-center">Kích cỡ</th>
-                                <th style="width: 20%;" class="text-center">Tồn kho thực tế</th>
-                            </tr>
-                        </thead>
-                        <tbody id="inventoryTableBody">
-                            {% for item in uniforms %}
-                            <tr>
-                                <td>
-                                    <input type="checkbox" name="uniform_ids" value="{{ item.id }}" class="form-check-input uniform-checkbox">
-                                </td>
-                                <td class="fw-bold text-secondary">{{ item.sku|default:item.id }}</td>
-                                <td class="fw-bold text-primary">{{ item.name }}</td>
-                                <td class="text-center"><span class="badge bg-light text-dark border">{{ item.size }}</span></td>
-                                <td class="text-center fw-bold fs-6">{{ item.quantity }}</td>
-                            </tr>
-                            {% empty %}
-                            <tr>
-                                <td colspan="5">
-                                    <div class="empty-state">
-                                        <i class="bi bi-inbox fs-1 text-light opacity-50 mb-2"></i>
-                                        <p class="mb-0 fw-medium">Chưa có dữ liệu đồng phục trong kho.</p>
-                                        <small>Hãy vào Trang Quản Trị hoặc Nhập Kho để bắt đầu.</small>
-                                    </div>
-                                </td>
-                            </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
+    <thead>
+        <tr class="text-uppercase">
+            <th style="width: 5%;">
+                <input type="checkbox" id="selectAllUniforms" class="form-check-input">
+            </th>
+            <th style="width: 15%;">Mã VT</th>
+            <th style="width: 40%;">Loại đồng phục</th>
+            <th style="width: 15%;" class="text-center">Kích cỡ</th>
+            <th style="width: 15%;" class="text-center">Tồn kho thực tế</th>
+            <th style="width: 10%;" class="text-center">SL Xuất</th>
+        </tr>
+    </thead>
+    <tbody id="inventoryTableBody">
+        {% for item in uniforms %}
+        <tr>
+            <td>
+                <input type="checkbox" name="uniform_ids" value="{{ item.id }}" class="form-check-input uniform-checkbox">
+            </td>
+            <td class="fw-bold text-secondary">{{ item.sku|default:item.id }}</td>
+            <td class="fw-bold text-primary">{{ item.name }}</td>
+            <td class="text-center"><span class="badge bg-light text-dark border">{{ item.size }}</span></td>
+            <td class="text-center fw-bold fs-6 target-stock">{{ item.quantity }}</td>
+
+            <td>
+                <input type="number" name="quantities" value="1" min="1" max="{{ item.quantity }}" class="form-control form-control-sm text-center fw-bold export-quantity-input" style="border-radius: 6px; border: 1px solid #ced4da;">
+            </td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="6">
+                <div class="empty-state">
+                    <i class="bi bi-inbox fs-1 text-light opacity-50 mb-2"></i>
+                    <p class="mb-0 fw-medium">Chưa có dữ liệu đồng phục trong kho.</p>
+                </div>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
                 </div>
             </form>
 
@@ -257,24 +261,44 @@
     document.getElementById('sizeFilter').addEventListener('change', filterTable);
 
     function filterTable() {
-        let searchValue = document.getElementById('searchInput').value.toLowerCase();
-        let sizeValue = document.getElementById('sizeFilter').value.toLowerCase();
-        let rows = document.querySelectorAll('#inventoryTableBody tr');
+    let searchValue = document.getElementById('searchInput').value.toLowerCase();
+    let sizeValue = document.getElementById('sizeFilter').value.toLowerCase();
+    let rows = document.querySelectorAll('#inventoryTableBody tr');
 
-        rows.forEach(row => {
-            if (row.cells.length > 2) {
-                let name = row.cells[2].textContent.toLowerCase();
-                let sku = row.cells[1].textContent.toLowerCase();
-                let size = row.cells[3].textContent.toLowerCase();
+    rows.forEach(row => {
+        if (row.cells.length > 3) {
+            let name = row.cells[2].textContent.toLowerCase();  // Cột Loại ĐP
+            let sku = row.cells[1].textContent.toLowerCase();   // Cột Mã VT
+            let size = row.cells[3].textContent.toLowerCase();  // Cột Kích cỡ
 
-                let matchesSearch = name.includes(searchValue) || sku.includes(searchValue);
-                let matchesSize = sizeValue === "" || size.includes(sizeValue);
+            let matchesSearch = name.includes(searchValue) || sku.includes(searchValue);
+            let matchesSize = sizeValue === "" || size.trim() === sizeValue.trim();
 
-                row.style.display = (matchesSearch && matchesSize) ? '' : 'none';
-            }
-        });
-    }
+            row.style.display = (matchesSearch && matchesSize) ? '' : 'none';
+        }
+    });
+}
+// Thêm đoạn logic gán name thông minh này vào trong sự kiện DOMContentLoaded của bạn
+document.querySelectorAll('.uniform-checkbox').forEach(cb => {
+    const row = cb.closest('tr');
+    const qtyInput = row.querySelector('.export-quantity-input');
 
+    // Tạo cơ chế động: Chỉ khi nào Checkbox được tích, ô nhập số lượng mới được gán tên định danh gửi lên Server
+    cb.addEventListener('change', function() {
+        if(this.checked) {
+            qtyInput.setAttribute('name', 'quantity_for_' + this.value);
+        } else {
+            qtyInput.removeAttribute('name');
+        }
+    });
+
+    // Phòng trường hợp người dùng chỉnh số lượng trước khi tích checkbox
+    qtyInput.addEventListener('input', function() {
+        if(row.querySelector('.uniform-checkbox').checked) {
+            this.setAttribute('name', 'quantity_for_' + row.querySelector('.uniform-checkbox').value);
+        }
+    });
+});
     // THÊM MỚI: JAVASCRIPT ĐIỀU KHIỂN ĐẾM VÀ BẬT/TẮT NÚT IN PHIẾU
     document.addEventListener('DOMContentLoaded', function () {
         const selectAllCheckbox = document.getElementById('selectAllUniforms');
