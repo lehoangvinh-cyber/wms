@@ -120,15 +120,15 @@
         <td class="text-center">{{ item.position }}</td>
 
         <td class="text-center fw-bold">
-            {% if 'xanh' in item.uniform.name|lower %}{{ item.quantity }}{% endif %}
+            {% if item.qty_xanh > 0 %}{{ item.qty_xanh }}{% endif %}
         </td>
 
         <td class="text-center fw-bold">
-            {% if 'trắng' in item.uniform.name|lower or 'rap' in item.uniform.name|lower %}{{ item.quantity }}{% endif %}
+            {% if item.qty_trang > 0 %}{{ item.qty_trang }}{% endif %}
         </td>
 
-        <td class="text-center"><span class="border px-2 py-1">{{ item.uniform.size }}</span></td>
-        <td></td> <td>{{ item.note|default_if_none:"" }}</td>
+        <td class="text-center"><span class="border px-2 py-1">{{ item.size }}</span></td>
+        <td></td> <td>{{ item.note }}</td>
     </tr>
     {% empty %}
     <tr>

@@ -665,28 +665,61 @@ def audit_log(request):
     return render(request, 'audit_log.html', {'page_obj': Paginator(logs_list, 30).get_page(request.GET.get('page'))})
 
 
+from django.shortcuts import render
+
+
+# Nhớ đảm bảo đã import StaffDebt ở đầu file nhé
+
 @login_required
 def print_receipt(request):
-    # 1. Hứng danh sách ID từ URL (Ví dụ: ?ids=1,3,5)
     ids_str = request.GET.get('ids', '')
-    items = []
-    co_so = "...................................."  # Mặc định là dấu chấm
+
+    # Dùng Dictionary để gom nhóm dữ liệu theo Tên nhân viên
+    grouped_items = {}
+
 
     if ids_str:
-        # Tách chuỗi thành mảng các ID
         id_list = ids_str.split(',')
-
-        # 2. Truy vấn dữ liệu từ Database
-        # ⚠️ LƯU Ý: Đổi 'Tên_Model_Của_Bạn' thành model lưu bảng cấp phát (ví dụ: StaffDebt, Distribution...)
         items = StaffDebt.objects.filter(id__in=id_list)
 
-        # 3. Lấy tên Cơ sở của người đầu tiên để tự động điền lên đầu phiếu
         if items.exists():
             co_so = items.first().branch
 
-    # 4. Gửi dữ liệu ra file HTML phôi in
+        # Bắt đầu vòng lặp gom nhóm
+        for item in items:
+            name = item.employee_name
+
+            # Nếu tên nhân viên chưa có trong danh sách gom, thì tạo mới
+            if name not in grouped_items:
+                grouped_items[name] = {
+                    'employee_name': name,
+                    'position': item.position,
+                    'qty_xanh': 0,
+                    'qty_trang': 0,
+                    'size': item.uniform.size,
+                    'note': item.note or ""
+                }
+            else:
+                # Nếu đã có tên rồi, kiểm tra xem size có khác không để gộp chuỗi (VD: "S, M")
+                if item.uniform.size not in grouped_items[name]['size']:
+                    grouped_items[name]['size'] += f", {item.uniform.size}"
+
+                # Gộp ghi chú nếu có
+                if item.note and item.note not in grouped_items[name]['note']:
+                    grouped_items[name]['note'] += f" {item.note}"
+
+            # Phân loại và cộng dồn số lượng áo dựa vào tên đồng phục
+            uniform_name = item.uniform.name.lower()
+            if 'xanh' in uniform_name:
+                grouped_items[name]['qty_xanh'] += item.quantity
+            elif 'trắng' in uniform_name or 'rap' in uniform_name:
+                grouped_items[name]['qty_trang'] += item.quantity
+
+    # Chuyển Dictionary thành dạng List (danh sách) để đẩy ra HTML dễ dàng
+    final_items = list(grouped_items.values())
+
     return render(request, 'print_receipt.html', {
-        'items': items,
+        'items': final_items,
         'co_so': co_so
     })
 
