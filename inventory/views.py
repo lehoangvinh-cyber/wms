@@ -665,12 +665,30 @@ def audit_log(request):
     return render(request, 'audit_log.html', {'page_obj': Paginator(logs_list, 30).get_page(request.GET.get('page'))})
 
 
-@login_required(login_url='login')
+@login_required
 def print_receipt(request):
-    if not request.user.is_superuser:
-        return redirect('dashboard')
-    # ... logic in phiếu
-    return render(request, 'print_receipt.html', {})
+    # 1. Hứng danh sách ID từ URL (Ví dụ: ?ids=1,3,5)
+    ids_str = request.GET.get('ids', '')
+    items = []
+    co_so = "...................................."  # Mặc định là dấu chấm
+
+    if ids_str:
+        # Tách chuỗi thành mảng các ID
+        id_list = ids_str.split(',')
+
+        # 2. Truy vấn dữ liệu từ Database
+        # ⚠️ LƯU Ý: Đổi 'Tên_Model_Của_Bạn' thành model lưu bảng cấp phát (ví dụ: StaffDebt, Distribution...)
+        items = Tên_Model_Của_Bạn.objects.filter(id__in=id_list)
+
+        # 3. Lấy tên Cơ sở của người đầu tiên để tự động điền lên đầu phiếu
+        if items.exists():
+            co_so = items.first().branch
+
+    # 4. Gửi dữ liệu ra file HTML phôi in
+    return render(request, 'tên_thư_mục/print_receipt.html', {
+        'items': items,
+        'co_so': co_so
+    })
 
 
 @login_required
