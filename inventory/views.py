@@ -678,14 +678,14 @@ def print_receipt(request):
 
         # 2. Truy vấn dữ liệu từ Database
         # ⚠️ LƯU Ý: Đổi 'Tên_Model_Của_Bạn' thành model lưu bảng cấp phát (ví dụ: StaffDebt, Distribution...)
-        items = Tên_Model_Của_Bạn.objects.filter(id__in=id_list)
+        items = StaffDebt.objects.filter(id__in=id_list)
 
         # 3. Lấy tên Cơ sở của người đầu tiên để tự động điền lên đầu phiếu
         if items.exists():
             co_so = items.first().branch
 
     # 4. Gửi dữ liệu ra file HTML phôi in
-    return render(request, 'tên_thư_mục/print_receipt.html', {
+    return render(request, 'print_receipt.html', {
         'items': items,
         'co_so': co_so
     })
