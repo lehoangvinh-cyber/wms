@@ -171,7 +171,12 @@
                                 data-bs-target="#editDistributionModal"
                                 data-id="{{ d.id }}"
                                 data-name="{{ d.employee_name }}"
+                                data-position="{{ d.position }}"
+                                data-gender="{{ d.gender }}"
+                                data-uniform="{{ d.uniform.id }}"
                                 data-qty="{{ d.quantity }}"
+                                data-date="{{ d.issue_date|date:'Y-m-d' }}"
+                                data-branch="{{ d.branch }}"
                                 data-note="{{ d.note|default_if_none:'' }}">
                             <i class="bi bi-pencil"></i>
                         </button>
@@ -239,25 +244,56 @@
 </div>
 
 <div class="modal fade" id="editDistributionModal" tabindex="-1">
-    <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
         <form id="editDistributionForm" method="POST" action="" class="modal-content">
             {% csrf_token %}
             <div class="modal-header bg-light">
-                <h5 class="modal-title fw-bold">Chỉnh sửa thông tin cấp phát</h5>
+                <h5 class="modal-title fw-bold">Chỉnh sửa toàn bộ thông tin</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body">
-                <div class="mb-3">
-                    <label class="form-label text-secondary small">Tên nhân viên</label>
-                    <input type="text" id="edit-emp-name" class="form-control bg-light" readonly>
-                </div>
-                <div class="mb-3">
-                    <label class="form-label text-secondary small">Số lượng</label>
-                    <input type="number" name="quantity" id="edit-qty" class="form-control" min="1" required>
-                </div>
-                <div class="mb-3">
-                    <label class="form-label text-secondary small">Ghi chú</label>
-                    <textarea name="note" id="edit-note" class="form-control" rows="2"></textarea>
+                <div class="row g-3">
+                    <div class="col-md-4">
+                        <label class="form-label text-secondary small">Tên nhân viên</label>
+                        <input type="text" name="employee_name" id="edit-emp-name" class="form-control" required>
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label text-secondary small">Chức vụ</label>
+                        <input type="text" name="position" id="edit-position" class="form-control" required>
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label text-secondary small">Giới tính</label>
+                        <select name="gender" id="edit-gender" class="form-select" required>
+                            <option value="Nữ">Nữ</option>
+                            <option value="Nam">Nam</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="form-label text-secondary small">Sản phẩm</label>
+                        <select name="uniform" id="edit-uniform" class="form-select" required>
+                            {% for u in uniforms %}
+                                <option value="{{ u.id }}">{{ u.name }} - Size: {{ u.size }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label text-secondary small">Số lượng</label>
+                        <input type="number" name="quantity" id="edit-qty" class="form-control" min="1" required>
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label text-secondary small">Ngày xuất</label>
+                        <input type="date" name="issue_date" id="edit-date" class="form-control" required>
+                    </div>
+
+                    <div class="col-md-4">
+                        <label class="form-label text-secondary small">Cơ sở</label>
+                        <input type="text" name="branch" id="edit-branch" class="form-control" required>
+                    </div>
+                    <div class="col-md-8">
+                        <label class="form-label text-secondary small">Ghi chú</label>
+                        <input type="text" name="note" id="edit-note" class="form-control">
+                    </div>
                 </div>
             </div>
             <div class="modal-footer">
@@ -274,33 +310,35 @@
 
 <script>
     $(document).ready(function() {
-        // 1. Khởi tạo ô tìm kiếm Select2
+        // Khởi tạo Select2 cho thanh tìm kiếm
         $('#searchableSelect').select2({ placeholder: "Gõ để tìm kiếm đồng phục...", allowClear: true, width: '100%' });
 
-        // 2. Tính năng tick "Chọn tất cả"
+        // Tính năng tick "Chọn tất cả"
         $('#selectAll').click(function() {
             $('.row-checkbox').prop('checked', this.checked);
         });
 
-        // 3. Bắt sự kiện click vào nút Sửa để hiện Modal
+        // Bắt sự kiện click vào nút Sửa để hiện Modal và điền dữ liệu
         $('.btn-edit-modal').click(function() {
             let itemId = $(this).data('id');
-            let empName = $(this).data('name');
-            let qty = $(this).data('qty');
-            let note = $(this).data('note');
 
-            // Điền dữ liệu vào form
-            $('#edit-emp-name').val(empName);
-            $('#edit-qty').val(qty);
-            $('#edit-note').val(note);
+            // Lấy dữ liệu
+            $('#edit-emp-name').val($(this).data('name'));
+            $('#edit-position').val($(this).data('position'));
+            $('#edit-gender').val($(this).data('gender'));
+            $('#edit-uniform').val($(this).data('uniform'));
+            $('#edit-qty').val($(this).data('qty'));
+            $('#edit-date').val($(this).data('date'));
+            $('#edit-branch').val($(this).data('branch'));
+            $('#edit-note').val($(this).data('note'));
 
-            // Cập nhật URL Submit Form
+            // Cập nhật URL Submit Form động dựa vào ID của dòng
             let baseUrl = "{% url 'edit_staff_debt' 12345 %}".replace(/12345/, itemId);
             $('#editDistributionForm').attr('action', baseUrl);
         });
     });
 
-    // 4. Tính năng In Phiếu
+    // Tính năng gom ID để in phiếu
     function printSelected() {
         var selectedIds = [];
         $('.row-checkbox:checked').each(function() {
