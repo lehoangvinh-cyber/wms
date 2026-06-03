@@ -166,14 +166,13 @@
                     </td>
 
                     <td class="text-center align-middle text-nowrap">
-                        <button type="button" class="btn btn-sm btn-outline-primary py-0 px-2 rounded-pill mb-1"
+                        <button type="button" class="btn btn-sm btn-outline-primary py-0 px-2 rounded-pill mb-1 btn-edit-modal"
         data-bs-toggle="modal"
         data-bs-target="#editDistributionModal"
         data-id="{{ d.id }}"
         data-name="{{ d.employee_name }}"
         data-qty="{{ d.quantity }}"
-        data-note="{{ d.note|default_if_none:'' }}"
-        onclick="loadEditData(this)">
+        data-note="{{ d.note|default_if_none:'' }}">
     <i class="bi bi-pencil"></i>
 </button>
                         <a href="{% url 'delete_staff_debt' d.id %}" class="btn btn-sm btn-outline-dark py-0 px-2 rounded-pill mb-1" onclick="return confirm('Xóa vĩnh viễn dòng này?');"><i class="bi bi-trash"></i></a>
@@ -295,23 +294,51 @@
         window.open(url, '_blank');
 
     }
-    function loadEditData(button) {
-        const itemId = button.getAttribute('data-id');
-        const empName = button.getAttribute('data-name');
-        const qty = button.getAttribute('data-qty');
-        const note = button.getAttribute('data-note');
 
-        // Gán dữ liệu vào các ô Input
-        document.getElementById('edit-emp-name').value = empName || '';
-        document.getElementById('edit-qty').value = qty || 1;
-        document.getElementById('edit-note').value = note || '';
+</script>
+<script>
+    $(document).ready(function() {
+        // Khởi tạo ô tìm kiếm Select2 (Đang có sẵn)
+        $('#searchableSelect').select2({ placeholder: "Gõ để tìm kiếm đồng phục...", allowClear: true, width: '100%' });
 
-        // Tạo URL động an toàn trỏ về view 'edit_staff_debt' của Django
-        let baseUrl = "{% url 'edit_staff_debt' 0 %}";
-        const form = document.getElementById('editDistributionForm');
-        form.action = baseUrl.replace('/0/', '/' + itemId + '/');
+        // Tính năng tick "Chọn tất cả" (Đang có sẵn)
+        $('#selectAll').click(function() {
+            $('.row-checkbox').prop('checked', this.checked);
+        });
+
+        // 🟢 THÊM MỚI: BẮT SỰ KIỆN CLICK NÚT SỬA BẰNG JQUERY
+        $('.btn-edit-modal').click(function() {
+            // Hút dữ liệu
+            let itemId = $(this).data('id');
+            let empName = $(this).data('name');
+            let qty = $(this).data('qty');
+            let note = $(this).data('note');
+
+            // Bắn dữ liệu vào Modal
+            $('#edit-emp-name').val(empName);
+            $('#edit-qty').val(qty);
+            $('#edit-note').val(note);
+
+            // Cập nhật đường dẫn URL Form (Dùng số 12345 làm mồi nhử rồi thay thế)
+            let baseUrl = "{% url 'edit_staff_debt' 12345 %}".replace(/12345/, itemId);
+            $('#editDistributionForm').attr('action', baseUrl);
+        });
+    });
+
+    // Hàm In Phiếu của bạn (Giữ nguyên)
+    function printSelected() {
+        var selectedIds = [];
+        $('.row-checkbox:checked').each(function() {
+            selectedIds.push($(this).val());
+        });
+
+        if (selectedIds.length === 0) {
+            alert('Vui lòng tick chọn ít nhất 1 nhân viên để in phiếu!');
+            return;
+        }
+        var url = "{% url 'print_receipt' %}?ids=" + selectedIds.join(',');
+        window.open(url, '_blank');
     }
 </script>
-
 </body>
 </html>
