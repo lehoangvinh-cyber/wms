@@ -166,7 +166,16 @@
                     </td>
 
                     <td class="text-center align-middle text-nowrap">
-                        <a href="{% url 'edit_staff_debt' d.id %}" class="btn btn-sm btn-outline-primary py-0 px-2 rounded-pill mb-1"><i class="bi bi-pencil"></i></a>
+                        <button type="button" class="btn btn-sm btn-outline-primary py-0 px-2 rounded-pill mb-1"
+        data-bs-toggle="modal"
+        data-bs-target="#editDistributionModal"
+        data-id="{{ d.id }}"
+        data-name="{{ d.employee_name }}"
+        data-qty="{{ d.quantity }}"
+        data-note="{{ d.note|default_if_none:'' }}"
+        onclick="loadEditData(this)">
+    <i class="bi bi-pencil"></i>
+</button>
                         <a href="{% url 'delete_staff_debt' d.id %}" class="btn btn-sm btn-outline-dark py-0 px-2 rounded-pill mb-1" onclick="return confirm('Xóa vĩnh viễn dòng này?');"><i class="bi bi-trash"></i></a>
                     </td>
                 </tr> {% empty %}
@@ -212,6 +221,35 @@
 </footer>
 
 <div class="modal fade" id="importModal" tabindex="-1">
+    <div class="modal fade" id="editDistributionModal" tabindex="-1">
+    <div class="modal-dialog">
+        <form id="editDistributionForm" method="POST" action="" class="modal-content">
+            {% csrf_token %}
+            <div class="modal-header bg-light">
+                <h5 class="modal-title fw-bold">Chỉnh sửa thông tin cấp phát</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-3">
+                    <label class="form-label text-secondary small">Tên nhân viên</label>
+                    <input type="text" id="edit-emp-name" class="form-control bg-light" readonly>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label text-secondary small">Số lượng</label>
+                    <input type="number" name="quantity" id="edit-qty" class="form-control" min="1" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label text-secondary small">Ghi chú</label>
+                    <textarea name="note" id="edit-note" class="form-control" rows="2"></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                <button type="submit" class="btn btn-primary">Lưu thay đổi</button>
+            </div>
+        </form>
+    </div>
+</div>
     <div class="modal-dialog">
         <form action="{% url 'import_staff_debt_excel' %}" method="POST" enctype="multipart/form-data" class="modal-content">
             {% csrf_token %}
@@ -255,6 +293,23 @@
         var url = "{% url 'print_receipt' %}?ids=" + selectedIds.join(',');
 
         window.open(url, '_blank');
+
+    }
+    function loadEditData(button) {
+        const itemId = button.getAttribute('data-id');
+        const empName = button.getAttribute('data-name');
+        const qty = button.getAttribute('data-qty');
+        const note = button.getAttribute('data-note');
+
+        // Gán dữ liệu vào các ô Input
+        document.getElementById('edit-emp-name').value = empName || '';
+        document.getElementById('edit-qty').value = qty || 1;
+        document.getElementById('edit-note').value = note || '';
+
+        // Tạo URL động an toàn trỏ về view 'edit_staff_debt' của Django
+        let baseUrl = "{% url 'edit_staff_debt' 0 %}";
+        const form = document.getElementById('editDistributionForm');
+        form.action = baseUrl.replace('/0/', '/' + itemId + '/');
     }
 </script>
 
