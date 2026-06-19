@@ -355,23 +355,76 @@ def import_debt_excel(request):
         return redirect('debt_list')
 
     if request.method == 'POST' and request.FILES.get('excel_file'):
+        # 🟢 1. BẮT TÍN HIỆU TỪ CHECKBOX XÓA DỮ LIỆU CŨ
+        clear_data = request.POST.get('clear_old_data')
+        if clear_data == 'yes':
+            Debt.objects.all().delete()  # Xóa sạch toàn bộ dữ liệu nợ cũ
+
         try:
             wb = openpyxl.load_workbook(request.FILES['excel_file'], data_only=True)
             sheet = wb.active
+
             success_count = 0
+            skip_count = 0  # Biến đếm số dòng bị trùng lặp
+
             for row in sheet.iter_rows(min_row=2, values_only=True):
-                if not row[0] or not row[2]: continue
-                uniform = Uniform.objects.filter(name__icontains=str(row[2]).strip()).first()
+                if not row[0] or not row[2]:
+                    continue
+
+                # Trích xuất dữ liệu
+                branch_name = str(row[0]).strip()
+                uniform_name = str(row[2]).strip()
+                quantity_val = int(row[4] or 1)
+                student_name = str(row[5]).strip() if row[5] else ""
+
+                uniform = Uniform.objects.filter(name__icontains=uniform_name).first()
+
                 if uniform:
-                    Debt.objects.create(branch=str(row[0]).strip(), request_date=timezone.now().date(), uniform=uniform,
-                                        quantity=int(row[4] or 1), student_name=str(row[5]).strip())
-                    success_count += 1
-            if success_count > 0:
-                ActionLog.objects.create(user=request.user, action="IMPORT NỢ HS",
-                                         description=f"Import {success_count} dòng nợ mới.")
-                messages.success(request, f"Nhập thành công {success_count} dòng!")
+                    # 🟢 2. LOGIC CHỐNG TRÙNG LẶP
+                    # Kiểm tra xem Học sinh này ở Cơ sở này đã nợ Món đồ này chưa
+                    is_exist = Debt.objects.filter(
+                        branch=branch_name,
+                        student_name=student_name,
+                        uniform=uniform
+                    ).exists()
+
+                    if not is_exist:
+                        # Nếu CHƯA CÓ -> Tạo mới
+                        Debt.objects.create(
+                            branch=branch_name,
+                            request_date=timezone.now().date(),
+                            uniform=uniform,
+                            quantity=quantity_val,
+                            student_name=student_name
+                        )
+                        success_count += 1
+                    else:
+                        # Nếu ĐÃ CÓ -> Bỏ qua, tăng biến đếm
+                        skip_count += 1
+
+            # 🟢 3. GHI LOG VÀ THÔNG BÁO THÔNG MINH
+            if success_count > 0 or clear_data == 'yes':
+                action_desc = f"Import {success_count} dòng nợ mới."
+                if clear_data == 'yes':
+                    action_desc = "XÓA DỮ LIỆU CŨ và " + action_desc
+
+                ActionLog.objects.create(
+                    user=request.user,
+                    action="IMPORT NỢ HS",
+                    description=action_desc
+                )
+
+            # Trả về thông báo cho người dùng
+            if clear_data == 'yes':
+                messages.success(request,
+                                 f"Đã dọn sạch dữ liệu cũ! Import thành công {success_count} dòng mới. Bỏ qua {skip_count} dòng trùng.")
+            else:
+                messages.success(request,
+                                 f"Nhập thành công {success_count} dòng! Bỏ qua {skip_count} dòng bị trùng lặp.")
+
         except Exception as e:
             messages.error(request, f"Lỗi đọc file: {str(e)}")
+
     return redirect('debt_list')
 
 
