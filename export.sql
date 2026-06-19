@@ -1625,7 +1625,7 @@ CREATE TABLE `socialaccount_socialaccount` (
 
 LOCK TABLES `socialaccount_socialaccount` WRITE;
 /*!40000 ALTER TABLE `socialaccount_socialaccount` DISABLE KEYS */;
-INSERT INTO `socialaccount_socialaccount` VALUES (1,'google','114187649702992810872','2026-05-27 04:51:57.507709','2026-05-27 04:49:36.310084','{\"aud\": \"764671171591-8j3leuht5alh0lsp9tdaoe48dc0k20rs.apps.googleusercontent.com\", \"azp\": \"764671171591-8j3leuht5alh0lsp9tdaoe48dc0k20rs.apps.googleusercontent.com\", \"exp\": 1779861117, \"iat\": 1779857517, \"iss\": \"https://accounts.google.com\", \"sub\": \"114187649702992810872\", \"name\": \"Vinh\", \"email\": \"vinh20002000@gmail.com\", \"at_hash\": \"lEboJNN74MnSaQL4pPAGtg\", \"picture\": \"https://lh3.googleusercontent.com/a/ACg8ocKEOcivOlk5hNmZvAvyjmht5O813jQh8zy7B_xcvDSJYy3SryxI=s96-c\", \"given_name\": \"Vinh\", \"email_verified\": true}',8);
+INSERT INTO `socialaccount_socialaccount` VALUES (1,'google','114187649702992810872','2026-05-27 04:51:57.507709','2026-05-27 04:49:36.310084','{\"aud\": \"764671171591-.apps.googleusercontent.com\", \"azp\": \"764671171591-8j3leuht5alh0lsp9tdaoe48dc0k20rs.apps.googleusercontent.com\", \"exp\": 1779861117, \"iat\": 1779857517, \"iss\": \"https://accounts.google.com\", \"sub\": \"114187649702992810872\", \"name\": \"Vinh\", \"email\": \"vinh20002000@gmail.com\", \"at_hash\": \"lEboJNN74MnSaQL4pPAGtg\", \"picture\": \"https://lh3.googleusercontent.com/a/ACg8ocKEOcivOlk5hNmZvAvyjmht5O813jQh8zy7B_xcvDSJYy3SryxI=s96-c\", \"given_name\": \"Vinh\", \"email_verified\": true}',8);
 /*!40000 ALTER TABLE `socialaccount_socialaccount` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1655,7 +1655,7 @@ CREATE TABLE `socialaccount_socialapp` (
 
 LOCK TABLES `socialaccount_socialapp` WRITE;
 /*!40000 ALTER TABLE `socialaccount_socialapp` DISABLE KEYS */;
-INSERT INTO `socialaccount_socialapp` VALUES (1,'google','Google Login','764671171591-8j3leuht5alh0lsp9tdaoe48dc0k20rs.apps.googleusercontent.com','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','','','{}');
+INSERT INTO `socialaccount_socialapp` VALUES (1,'google','Google Login','764671171591-.apps.googleusercontent.com','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','','','{}');
 /*!40000 ALTER TABLE `socialaccount_socialapp` ENABLE KEYS */;
 UNLOCK TABLES;
 
