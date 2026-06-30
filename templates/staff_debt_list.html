@@ -69,32 +69,76 @@
     <div class="card mb-4 border-0 shadow-sm bg-white">
         <div class="card-body">
             <h6 class="fw-bold mb-3 text-primary"><i class="bi bi-plus-circle-fill me-2"></i>CẤP PHÁT MỚI</h6>
-            <form method="POST">
+            <form method="POST" id="issueForm">
                 {% csrf_token %}
-                <div class="row g-2 align-items-center">
-                    <div class="col-md-2"><input type="text" name="employee_name" class="form-control" placeholder="Tên nhân viên" required></div>
-                    <div class="col-md-2"><input type="text" name="position" class="form-control" placeholder="Chức vụ (GVTA, HCNS...)" required></div>
-                    <div class="col-md-1">
+                <div class="row g-2 mb-2">
+                    <div class="col-md-3">
+                        <label class="form-label small fw-bold mb-1 text-muted">Nhân viên <span class="text-danger">*</span></label>
+                        <input type="text" name="employee_name" class="form-control" placeholder="Tên nhân viên" required autofocus>
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label small fw-bold mb-1 text-muted">Chức vụ <span class="text-danger">*</span></label>
+                        <input type="text" name="position" class="form-control" placeholder="VD: GV, HCNS" list="positionList" required>
+                        <datalist id="positionList">
+                            {% for p in unique_positions %}<option value="{{ p }}">{% endfor %}
+                        </datalist>
+                    </div>
+                    <div class="col-md-2">
+                        <label class="form-label small fw-bold mb-1 text-muted">Giới tính <span class="text-danger">*</span></label>
                         <select name="gender" class="form-select" required>
                             <option value="Nữ">Nữ</option>
                             <option value="Nam">Nam</option>
                         </select>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-4">
+                        <label class="form-label small fw-bold mb-1 text-muted">Cơ sở <span class="text-danger">*</span></label>
+                        <input type="text" name="branch" id="branchInput" class="form-control" placeholder="VD: New City" list="branchList" required>
+                        <datalist id="branchList">
+                            {% for b in unique_branches %}<option value="{{ b }}">{% endfor %}
+                        </datalist>
+                    </div>
+                </div>
+
+                <div class="row g-2">
+                    <div class="col-md-4">
+                        <label class="form-label small fw-bold mb-1 text-muted">Sản phẩm <span class="text-danger">*</span></label>
                         <select name="uniform" id="searchableSelect" class="form-select" required>
-                            <option value="" disabled selected>Chọn sản phẩm...</option>
+                            <option value="" disabled selected>Gõ tìm đồng phục...</option>
                             {% for u in uniforms %}<option value="{{ u.id }}">{{ u.name }} - Size: {{ u.size }}</option>{% endfor %}
                         </select>
                     </div>
-                    <div class="col-md-1"><input type="number" name="quantity" class="form-control" value="1" min="1"></div>
-                    <div class="col-md-2"><input type="date" name="issue_date" class="form-control" value="{% now 'Y-m-d' %}" title="Ngày xuất"></div>
-                </div>
-                <div class="row g-2 mt-1">
-                    <div class="col-md-3"><input type="text" name="branch" class="form-control" placeholder="Cơ sở (Ví dụ: New City)" required></div>
-                    <div class="col-md-7"><input type="text" name="note" class="form-control" placeholder="Ghi chú thêm..."></div>
-                    <div class="col-md-2"><button type="submit" class="btn btn-primary w-100 fw-bold"><i class="bi bi-save me-1"></i> LƯU DỮ LIỆU</button></div>
+                    <div class="col-md-2">
+                        <label class="form-label small fw-bold mb-1 text-muted">Số lượng <span class="text-danger">*</span></label>
+                        <input type="number" name="quantity" class="form-control" value="1" min="1" required>
+                    </div>
+                    <div class="col-md-2">
+                        <label class="form-label small fw-bold mb-1 text-muted">Ngày xuất <span class="text-danger">*</span></label>
+                        <input type="date" name="issue_date" id="issue_date" class="form-control" value="{% now 'Y-m-d' %}" required>
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label small fw-bold mb-1 text-muted">Ghi chú</label>
+                        <div class="d-flex gap-2">
+                            <input type="text" name="note" class="form-control" placeholder="Ghi chú thêm...">
+                            <button type="submit" class="btn btn-primary fw-bold text-nowrap"><i class="bi bi-save me-1"></i> LƯU</button>
+                        </div>
+                    </div>
                 </div>
             </form>
+            <script>
+                // Ghi nhớ Cơ sở và Ngày xuất sau khi submit để nhập liệu nhanh hơn
+                document.addEventListener("DOMContentLoaded", function() {
+                    const branchInput = document.getElementById("branchInput");
+                    const dateInput = document.getElementById("issue_date");
+                    
+                    if(localStorage.getItem("last_branch")) branchInput.value = localStorage.getItem("last_branch");
+                    if(localStorage.getItem("last_issue_date")) dateInput.value = localStorage.getItem("last_issue_date");
+
+                    document.getElementById("issueForm").addEventListener("submit", function() {
+                        localStorage.setItem("last_branch", branchInput.value);
+                        localStorage.setItem("last_issue_date", dateInput.value);
+                    });
+                });
+            </script>
         </div>
     </div>
 
