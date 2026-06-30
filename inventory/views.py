@@ -679,6 +679,21 @@ def import_staff_debt_excel(request):
             success_count = 0
             error_count = 0
 
+            from datetime import datetime
+            
+            def parse_excel_date(val):
+                if not val or str(val).strip() in ['-', '---', '']:
+                    return None
+                if isinstance(val, datetime):
+                    return val.date()
+                val = str(val).strip()
+                for fmt in ['%d/%m/%Y', '%Y-%m-%d', '%d-%m-%Y']:
+                    try:
+                        return datetime.strptime(val, fmt).date()
+                    except ValueError:
+                        pass
+                return None
+
             # Vòng lặp đọc từ dòng thứ 2 (bỏ qua hàng tiêu đề)
             for row in sheet.iter_rows(min_row=2, values_only=True):
                 # Nếu dòng đó trống rỗng (không có tên nhân viên) thì bỏ qua
@@ -686,15 +701,29 @@ def import_staff_debt_excel(request):
                     continue
 
                 ten_nhan_vien = str(row[1]).strip()
-                chuc_vu = str(row[2]).strip() if row[2] else ''
-                gioi_tinh = str(row[3]).strip() if row[3] in ['Nam', 'Nữ'] else 'Nam'
-                ten_san_pham = str(row[4]).strip()
-                so_luong = int(row[6]) if row[6] else 1
-                co_so = str(row[9]).strip() if row[9] else ''
-                ghi_chu = str(row[10]).strip() if row[10] else ''
+                chuc_vu = str(row[2]).strip() if len(row) > 2 and row[2] else ''
+                gioi_tinh = str(row[3]).strip() if len(row) > 3 and row[3] in ['Nam', 'Nữ'] else 'Nam'
+                ten_san_pham = str(row[4]).strip() if len(row) > 4 and row[4] else ''
+                kich_co = str(row[5]).strip() if len(row) > 5 and row[5] else 'Free Size'
+                so_luong = int(row[6]) if len(row) > 6 and row[6] else 1
+                
+                ngay_xuat = row[7] if len(row) > 7 else None
+                issue_date = parse_excel_date(ngay_xuat) or timezone.now().date()
+                
+                ngay_tra = row[8] if len(row) > 8 else None
+                return_date = parse_excel_date(ngay_tra)
+                
+                co_so = str(row[9]).strip() if len(row) > 9 and row[9] else ''
+                ghi_chu = str(row[10]).strip() if len(row) > 10 and row[10] else ''
+                
+                trang_thai = str(row[11]).strip().lower() if len(row) > 11 and row[11] else ''
+                is_resolved = 'đủ' in trang_thai or 'trả' in trang_thai
 
-                # Tìm kiếm sản phẩm trong kho bằng tên (không phân biệt hoa thường)
-                uniform_obj = Uniform.objects.filter(name__icontains=ten_san_pham).first()
+                # Tìm kiếm sản phẩm trong kho bằng tên và kích cỡ
+                uniform_obj = Uniform.objects.filter(name__icontains=ten_san_pham, size__iexact=kich_co).first()
+                if not uniform_obj:
+                    # Fallback tìm bằng tên nếu không khớp size
+                    uniform_obj = Uniform.objects.filter(name__icontains=ten_san_pham).first()
 
                 if uniform_obj:
                     # Tạo bản ghi cấp phát mới
@@ -704,9 +733,11 @@ def import_staff_debt_excel(request):
                         gender=gioi_tinh,
                         uniform=uniform_obj,
                         quantity=so_luong,
-                        issue_date=timezone.now().date(),  # Mặc định lấy ngày import làm ngày xuất
+                        issue_date=issue_date,
+                        return_date=return_date,
                         branch=co_so,
-                        note=ghi_chu
+                        note=ghi_chu,
+                        is_resolved=is_resolved
                     )
                     success_count += 1
                 else:
