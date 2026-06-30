@@ -119,17 +119,35 @@
                         <input class="form-check-input border-secondary shadow-sm" type="checkbox" id="selectAll">
                     </th>
                     <th style="width: 50px;">STT</th>
-                    <th class="text-start">Tên nhân viên</th>
-                    <th>Chức vụ</th>
-                    <th>Giới tính</th>
-                    <th class="text-start">Tên sản phẩm</th>
-                    <th>Kích cỡ</th>
-                    <th>SL</th>
+                    <th class="text-start">
+                        <a href="?sort={% if sort_param == 'employee_name' %}-employee_name{% else %}employee_name{% endif %}&search={{ search_query }}&position={{ filter_role }}&branch={{ filter_branch }}" class="text-dark text-decoration-none d-block">Tên nhân viên {% if sort_param == 'employee_name' %}&uarr;{% elif sort_param == '-employee_name' %}&darr;{% endif %}</a>
+                    </th>
+                    <th>
+                        <a href="?sort={% if sort_param == 'position' %}-position{% else %}position{% endif %}&search={{ search_query }}&position={{ filter_role }}&branch={{ filter_branch }}" class="text-dark text-decoration-none d-block">Chức vụ {% if sort_param == 'position' %}&uarr;{% elif sort_param == '-position' %}&darr;{% endif %}</a>
+                    </th>
+                    <th>
+                        <a href="?sort={% if sort_param == 'gender' %}-gender{% else %}gender{% endif %}&search={{ search_query }}&position={{ filter_role }}&branch={{ filter_branch }}" class="text-dark text-decoration-none d-block">Giới tính {% if sort_param == 'gender' %}&uarr;{% elif sort_param == '-gender' %}&darr;{% endif %}</a>
+                    </th>
+                    <th class="text-start">
+                        <a href="?sort={% if sort_param == 'uniform__name' %}-uniform__name{% else %}uniform__name{% endif %}&search={{ search_query }}&position={{ filter_role }}&branch={{ filter_branch }}" class="text-dark text-decoration-none d-block">Tên sản phẩm {% if sort_param == 'uniform__name' %}&uarr;{% elif sort_param == '-uniform__name' %}&darr;{% endif %}</a>
+                    </th>
+                    <th>
+                        <a href="?sort={% if sort_param == 'uniform__size' %}-uniform__size{% else %}uniform__size{% endif %}&search={{ search_query }}&position={{ filter_role }}&branch={{ filter_branch }}" class="text-dark text-decoration-none d-block">Kích cỡ {% if sort_param == 'uniform__size' %}&uarr;{% elif sort_param == '-uniform__size' %}&darr;{% endif %}</a>
+                    </th>
+                    <th>
+                        <a href="?sort={% if sort_param == 'quantity' %}-quantity{% else %}quantity{% endif %}&search={{ search_query }}&position={{ filter_role }}&branch={{ filter_branch }}" class="text-dark text-decoration-none d-block">SL {% if sort_param == 'quantity' %}&uarr;{% elif sort_param == '-quantity' %}&darr;{% endif %}</a>
+                    </th>
                     <th>Ngày nhập (Kho)</th>
-                    <th>Ngày xuất</th>
-                    <th>Cơ sở</th>
+                    <th>
+                        <a href="?sort={% if sort_param == 'issue_date' %}-issue_date{% else %}issue_date{% endif %}&search={{ search_query }}&position={{ filter_role }}&branch={{ filter_branch }}" class="text-dark text-decoration-none d-block">Ngày xuất {% if sort_param == 'issue_date' %}&uarr;{% elif sort_param == '-issue_date' %}&darr;{% endif %}</a>
+                    </th>
+                    <th>
+                        <a href="?sort={% if sort_param == 'branch' %}-branch{% else %}branch{% endif %}&search={{ search_query }}&position={{ filter_role }}&branch={{ filter_branch }}" class="text-dark text-decoration-none d-block">Cơ sở {% if sort_param == 'branch' %}&uarr;{% elif sort_param == '-branch' %}&darr;{% endif %}</a>
+                    </th>
                     <th>Ghi chú</th>
-                    <th class="text-center">Trạng thái</th>
+                    <th class="text-center">
+                        <a href="?sort={% if sort_param == 'is_resolved' %}-is_resolved{% else %}is_resolved{% endif %}&search={{ search_query }}&position={{ filter_role }}&branch={{ filter_branch }}" class="text-dark text-decoration-none d-block">Trạng thái {% if sort_param == 'is_resolved' %}&uarr;{% elif sort_param == '-is_resolved' %}&darr;{% endif %}</a>
+                    </th>
                     <th class="text-center">Thao tác</th>
                 </tr>
             </thead>
@@ -193,7 +211,7 @@
     <nav aria-label="Page navigation" class="mt-4 mb-2">
         <ul class="pagination justify-content-center shadow-sm">
             {% if page_obj.has_previous %}
-                <li class="page-item"><a class="page-link text-primary fw-bold" href="?page={{ page_obj.previous_page_number }}"><i class="bi bi-chevron-left"></i> Trước</a></li>
+                <li class="page-item"><a class="page-link text-primary fw-bold" href="?page={{ page_obj.previous_page_number }}&sort={{ sort_param }}&search={{ search_query }}&position={{ filter_role }}&branch={{ filter_branch }}"><i class="bi bi-chevron-left"></i> Trước</a></li>
             {% else %}
                 <li class="page-item disabled"><span class="page-link"><i class="bi bi-chevron-left"></i> Trước</span></li>
             {% endif %}
@@ -202,12 +220,12 @@
                 {% if page_obj.number == num %}
                     <li class="page-item active"><span class="page-link fw-bold border-primary">{{ num }}</span></li>
                 {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
-                    <li class="page-item"><a class="page-link text-dark" href="?page={{ num }}">{{ num }}</a></li>
+                    <li class="page-item"><a class="page-link text-dark" href="?page={{ num }}&sort={{ sort_param }}&search={{ search_query }}&position={{ filter_role }}&branch={{ filter_branch }}">{{ num }}</a></li>
                 {% endif %}
             {% endfor %}
 
             {% if page_obj.has_next %}
-                <li class="page-item"><a class="page-link text-primary fw-bold" href="?page={{ page_obj.next_page_number }}">Sau <i class="bi bi-chevron-right"></i></a></li>
+                <li class="page-item"><a class="page-link text-primary fw-bold" href="?page={{ page_obj.next_page_number }}&sort={{ sort_param }}&search={{ search_query }}&position={{ filter_role }}&branch={{ filter_branch }}">Sau <i class="bi bi-chevron-right"></i></a></li>
             {% else %}
                 <li class="page-item disabled"><span class="page-link">Sau <i class="bi bi-chevron-right"></i></span></li>
             {% endif %}

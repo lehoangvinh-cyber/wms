@@ -461,11 +461,11 @@ def staff_debt_list(request):
         return redirect('staff_debt_list')
 
     # --- 2. XỬ LÝ BỘ LỌC ĐA NĂNG ĐỘC LẬP (GET FILTER) ---
-    staff_debts = StaffDebt.objects.all().order_by('is_resolved', '-issue_date')
+    staff_debts = StaffDebt.objects.all()
 
     # Đọc dữ liệu từ 3 ô lọc trên giao diện (image_c82c27.png)
     search_query = request.GET.get('search', '').strip()
-    filter_role = request.GET.get('role', '').strip()  # Nhận từ ô "Lọc theo Chức vụ"
+    filter_role = request.GET.get('position', '').strip()  # Nhận từ ô "Lọc theo Chức vụ" (Sửa lỗi sai tên biến role -> position)
     filter_branch = request.GET.get('branch', '').strip()  # Nhận từ ô "Lọc theo Cơ sở"
 
     # Ô 1: Tìm theo tên nhân viên hoặc tên sản phẩm đồng phục
@@ -482,6 +482,21 @@ def staff_debt_list(request):
     # Ô 3: Tìm kiếm theo cơ sở
     if filter_branch:
         staff_debts = staff_debts.filter(branch__icontains=filter_branch)
+
+    # Xử lý Sắp xếp (Sort) khi click vào tiêu đề
+    sort_param = request.GET.get('sort', '').strip()
+    valid_sort_fields = [
+        'employee_name', '-employee_name', 'position', '-position', 
+        'gender', '-gender', 'uniform__name', '-uniform__name', 
+        'uniform__size', '-uniform__size', 'quantity', '-quantity', 
+        'issue_date', '-issue_date', 'branch', '-branch', 
+        'is_resolved', '-is_resolved'
+    ]
+    if sort_param in valid_sort_fields:
+        staff_debts = staff_debts.order_by(sort_param)
+    else:
+        staff_debts = staff_debts.order_by('is_resolved', '-issue_date')
+
     tong_luot_cap_phat = staff_debts.aggregate(Sum('quantity'))['quantity__sum'] or 0
 
     # Đang sử dụng (Chưa trả) = các bản ghi có is_resolved=False
@@ -493,6 +508,7 @@ def staff_debt_list(request):
         'search_query': search_query,
         'filter_role': filter_role,
         'filter_branch': filter_branch,
+        'sort_param': sort_param,
         'tong_luot_cap_phat': tong_luot_cap_phat,
         'dang_su_dung': dang_su_dung,
     })
