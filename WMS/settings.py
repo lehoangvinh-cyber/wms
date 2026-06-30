@@ -53,6 +53,11 @@ AUTHENTICATION_BACKENDS = [
 SOCIALACCOUNT_LOGIN_ON_GET = True
 SOCIALACCOUNT_PROVIDERS = {
     'google': {
+        'APP': {
+            'client_id': '123456789-example.apps.googleusercontent.com', # Thay bằng Client ID thật của bạn
+            'secret': 'GOCSPX-example_secret_key', # Thay bằng Secret thật của bạn
+            'key': ''
+        },
         'SCOPE': [
             'profile',
             'email',
