@@ -1,0 +1,29 @@
+{% extends "admin/base_site.html" %}
+{% block content %}
+<div style="background: white; padding: 20px; border-radius: 8px; max-width: 600px; margin: 20px 0; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
+    <h2 style="margin-top: 0; color: #333; font-size: 20px;">Nhập danh sách Đồng Phục từ Excel</h2>
+    <p style="color: #666; line-height: 1.5; font-size: 14px;">
+        Vui lòng tải lên file Excel (.xlsx) với định dạng sau (bỏ qua dòng tiêu đề):
+        <ul style="color: #555; margin-bottom: 20px;">
+            <li><strong>Cột 1:</strong> Mã Đồng Phục (SKU) - <i>Ví dụ: DP_001</i></li>
+            <li><strong>Cột 2:</strong> Tên Loại Đồng Phục - <i>Ví dụ: Áo sơ mi nam</i></li>
+            <li><strong>Cột 3:</strong> Kích cỡ (Size) - <i>Ví dụ: M, L, XL (Bỏ trống = Free Size)</i></li>
+            <li><strong>Cột 4:</strong> Số lượng tồn - <i>Ví dụ: 100 (Bỏ trống = 0)</i></li>
+        </ul>
+    </p>
+
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div style="margin-bottom: 20px; padding: 15px; background: #f8f9fa; border: 1px solid #ddd; border-radius: 4px;">
+            <input type="file" name="excel_file" required accept=".xlsx, .xls" style="font-size: 14px;">
+        </div>
+        
+        <div style="display: flex; gap: 10px;">
+            <button type="submit" class="button" style="background-color: #28a745; color: white; padding: 10px 20px; border: none; cursor: pointer; border-radius: 4px; font-weight: bold;">
+                Bắt đầu Nhập
+            </button>
+            <a href=".." style="padding: 10px 20px; background: #e0e0e0; color: #333; text-decoration: none; border-radius: 4px; font-weight: bold;">Hủy</a>
+        </div>
+    </form>
+</div>
+{% endblock %}
