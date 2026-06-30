@@ -64,7 +64,8 @@
             <hr class="my-4 text-muted">
             {% if request.user.is_superuser %}
                 <a href="{% url 'audit_log' %}" class="btn btn-secondary w-100 mb-2 fw-bold shadow-sm"><i class="bi bi-shield-check me-1"></i> LỊCH SỬ THAO TÁC</a>
-                <a href="/admin/" target="_blank" class="btn-sidebar btn-admin"><i class="bi bi-gear"></i> TRANG QUẢN TRỊ</a>
+                <a href="{% url 'backup_database' %}" class="btn btn-success w-100 mb-2 fw-bold shadow-sm"><i class="bi bi-database-down me-1"></i> SAO LƯU DỮ LIỆU</a>
+                <a href="/admin/" target="_blank" class="btn-sidebar btn-admin mb-0"><i class="bi bi-gear"></i> TRANG QUẢN TRỊ</a>
             {% endif %}
             <div class="mt-4 rounded-3 shadow-sm overflow-hidden border-0" style="border-radius: 12px;">
     <div id="sidebarBanner" class="carousel slide carousel-fade" data-bs-ride="carousel" data-bs-interval="3000">

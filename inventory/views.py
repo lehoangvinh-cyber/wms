@@ -909,3 +909,30 @@ def confirm_export_stock(request):
             return JsonResponse({'status': 'error', 'message': str(e)})
 
     return redirect('dashboard')
+
+
+@login_required(login_url='login')
+def backup_database(request):
+    """Xuất toàn bộ dữ liệu database dưới dạng JSON để backup"""
+    if not request.user.is_superuser:
+        messages.error(request, "Lỗi bảo mật: Chỉ Admin mới có quyền Sao lưu dữ liệu!")
+        return redirect('dashboard')
+        
+    from django.core.management import call_command
+    import io
+    
+    buf = io.StringIO()
+    # Loại trừ contenttypes và auth.Permission để tránh lỗi khi restore
+    call_command('dumpdata', natural_foreign=True, natural_primary=True, 
+                 exclude=['contenttypes', 'auth.Permission'], indent=4, stdout=buf)
+    
+    buf.seek(0)
+    response = HttpResponse(buf.read(), content_type='application/json')
+    response['Content-Disposition'] = f'attachment; filename="wms_backup_{timezone.now().strftime("%Y%m%d_%H%M%S")}.json"'
+    
+    ActionLog.objects.create(
+        user=request.user,
+        action="SAO LƯU DỮ LIỆU",
+        description="Tải xuống bản sao lưu toàn bộ hệ thống (JSON)"
+    )
+    return response

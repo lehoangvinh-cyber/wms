@@ -46,4 +46,5 @@ urlpatterns = [
     path('accounts/', include('allauth.urls')), # Thêm dòng này để xử lý luồng Google Callback
     path('print-uniform-receipt/', views.print_uniform_receipt, name='print_uniform_receipt'),
     path('confirm-export-stock/', views.confirm_export_stock, name='confirm_export_stock'),
+    path('sao-luu-du-lieu/', views.backup_database, name='backup_database'),
 ]
