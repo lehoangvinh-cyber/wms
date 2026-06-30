@@ -286,6 +286,10 @@ def resolve_debt(request, debt_id):
         if debt.uniform.quantity >= debt.quantity:
             debt.uniform.quantity -= debt.quantity
             debt.uniform.save()
+            Transaction.objects.create(
+                ticket_id=f"DEBT-{debt.id}", uniform=debt.uniform, amount=debt.quantity,
+                type='OUT', actor_name="Hệ thống", branch=debt.branch
+            )
             debt.is_resolved = True
             debt.note = f"{debt.note} (Đã trả {timezone.now().strftime('%d/%m/%Y')})"
             debt.save()
@@ -530,7 +534,11 @@ def resolve_staff_debt(request, debt_id):
     if not debt.is_resolved and debt.uniform.quantity >= debt.quantity:
         debt.is_resolved = True
         debt.uniform.quantity -= debt.quantity
-        debt.uniform.save();
+        debt.uniform.save()
+        Transaction.objects.create(
+            ticket_id=f"STAFF-{debt.id}", uniform=debt.uniform, amount=debt.quantity,
+            type='OUT', actor_name="Hệ thống", branch=debt.branch
+        )
         debt.save()
         ActionLog.objects.create(user=request.user, action="GIAO ÁO NV",
                                  description=f"Nhân viên {debt.employee_name} đã nhận áo.")
@@ -593,9 +601,14 @@ def delete_staff_debt(request, debt_id):
         return redirect('staff_debt_list')
 
     debt = get_object_or_404(StaffDebt, id=debt_id)
-    if not debt.is_resolved:
+    if debt.is_resolved:
+        # Nếu đã cấp phát (đã trừ kho) thì nay xóa đi phải cộng trả lại kho
         debt.uniform.quantity += debt.quantity
         debt.uniform.save()
+        Transaction.objects.create(
+            ticket_id=f"DEL-STAFF-{debt.id}", uniform=debt.uniform, amount=debt.quantity,
+            type='IN', actor_name="Hệ thống", branch=debt.branch
+        )
     debt.delete()
     ActionLog.objects.create(user=request.user, action="XÓA DỮ LIỆU NV",
                              description=f"Đã xóa bản ghi của {debt.employee_name}.")
