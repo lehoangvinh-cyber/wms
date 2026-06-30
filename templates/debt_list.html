@@ -198,6 +198,13 @@
                         <label class="form-label fw-bold text-secondary">Chọn file Excel (.xlsx)</label>
                         <input class="form-control form-control-lg" type="file" name="excel_file" accept=".xlsx" required>
                     </div>
+                    <div class="form-check mt-4 p-3 bg-danger bg-opacity-10 rounded border border-danger">
+                        <input class="form-check-input ms-1" type="checkbox" name="clear_old_data" value="yes" id="clearOldData">
+                        <label class="form-check-label ms-2 text-danger fw-bold" for="clearOldData">
+                            <i class="bi bi-exclamation-triangle-fill me-1"></i> Xóa TOÀN BỘ dữ liệu nợ cũ trước khi nhập file này
+                        </label>
+                        <div class="small text-muted ms-2 mt-1">Lưu ý: Hành động này không thể hoàn tác. Vui lòng xuất file báo cáo để sao lưu trước khi thực hiện.</div>
+                    </div>
                 </div>
                 <div class="modal-footer bg-light border-0">
                     <button type="button" class="btn btn-secondary rounded-pill px-4" data-bs-dismiss="modal">Hủy</button>

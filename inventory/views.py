@@ -642,6 +642,11 @@ def import_staff_debt_excel(request):
         return redirect('staff_debt_list')
 
     if request.method == 'POST' and request.FILES.get('excel_file'):
+        # 🟢 1. BẮT TÍN HIỆU TỪ CHECKBOX XÓA DỮ LIỆU CŨ
+        clear_data = request.POST.get('clear_old_data')
+        if clear_data == 'yes':
+            StaffDebt.objects.all().delete()  # Xóa sạch toàn bộ nợ nhân viên cũ
+
         try:
             excel_file = request.FILES['excel_file']
 
